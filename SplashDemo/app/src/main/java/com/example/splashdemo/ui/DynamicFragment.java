@@ -37,7 +37,7 @@ public class DynamicFragment extends Fragment {
 
 
         webView.setWebViewClient(new WebViewClient() {
-            //在webview里打开新链接
+            //在webView里打开新链接
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
