@@ -16,7 +16,7 @@ public class TempActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temp);
         webView = findViewById(R.id.tempWebView);
-        webView.loadUrl("http://localhost/#/PersonalCenter");
+        webView.loadUrl("http://192.168.2.3:3000/#/PersonalCenter");
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new WebChromeClient() {
             //这里设置获取到的网站title
