@@ -54,8 +54,8 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //全屏
         setContentView(R.layout.activity_splash);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.hide();
         ad_image = (ImageView) findViewById(R.id.ad_image);
         ad_timer = (Button) findViewById(R.id.ad_timer);
         bottom_image = (ImageView) findViewById(R.id.bottom_image);

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="EditTextUnderline" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+        <item name="colorControlNormal">@color/login_line</item>
+    </style>
+</resources>
