@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void onClick(View v){
         Log.i("press", "true");
-        Intent intent = new Intent(MainActivity.this, TempActivity.class);
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
     }
 }

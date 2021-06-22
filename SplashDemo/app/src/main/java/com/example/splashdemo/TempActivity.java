@@ -16,32 +16,7 @@ public class TempActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temp);
         webView = findViewById(R.id.tempWebView);
-        webView.loadUrl("http://192.168.2.3:3000/#/PersonalCenter");
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebChromeClient(new WebChromeClient() {
-            //这里设置获取到的网站title
-            @Override
-            public void onReceivedTitle(WebView view, String title) {
-                super.onReceivedTitle(view, title);
-            }
-        });
-
-        webView.setWebViewClient(new WebViewClient() {
-            //在webview里打开新链接
-            @Override
-            public boolean shouldOverrideUrlLoading(final WebView view, String url) {
-                try {
-                    if (url.startsWith("http:") || url.startsWith("https:")) {
-                        view.loadUrl(url);
-                    } else {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                        startActivity(intent);
-                    }
-                    return true;
-                } catch (Exception e){
-                    return false;
-                }
-            }
-        });
+        WebUtil webUtil = new WebUtil(webView, getApplicationContext());
+        webUtil.webViewSetting("PersonalCenter");
     }
 }

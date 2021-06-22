@@ -1,0 +1,72 @@
+package com.example.splashdemo;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class SignupActivity extends AppCompatActivity {
+    private EditText signupAct;
+    private EditText signupPsd;
+    private Button signupButton;
+    private TextView normalLogin;
+    private String act;
+    private String psw;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_signup);
+        signupAct = (EditText) findViewById(R.id.accountSignupText);
+        signupPsd = (EditText) findViewById(R.id.passwordSignupText);
+        signupButton = (Button) findViewById(R.id.signupButton);
+        normalLogin = (TextView) findViewById(R.id.normalLogin);
+        //结束Activity
+        normalLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+    }
+
+    public void onClick(View view){
+        if(emptyJudge()) {
+            signupJudge();
+        }
+    }
+
+    /**
+     * EditText判空
+     * @return true代表不空
+     */
+    public boolean emptyJudge(){
+        act = signupAct.getText().toString().trim();
+        psw = signupPsd.getText().toString().trim();
+        if(act.equals("")){
+            Toast.makeText(this, "请输入账号", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (psw.equals("")){
+            Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * 发后端请求进行注册
+     */
+    public void signupJudge(){
+        act = signupAct.getText().toString().trim();
+        psw = signupPsd.getText().toString().trim();
+        // TODO: 2021/6/22 未完注册判定
+        LoginActivity.instance.finish();
+        finish();
+    }
+}
