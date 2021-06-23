@@ -10,6 +10,11 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home"/>
     <fragment
+        android:id="@+id/navigation_rank"
+        android:name="com.example.splashdemo.ui.RankFragment"
+        android:label="@string/title_rank"
+        tools:layout="@layout/fragment_rank"/>
+    <fragment
         android:id="@+id/navigation_dynamic"
         android:name="com.example.splashdemo.ui.DynamicFragment"
         android:label="@string/title_dynamic"

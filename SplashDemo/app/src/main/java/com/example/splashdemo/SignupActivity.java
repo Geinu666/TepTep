@@ -15,16 +15,26 @@ public class SignupActivity extends AppCompatActivity {
     private EditText signupPsd;
     private Button signupButton;
     private TextView normalLogin;
+    private EditText signupPhoneNumber;
+    private EditText signupMail;
     private String act;
     private String psw;
+    private String phone;
+    private String mail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         signupAct = (EditText) findViewById(R.id.accountSignupText);
         signupPsd = (EditText) findViewById(R.id.passwordSignupText);
+        signupPhoneNumber = (EditText) findViewById(R.id.phoneNumberSignupText);
+        signupMail = (EditText) findViewById(R.id.mailSignupText);
         signupButton = (Button) findViewById(R.id.signupButton);
         normalLogin = (TextView) findViewById(R.id.normalLogin);
+
+        fetchExtra();
+
+        LightStatusBarUtils.setAndroidNativeLightStatusBar(this, true);
         //结束Activity
         normalLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,7 +44,7 @@ public class SignupActivity extends AppCompatActivity {
         });
 
     }
-
+    //注册按钮点击事件
     public void onClick(View view){
         if(emptyJudge()) {
             signupJudge();
@@ -48,15 +58,17 @@ public class SignupActivity extends AppCompatActivity {
     public boolean emptyJudge(){
         act = signupAct.getText().toString().trim();
         psw = signupPsd.getText().toString().trim();
+        phone = signupPhoneNumber.getText().toString().trim();
+        mail = signupMail.getText().toString().trim();
         if(act.equals("")){
             Toast.makeText(this, "请输入账号", Toast.LENGTH_SHORT).show();
             return false;
         } else if (psw.equals("")){
             Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
             return false;
-        } else {
-            return true;
-        }
+        } else if (phone.equals("")){
+            return false;
+        } else return !mail.equals("");
     }
 
     /**
@@ -65,8 +77,17 @@ public class SignupActivity extends AppCompatActivity {
     public void signupJudge(){
         act = signupAct.getText().toString().trim();
         psw = signupPsd.getText().toString().trim();
+        phone = signupPhoneNumber.getText().toString().trim();
+        mail = signupMail.getText().toString().trim();
         // TODO: 2021/6/22 未完注册判定
         LoginActivity.instance.finish();
         finish();
+    }
+
+    /**
+     * 接收设置各种Extra
+     */
+    public void fetchExtra(){
+        signupAct.setText(getIntent().getExtras().getString("actTrans", ""));
     }
 }

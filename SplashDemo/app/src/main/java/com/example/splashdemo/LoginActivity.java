@@ -2,6 +2,7 @@ package com.example.splashdemo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -22,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private String act;
     private String psw;
+    //供SignupActivity操作的实例
     public static LoginActivity instance = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +34,14 @@ public class LoginActivity extends AppCompatActivity {
         passwordLoginText = (EditText) findViewById(R.id.passwordLoginText);
         signupText = (TextView) findViewById(R.id.signup_text);;
         loginButton = (Button) findViewById(R.id.loginButton);
-
+        LightStatusBarUtils.setAndroidNativeLightStatusBar(this, true);
+        //跳转注册的逻辑
         signupText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String transAct = accountLoginText.getText().toString().trim();
                 Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                intent.putExtra("actTrans", transAct);
                 startActivity(intent);
             }
         });
@@ -59,13 +64,13 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * 登录按钮的点击事件
-     * @param view
+     * @param view Button
      */
     public void onClick(View view){
         act = accountLoginText.getText().toString().trim();
         psw = passwordLoginText.getText().toString().trim();
         if(loginJudgement(act, psw)){
-
+            finish();
         } else {
             Toast.makeText(this, "账号或密码错误！", Toast.LENGTH_SHORT).show();
         }

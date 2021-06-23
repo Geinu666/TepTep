@@ -9,6 +9,9 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+/**
+ * 仅用于测试用的Activity类
+ */
 public class TempActivity extends AppCompatActivity {
     private WebView webView;
     @Override
@@ -17,6 +20,6 @@ public class TempActivity extends AppCompatActivity {
         setContentView(R.layout.activity_temp);
         webView = findViewById(R.id.tempWebView);
         WebUtil webUtil = new WebUtil(webView, getApplicationContext());
-        webUtil.webViewSetting("PersonalCenter");
+        webUtil.webViewSetting("PersonalCenter", 1);
     }
 }
