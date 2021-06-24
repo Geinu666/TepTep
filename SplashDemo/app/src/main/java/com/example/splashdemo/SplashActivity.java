@@ -1,6 +1,5 @@
 package com.example.splashdemo;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -16,9 +15,7 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -62,7 +59,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         ad_image.setOnClickListener(this);
         ad_timer.setOnClickListener(this);
         bottom_image.setOnClickListener(this);
-        adGameNo = sharedPreferencesUtil.get(SplashActivity.this,
+        adGameNo = SharedPreferencesUtil.get(SplashActivity.this,
                 "adGameNo",
                 "none")
                 .toString();
@@ -74,7 +71,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         } else {
             ad_image.setImageResource(R.mipmap.test_image1);
             //加载默认图
-            sharedPreferencesUtil.put(SplashActivity.this, "version", "0");
+            SharedPreferencesUtil.put(SplashActivity.this, "version", "0");
         }
 
         verifyStoragePermissions(SplashActivity.this);

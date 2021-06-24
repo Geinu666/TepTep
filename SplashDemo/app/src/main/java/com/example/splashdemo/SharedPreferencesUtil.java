@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * 管理SharedPreferences的类
  */
-public class sharedPreferencesUtil {
+public class SharedPreferencesUtil {
     /**
      * 本地文件名
      */
@@ -64,7 +64,6 @@ public class sharedPreferencesUtil {
         } else if (defaultObject instanceof Long) {
             return sp.getLong(key, (Long) defaultObject);
         }
-
         return null;
     }
 

@@ -38,7 +38,7 @@ public class DynamicFragment extends Fragment {
 
         button.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
         WebUtil webUtil = new WebUtil(dynamicWebView, getContext());
-        webUtil.webViewSetting("GameForum", 1);
+        webUtil.webViewSetting("TimeLine", 1);
         dynamicWebView.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

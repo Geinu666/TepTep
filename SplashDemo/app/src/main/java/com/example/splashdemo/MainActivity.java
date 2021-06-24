@@ -30,10 +30,25 @@ import com.example.splashdemo.ui.DynamicFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import WebKit.AddCookiesInterceptor;
+import WebKit.Bean.LoginBean;
+import WebKit.Bean.LoginData;
+import WebKit.LoginService;
+import WebKit.ReceivedCookiesInterceptor;
+import okhttp3.Headers;
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Header;
+
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private boolean isEx = false;
     private PopupWindow popupWindow;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +85,43 @@ public class MainActivity extends AppCompatActivity {
                 initPopupWindow(v);
                 Log.i("floating", "clicked");
                 break;
+            case R.id.http_test:
+                OkHttpClient client = new OkHttpClient.Builder()
+                        .addInterceptor(new AddCookiesInterceptor(getApplicationContext()))
+                        .addInterceptor(new ReceivedCookiesInterceptor(getApplicationContext()))
+                        .build();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://119.91.130.198/api/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(client)
+                        .build();
+                LoginService service = retrofit.create(LoginService.class);
+                Call<LoginBean> call = service.postLogin("test001", "test001");
+                call.enqueue(new Callback<LoginBean>() {
+                    @Override
+                    public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
+                        if (response.isSuccessful()) {
+                            LoginBean bean = response.body();
+                            if (bean != null) {
+                                Log.i("httptest", bean.getMsg());
+                                Log.i("httptest", String.valueOf(bean.getStatus()));
+                                Log.i("httptest", bean.getData().toString());
+                            }
+                            Headers headers = response.headers();
+                            Log.i("header", headers.toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<LoginBean> call, Throwable t) {
+
+                    }
+                });
         }
     }
 
     /**
-     * 弹PopupWindow时设置背景用
+     * 弹PopupWindow时设置背景用(暂时没用)
      * @param bgAlpha 1代表原来的透明度
      */
     public void backgroundAlpha(float bgAlpha){
@@ -96,6 +143,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 初始化设置DynamicFragment里面的弹出按钮
+     * @param v
+     */
     public void initPopupWindow(View v){
         View view = LayoutInflater.from(this).inflate(R.layout.popwindow_style, null, false);
         Button button1 = view.findViewById(R.id.button1);
@@ -120,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 backgroundAlpha(1f);
             }
         });
+        //
         DisplayMetrics dm = getResources().getDisplayMetrics();
         int screenWidth = dm.widthPixels;
         int screenHeight = dm.heightPixels;
