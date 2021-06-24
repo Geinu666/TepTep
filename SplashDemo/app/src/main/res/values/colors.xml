@@ -13,4 +13,5 @@
     <color name="hint_color">#B0B2BF</color>
     <color name="login_title">#03081B</color>
     <color name="button_white">#FBFFFF</color>
+    <color name="tab_focused_color">#1489FA</color>
 </resources>
