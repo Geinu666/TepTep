@@ -9,9 +9,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.example.splashdemo.R;
-import com.example.splashdemo.WebUtil;
-
 /**
  * 仅用于测试用的Activity类
  */

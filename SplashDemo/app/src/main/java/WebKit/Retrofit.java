@@ -1,6 +1,5 @@
 package WebKit;
 
-import WebKit.Service.LoginService;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Retrofit {

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="EditTextUnderline" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+        <item name="colorControlNormal">@color/login_line</item>
+    </style>
+    <style name="anim_menu_bottombar">
+        <item name="android:windowEnterAnimation">@anim/bottom_menu_in</item>
+        <item name="android:windowExitAnimation">@anim/bottom_menu_out</item>
+    </style>
+</resources>

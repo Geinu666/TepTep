@@ -46,7 +46,7 @@ public class RankFragment extends SupportFragment {
 
 
     private void loadData() {
-        games = DataServer.getRankData();
+        games = DataServer.getRecommendationData();
     }
 
 

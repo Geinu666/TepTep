@@ -42,7 +42,7 @@ public class updateAdvertisement {
 
     public void getLatestVersion(Context context, Response<List<advertisement>> response){
         //从SharedPreferences获取现有版本
-        currentVersion = sharedPreferencesUtil
+        currentVersion = SharedPreferencesUtil
                 .get(context, "version", "0").toString();
         Log.i("currentVersion", currentVersion);
 
@@ -52,10 +52,10 @@ public class updateAdvertisement {
             Log.i("latestVersion", latestVersion);
             //有新的广告则更新SharedPreferences
             if (!latestVersion.equals(currentVersion)){
-                sharedPreferencesUtil.put(context, "updateTime", latestAd.getUpdateTime());
-                sharedPreferencesUtil.put(context, "version", latestAd.getVersion());
-                sharedPreferencesUtil.put(context, "imageUrl", latestAd.getImageUrl());
-                sharedPreferencesUtil.put(context, "httpUrl", latestAd.getHttlUrl());
+                SharedPreferencesUtil.put(context, "updateTime", latestAd.getUpdateTime());
+                SharedPreferencesUtil.put(context, "version", latestAd.getVersion());
+                SharedPreferencesUtil.put(context, "imageUrl", latestAd.getImageUrl());
+                SharedPreferencesUtil.put(context, "httpUrl", latestAd.getHttlUrl());
                 imageUrl = latestAd.getImageUrl();
                 //子线程加载图片
                 new Thread(new Runnable() {

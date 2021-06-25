@@ -4,7 +4,15 @@ import com.example.splashdemo.Game;
 
 import java.util.ArrayList;
 
+/**
+ * 伪 从网络获取数据
+ */
 public class DataServer {
+    /**
+     * 推荐列表数据
+     *
+     * @return
+     */
     public static ArrayList<Game> getRecommendationData() {
         ArrayList<Game> games = new ArrayList<>();
         games.add(

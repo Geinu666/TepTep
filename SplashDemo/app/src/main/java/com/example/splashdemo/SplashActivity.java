@@ -1,6 +1,5 @@
 package com.example.splashdemo;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -54,15 +53,15 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //全屏
         setContentView(R.layout.activity_splash);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.hide();
         ad_image = (ImageView) findViewById(R.id.ad_image);
         ad_timer = (Button) findViewById(R.id.ad_timer);
         bottom_image = (ImageView) findViewById(R.id.bottom_image);
         ad_image.setOnClickListener(this);
         ad_timer.setOnClickListener(this);
         bottom_image.setOnClickListener(this);
-        adGameNo = sharedPreferencesUtil.get(SplashActivity.this,
+        adGameNo = SharedPreferencesUtil.get(SplashActivity.this,
                 "adGameNo",
                 "none")
                 .toString();
@@ -74,7 +73,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         } else {
             ad_image.setImageResource(R.mipmap.test_image1);
             //加载默认图
-            sharedPreferencesUtil.put(SplashActivity.this, "version", "0");
+            SharedPreferencesUtil.put(SplashActivity.this, "version", "0");
         }
 
         verifyStoragePermissions(SplashActivity.this);

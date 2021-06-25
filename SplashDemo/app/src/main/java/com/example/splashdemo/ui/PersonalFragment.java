@@ -8,9 +8,16 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.splashdemo.JsJavaBridge;
+import com.example.splashdemo.MainActivity;
 import com.example.splashdemo.R;
 import com.example.splashdemo.WebUtil;
 

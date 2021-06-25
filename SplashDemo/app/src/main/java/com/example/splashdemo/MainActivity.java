@@ -1,17 +1,10 @@
 package com.example.splashdemo;
 
-<<<<<<< Updated upstream:SplashDemo/app/src/main/java/com/example/splashdemo/MainActivity.java
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-=======
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -40,7 +33,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import WebKit.AddCookiesInterceptor;
 import WebKit.Bean.LoginBean;
-import WebKit.Service.LoginService;
+import WebKit.LoginService;
 import WebKit.ReceivedCookiesInterceptor;
 import me.yokeyword.fragmentation.SupportActivity;
 import okhttp3.Headers;
@@ -125,7 +118,7 @@ public class MainActivity extends SupportActivity {
                     }
                 });
             case R.id.getGame:
-                
+
         }
     }
 
@@ -150,6 +143,51 @@ public class MainActivity extends SupportActivity {
                 return true;
             }
         });
->>>>>>> Stashed changes:SplashDemo/app/src/main/java/com/example/splashdemo/activity/MainActivity.java
+    }
+    /**
+     * 初始化设置DynamicFragment里面的弹出按钮
+     * @param v
+     */
+    public void initPopupWindow(View v) {
+        View view = LayoutInflater.from(this).inflate(R.layout.popwindow_style, null, false);
+        Button button1 = view.findViewById(R.id.button1);
+        Button button2 = view.findViewById(R.id.button2);
+
+        popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
+        popupWindow.setTouchable(true);
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+        popupWindow.setAnimationStyle(R.style.anim_menu_bottombar);
+        //设置背景
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        //偏移量
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1f);
+            }
+        });
+        //
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        int screenWidth = dm.widthPixels;
+        int screenHeight = dm.heightPixels;
+        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, screenWidth - 100, screenHeight - 600);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
+            }
+        });
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "2", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

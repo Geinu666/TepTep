@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Game实体类
+ * 游戏实体类
  */
 public class Game implements Parcelable {
     //游戏名
