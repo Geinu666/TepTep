@@ -7,6 +7,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
+import com.example.splashdemo.R;
+
 public class WebViewActivity extends AppCompatActivity {
     private WebView webView;
     private WebSettings webSettings;

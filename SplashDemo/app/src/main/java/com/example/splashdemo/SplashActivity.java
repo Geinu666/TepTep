@@ -16,12 +16,12 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.splashdemo.SharedPreferencesUtil;
 
 import java.io.File;
 import java.util.List;
