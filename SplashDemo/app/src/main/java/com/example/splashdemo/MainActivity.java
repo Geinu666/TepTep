@@ -1,21 +1,21 @@
 package com.example.splashdemo;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
+
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,16 +25,17 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.example.splashdemo.LightStatusBarUtils;
+import com.example.splashdemo.R;
 import com.example.splashdemo.databinding.ActivityMainBinding;
-import com.example.splashdemo.ui.DynamicFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import WebKit.AddCookiesInterceptor;
 import WebKit.Bean.LoginBean;
-import WebKit.Bean.LoginData;
 import WebKit.LoginService;
 import WebKit.ReceivedCookiesInterceptor;
+import me.yokeyword.fragmentation.SupportActivity;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -42,9 +43,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Header;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends SupportActivity {
     private ActivityMainBinding binding;
     private boolean isEx = false;
     private PopupWindow popupWindow;
@@ -117,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+            case R.id.getGame:
+
         }
     }
 
@@ -142,12 +144,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     /**
      * 初始化设置DynamicFragment里面的弹出按钮
      * @param v
      */
-    public void initPopupWindow(View v){
+    public void initPopupWindow(View v) {
         View view = LayoutInflater.from(this).inflate(R.layout.popwindow_style, null, false);
         Button button1 = view.findViewById(R.id.button1);
         Button button2 = view.findViewById(R.id.button2);
@@ -189,6 +190,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }

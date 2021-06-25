@@ -18,6 +18,7 @@
     <string name="email">邮箱</string>
     <string name="male">男</string>
     <string name="female">女</string>
+    <string name="game_img">游戏图片</string>
     <string name="login_only_can_input">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
