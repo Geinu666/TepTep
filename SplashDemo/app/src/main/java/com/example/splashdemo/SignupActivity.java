@@ -90,4 +90,10 @@ public class SignupActivity extends AppCompatActivity {
     public void fetchExtra(){
         signupAct.setText(getIntent().getExtras().getString("actTrans", ""));
     }
+
+    @Override
+    public void finish(){
+        super.finish();
+        overridePendingTransition(R.anim.no_anim, R.anim.rightout_exit);
+    }
 }

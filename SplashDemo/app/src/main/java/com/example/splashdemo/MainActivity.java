@@ -1,7 +1,5 @@
 package com.example.splashdemo;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,9 +8,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -21,20 +17,21 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.CookieSyncManager;
 import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
-import com.example.splashdemo.LightStatusBarUtils;
-import com.example.splashdemo.R;
 import com.example.splashdemo.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import WebKit.AddCookiesInterceptor;
 import WebKit.Bean.LoginBean;
+import WebKit.Bean.LoginData;
 import WebKit.LoginService;
 import WebKit.ReceivedCookiesInterceptor;
+import WebKit.RetrofitFactory;
 import me.yokeyword.fragmentation.SupportActivity;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
@@ -80,6 +77,7 @@ public class MainActivity extends SupportActivity {
                 Log.i("press", "true");
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
                 break;
             case R.id.floating:
                 initPopupWindow(v);
@@ -118,7 +116,27 @@ public class MainActivity extends SupportActivity {
                     }
                 });
             case R.id.getGame:
+                LoginService service1 = RetrofitFactory.getLoginService(getApplicationContext());
+                Call<LoginBean> call1 = service1.getUserMessage();
+                call1.enqueue(new Callback<LoginBean>() {
+                    @Override
+                    public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
+                        LoginBean result = response.body();
+                        int status = result.getStatus();
+                        if (response.isSuccessful()){
+                            if (result != null) {
+                                LoginData data = result.getData();
+                                String i = data.toString();
+                                Log.i("test", i);
+                            }
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(Call<LoginBean> call, Throwable t) {
+
+                    }
+                });
         }
     }
 
@@ -189,5 +207,12 @@ public class MainActivity extends SupportActivity {
                 Toast.makeText(MainActivity.this, "2", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        CookieSyncManager.createInstance(getApplicationContext());
+        CookieSyncManager.getInstance().startSync();
     }
 }

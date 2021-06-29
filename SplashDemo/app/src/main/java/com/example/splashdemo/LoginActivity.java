@@ -2,28 +2,33 @@ package com.example.splashdemo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import WebKit.AddCookiesInterceptor;
 import WebKit.Bean.LoginBean;
 import WebKit.Bean.LoginData;
 import WebKit.LoginService;
-import WebKit.Retrofit;
+import WebKit.ReceivedCookiesInterceptor;
+import WebKit.RetrofitFactory;
+import okhttp3.Cookie;
+import okhttp3.Headers;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Body;
-
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Locale;
@@ -37,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private String act;
     private String psw;
-    private Retrofit retrofit;
     private LoginService loginService;
     private Boolean isLogin = false;
 
@@ -49,10 +53,8 @@ public class LoginActivity extends AppCompatActivity {
         accountLoginText = (EditText) findViewById(R.id.accountLoginText);
         passwordLoginText = (EditText) findViewById(R.id.passwordLoginText);
         signupText = (TextView) findViewById(R.id.signup_text);
-        ;
         loginButton = (Button) findViewById(R.id.loginButton);
-        retrofit = Retrofit.getRetrofit();
-        loginService = retrofit.getService();
+        loginService = RetrofitFactory.getLoginService(getApplicationContext());
         LightStatusBarUtils.setAndroidNativeLightStatusBar(this, true);
         //跳转注册的逻辑
         signupText.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
                 intent.putExtra("actTrans", transAct);
                 startActivity(intent);
+                overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
             }
         });
 
@@ -90,36 +93,39 @@ public class LoginActivity extends AppCompatActivity {
     public void onClick(View view) {
         act = accountLoginText.getText().toString().trim();
         psw = passwordLoginText.getText().toString().trim();
-        if (loginJudgement(act, psw)) {
-            Toast.makeText(this, "登陆成功", Toast.LENGTH_SHORT).show();
-            Log.i("login", "登陆成功");
-            finish();
-        } else {
-            Toast.makeText(this, "账号或密码错误！", Toast.LENGTH_SHORT).show();
-        }
+        login(act, psw);
     }
 
     /**
      * 发送登录请求
      * @param account 账号栏输入
      * @param password 密码栏输入
-     * @return 返回登录状态
      */
-    public boolean loginJudgement(String account, String password) {
+    public void login(String account, String password) {
         Call<LoginBean> call = loginService.postLogin(account, password);
         call.enqueue(new Callback<LoginBean>() {
             @Override
             public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
                 if (response.isSuccessful()) {
                     LoginBean result = response.body();
+                    String cookies = response.headers().get("Set-Cookie");
+                    Headers headers = response.headers();
+                    Log.i("test", cookies);
+                    SharedPreferences.Editor config = getApplicationContext().getSharedPreferences("config", getApplicationContext().MODE_PRIVATE).edit();
+                    config.putString("cookie", cookies);
+                    config.commit();
+                    syncCookie("http://119.91.130.198/api/", cookies);
                     if (result != null) {
                         LoginData data = result.getData();
                         String i = data.toString();
                         isLogin = true;
+                        Log.i("loginPOST", String.valueOf(isLogin));
                         Log.i("loginPOST", i);
                     } else {
                         Log.i("loginPOST", "empty result");
                     }
+                    loginButton = (Button) findViewById(R.id.loginButton);
+                    loginButton.setText("login success");
                 } else {
                     Log.i("loginPOST", "400 Bad request");
                 }
@@ -130,8 +136,34 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+        Log.i("loginPOST", String.valueOf(isLogin));
         Log.i("loginPOST", "before return");
-        return isLogin;
+    }
+
+    /**
+     * 修改过场动画
+     */
+    @Override
+    public void finish(){
+        super.finish();
+        overridePendingTransition(R.anim.no_anim, R.anim.rightout_exit);
+    }
+
+    /**
+     * 登陆成功，抓取Cookie同步到全局WebView
+     * @param url
+     * @param cookie
+     */
+    public void syncCookie(String url, String cookie) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            CookieSyncManager.createInstance(this);
+        }
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        cookieManager.removeAllCookie();
+        cookieManager.setCookie(url, cookie);
+//        CookieSyncManager.getInstance().sync();
+        Log.i("test", "cookie sync" + cookie);
     }
 
     public String getStringData(int id) {

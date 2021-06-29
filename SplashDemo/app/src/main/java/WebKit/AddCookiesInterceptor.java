@@ -15,16 +15,21 @@ public class AddCookiesInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
+
         Request.Builder builder = chain.request().newBuilder();
-        HashSet<String> preferences = (HashSet) context.getSharedPreferences("config",
-                context.MODE_PRIVATE).getStringSet("cookie", null);
-        if (preferences != null){
-            for (String cookie : preferences) {
+        String url = String.valueOf(chain.request().url());
+        Log.i("test", url);
+        if (url.equals("http://119.91.130.198/api/userLogin")) {
+            Log.i("test", "hit login");
+            return chain.proceed(builder.build());
+        } else {
+            String cookie = context.getSharedPreferences("config",
+                    context.MODE_PRIVATE).getString("cookie", null);
+            if (cookie != null){
                 builder.addHeader("Cookie", cookie);
-                Log.i("Cookie", "Adding header: " + cookie);
             }
+            return chain.proceed(builder.build());
         }
-        return chain.proceed(builder.build());
     }
 
     public AddCookiesInterceptor(Context context){
