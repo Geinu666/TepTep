@@ -39,14 +39,13 @@ public class RankFragment extends SupportFragment {
         mBinding = FragmentRankBinding.inflate(inflater);
         mRootView = mBinding.getRoot();
         onBindView(savedInstanceState,mRootView);
-        Log.i("rank", "before init");
 //        return super.onCreateView(inflater, container, savedInstanceState);
         return mRootView;
     }
 
 
     private void loadData() {
-        games = DataServer.getRecommendationData();
+        games = DataServer.getRankData();
     }
 
 
@@ -61,7 +60,6 @@ public class RankFragment extends SupportFragment {
         mBinding.viewPager.setOffscreenPageLimit(2);
 
         mediateTabLayoutAndViewPager2();
-        Log.i("rank", "viewpager ok");
     }
 
 
@@ -73,7 +71,6 @@ public class RankFragment extends SupportFragment {
         fragments.add(ViewPager2ContentFragment.create(games));
         fragments.add(ViewPager2ContentFragment.create(games));
         fragments.add(ViewPager2ContentFragment.create(games));
-        Log.i("rank", "fragment init ok");
     }
 
     /**
@@ -90,7 +87,6 @@ public class RankFragment extends SupportFragment {
                 tab.setText(tabNameList.get(position));
             }
         }).attach();
-        Log.i("rank", "tablayout ok");
     }
     protected Object setLayout() {
         return mBinding.getRoot();

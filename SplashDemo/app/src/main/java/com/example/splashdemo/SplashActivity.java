@@ -39,6 +39,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     private CountDownTimer textTimer;
     private Intent it;
     String adGameNo;
+    public static SplashActivity instance = null;
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static final String[] PERMISSIONS_STORAGE = {"android.permission.READ_EXTERNAL_STORAGE",
@@ -59,6 +60,9 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         ad_image.setOnClickListener(this);
         ad_timer.setOnClickListener(this);
         bottom_image.setOnClickListener(this);
+
+        instance = this;
+
         adGameNo = SharedPreferencesUtil.get(SplashActivity.this,
                 "adGameNo",
                 "none")
@@ -192,5 +196,6 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
     }
+
 
 }

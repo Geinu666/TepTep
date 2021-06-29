@@ -6,6 +6,17 @@
     android:background="@color/login_background"
     tools:context=".LoginActivity">
 
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+<!--        <ImageView-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:src="@mipmap/back"/>-->
+<!--    </RelativeLayout>-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_marginTop="50dp"

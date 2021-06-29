@@ -19,4 +19,8 @@ public interface LoginService {
     @FormUrlEncoded
     @POST("userLogin")
     Call<LoginBean> postLogin(@Field("username") String name, @Field("password") String password);
+
+    @GET("userMessage")
+    Call<LoginBean> getUserMessage();
+
 }
