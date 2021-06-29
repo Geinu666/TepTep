@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.View;
@@ -17,20 +16,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import WebKit.AddCookiesInterceptor;
 import WebKit.Bean.LoginBean;
 import WebKit.Bean.LoginData;
 import WebKit.LoginService;
-import WebKit.ReceivedCookiesInterceptor;
 import WebKit.RetrofitFactory;
-import okhttp3.Cookie;
 import okhttp3.Headers;
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.util.List;
 import java.util.Locale;
 
 public class LoginActivity extends AppCompatActivity {
@@ -114,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor config = getApplicationContext().getSharedPreferences("config", getApplicationContext().MODE_PRIVATE).edit();
                     config.putString("cookie", cookies);
                     config.commit();
+                    //同步cookies到全局WebView
                     syncCookie("http://119.91.130.198/api/", cookies);
                     if (result != null) {
                         LoginData data = result.getData();

@@ -17,6 +17,7 @@
             android:scaleType="centerCrop"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:clickable="true"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

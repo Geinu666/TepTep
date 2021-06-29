@@ -38,7 +38,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     private Integer ms = 4;
     private CountDownTimer textTimer;
     private Intent it;
-    String adGameNo;
+    String adGameId;
     public static SplashActivity instance = null;
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -48,6 +48,17 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //检测最近一次登陆时间，如果3分钟以内不显示开屏
+//        long i = (long) SharedPreferencesUtil.get(SplashActivity.this, "latestLogin", System.currentTimeMillis() / 60000);
+//        long j = System.currentTimeMillis() / 60000;
+//        SharedPreferencesUtil.put(SplashActivity.this, "latestLogin", j);
+//        if (j - i < 3) {
+//            it = new Intent(SplashActivity.this, MainActivity.class);
+//            startActivity(it);
+//            Log.i("test", "最近登陆过");
+//            finish();
+//        }
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //全屏
@@ -62,10 +73,10 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         bottom_image.setOnClickListener(this);
 
         instance = this;
-
-        adGameNo = SharedPreferencesUtil.get(SplashActivity.this,
-                "adGameNo",
-                "none")
+        //获取首图的游戏id
+        adGameId = SharedPreferencesUtil.get(SplashActivity.this,
+                "adGameId",
+                "")
                 .toString();
 
         File PicFile = new File(Environment.getExternalStorageDirectory(), "/adImage.jpg");
@@ -88,11 +99,10 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ad_image:
-                Log.i("onClick", "大图Click");
-                if (!adGameNo.equals("none")) {
+                if (!adGameId.equals("")) {
                     textTimer.cancel();
-                    it = new Intent(SplashActivity.this, WebViewActivity.class);
-                    it.putExtra("gameNo", adGameNo);
+                    it = new Intent(SplashActivity.this, GameActivity.class);
+                    it.putExtra("gameId", adGameId);
                     startActivity(it);
                 }
                 break;
@@ -163,11 +173,9 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
      * 跳转主界面的转移
      */
     public void goNextActivity(){
-        Log.i("goNextActivity", "开始执行goNextActivity");
         it = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(it);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        Log.i("goNextActivity", "goNextActivity完毕");
     }
 
     /**
