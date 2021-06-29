@@ -24,50 +24,58 @@ import com.example.splashdemo.databinding.ActivityGameBinding;
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     private String gameId;
     private ImageView gameIcon;
-    private ActivityGameBinding binding;
-    private ImageView forumImage;
-    private TextView forumText;
-    private Button testbutton;
+    private RelativeLayout gameForum;
+    private RelativeLayout gameLike;
+    private RelativeLayout gameComment;
+    private ImageView gameBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        binding = ActivityGameBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_game);
+
         LightStatusBarUtils.setAndroidNativeLightStatusBar(this, true);
-        gameIcon = binding.gameIcon;
-        forumImage = binding.forumIcon;
-        forumText = binding.forumText;
-        testbutton = binding.testbutton;
+
+        gameIcon = findViewById(R.id.game_icon);
+        gameForum = findViewById(R.id.game_forum);
+        gameLike = findViewById(R.id.game_like);
+        gameComment = findViewById(R.id.game_comment);
+        gameBack = findViewById(R.id.game_back);
+
+        gameLike.setOnClickListener(this);
+        gameForum.setOnClickListener(this);
+        gameComment.setOnClickListener(this);
+        gameBack.setOnClickListener(this);
+
         gameId = getIntent().getStringExtra("gameId");
-        gameId = "2";
-        Log.i("test", "before glide");
+        gameId = "2";//TODO:暂时这样设置，以后改
+
         Glide.with(getApplicationContext())
                 .load("https://dss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/c7540fa48a64bbaadb88ce07f0d6a1bb_264_264.jpg")
                 .into(gameIcon);
-        Log.i("test", "after glide");
-    }
-
-    /**
-     * 等待完善
-     * @param gameId
-     * @return
-     */
-    private String getHttpUrl(String gameId){
-
-        return null;
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.forum_icon:
-            case R.id.forum_text:
-            case R.id.testbutton:
+            case R.id.game_like:
+                break;
+            case R.id.game_comment:
+                break;
+            case R.id.game_forum:
                 Log.i("test", "onclick");
                 Intent intent = new Intent(GameActivity.this, WebViewActivity.class);
                 intent.putExtra("url", "GameForum/" + gameId);
                 startActivity(intent);
                 break;
+            case R.id.game_back:
+                finish();
+                break;
         }
+    }
+
+    @Override
+    public void finish(){
+        super.finish();
+        overridePendingTransition(R.anim.no_anim, R.anim.rightout_exit);
     }
 }

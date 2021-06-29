@@ -10,21 +10,22 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="240dp">
-        <ImageView
-            android:id="@+id/game_back"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:background="@color/grey"
-            android:src="@mipmap/back"/>
+
         <ImageView
             android:id="@+id/big_img"
             android:layout_width="match_parent"
             android:layout_height="@dimen/big_pic_height"
             android:src="@mipmap/mrfz"/>
+        <ImageView
+            android:id="@+id/game_back"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:background="#bbadadad"
+            android:src="@drawable/outline_chevron_left_24"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +53,7 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="80dp">
         <TextView
             android:id="@+id/game_company"
             android:layout_width="wrap_content"
@@ -90,12 +91,14 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:text="9.9"
-                android:textSize="20sp"/>
+                android:textSize="28sp"/>
         </RelativeLayout>
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:orientation="horizontal">
         <RelativeLayout
             android:id="@+id/game_like"
@@ -118,6 +121,10 @@
                 android:text="@string/game_like"
                 android:textSize="20dp"/>
         </RelativeLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#ADADAD" />
         <RelativeLayout
             android:id="@+id/game_comment"
             android:layout_width="wrap_content"
@@ -140,6 +147,10 @@
                 android:textSize="20dp"/>
 
         </RelativeLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#ADADAD" />
         <RelativeLayout
             android:id="@+id/game_forum"
             android:layout_width="wrap_content"
@@ -150,9 +161,9 @@
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/game_split"
-                android:clickable="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:src="@drawable/outline_forum_24"/>
             <TextView
                 android:id="@+id/forum_text"
@@ -161,9 +172,9 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
                 android:layout_toRightOf="@+id/forum_icon"
-                android:clickable="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:text="@string/game_forum"
                 android:textSize="20dp"/>
         </RelativeLayout>
@@ -206,10 +217,37 @@
             android:layout_marginBottom="10dp"
             android:text="@string/intro_content"
             android:textSize="18sp"/>
-        <Button
-            android:id="@+id/testbutton"
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:text="@string/rate_title"
+            android:textStyle="bold"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/rate_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="9.9"
+                android:layout_centerVertical="true"
+                android:textSize="28sp"/>
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+
     </LinearLayout>
 
 </LinearLayout>

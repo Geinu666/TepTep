@@ -24,6 +24,7 @@
     <string name="game_comment">评论</string>
     <string name="game_forum">论坛</string>
     <string name="brief_info">简介</string>
+    <string name="rate_title">评分&amp;评论</string>
     <string name="intro_content">这是一段有亿点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点长的简介</string>
     <string name="login_only_can_input">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>

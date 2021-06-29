@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.webkit.WebView;
 
 /**
- * 仅用于测试用的Activity类
+ * 用以接受各种intent跳转到WebView
  */
 public class WebViewActivity extends AppCompatActivity {
     private WebView webView;
@@ -16,6 +16,7 @@ public class WebViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
+        LightStatusBarUtils.setAndroidNativeLightStatusBar(this, true);
         //从intent里找有没有传gameId
         url = getIntent().getExtras().getString("url", null);
         webView = findViewById(R.id.tempWebView);
