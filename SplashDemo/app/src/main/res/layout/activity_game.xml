@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".GameActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -11,40 +14,40 @@
             android:id="@+id/game_back"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@mipmap/back"
-            android:background="@color/grey"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:layout_marginLeft="15dp"/>
+            android:background="@color/grey"
+            android:src="@mipmap/back"/>
         <ImageView
             android:id="@+id/big_img"
             android:layout_width="match_parent"
-            android:src="@mipmap/mrfz"
-            android:layout_height="300dp"/>
+            android:layout_height="@dimen/big_pic_height"
+            android:src="@mipmap/mrfz"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ccADADAD"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:background="#cc111111">
             <ImageView
                 android:id="@+id/game_icon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
                 android:layout_margin="10dp"/>
             <TextView
                 android:id="@+id/game_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_toRightOf="@+id/game_icon"
                 android:text="明日方舟"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="25sp"/>
+                android:textSize="25sp"
+                android:textStyle="bold"/>
         </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
@@ -54,6 +57,159 @@
             android:id="@+id/game_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="tencent"/>
+            android:layout_alignParentLeft="true"
+            android:layout_margin="10dp"
+            android:text="开发 腾讯"
+            android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/game_followers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="40dp"
+            android:text="关注 5w"
+            android:textSize="16sp"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/game_score"
+                android:textAlignment="center"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/game_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="9.9"
+                android:textSize="20sp"/>
+        </RelativeLayout>
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:id="@+id/game_like"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true">
+            <ImageView
+                android:id="@+id/like_icon"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/game_split"
+                android:src="@drawable/baseline_favorite_border_24"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/like_icon"
+                android:text="@string/game_like"
+                android:textSize="20dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/game_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true">
+            <ImageView
+                android:id="@+id/comment_icon"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/game_split"
+                android:src="@drawable/outline_comment_24"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/comment_icon"
+                android:text="@string/game_comment"
+                android:textSize="20dp"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/game_forum"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/forum_icon"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/game_split"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:src="@drawable/outline_forum_24"/>
+            <TextView
+                android:id="@+id/forum_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/forum_icon"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:text="@string/game_forum"
+                android:textSize="20dp"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+            <TextView
+                android:id="@+id/brief_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/brief_info"
+                android:textSize="22sp"
+                android:textStyle="bold"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/game_category"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/brief_info"
+                android:backgroundTint="#686464"
+                android:clickable="false"
+                android:padding="2dp"
+                android:text="塔防"
+                android:textSize="12sp"
+                app:cornerRadius="10dp" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/intro_content"
+            android:textSize="18sp"/>
+        <Button
+            android:id="@+id/testbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
 </LinearLayout>

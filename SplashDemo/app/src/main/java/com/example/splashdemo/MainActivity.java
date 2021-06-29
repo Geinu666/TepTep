@@ -115,28 +115,11 @@ public class MainActivity extends SupportActivity {
 
                     }
                 });
+                break;
             case R.id.getGame:
-                LoginService service1 = RetrofitFactory.getLoginService(getApplicationContext());
-                Call<LoginBean> call1 = service1.getUserMessage();
-                call1.enqueue(new Callback<LoginBean>() {
-                    @Override
-                    public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
-                        LoginBean result = response.body();
-                        int status = result.getStatus();
-                        if (response.isSuccessful()){
-                            if (result != null) {
-                                LoginData data = result.getData();
-                                String i = data.toString();
-                                Log.i("test", i);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<LoginBean> call, Throwable t) {
-
-                    }
-                });
+                Intent intent1 = new Intent(MainActivity.this, GameActivity.class);
+                startActivity(intent1);
+                break;
         }
     }
 
