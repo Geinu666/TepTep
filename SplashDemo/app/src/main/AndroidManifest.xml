@@ -21,7 +21,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".TempActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".WebViewActivity" />
+        <activity android:name=".GameActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

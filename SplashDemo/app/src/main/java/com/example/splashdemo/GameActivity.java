@@ -7,28 +7,29 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
-import com.example.splashdemo.R;
-
-public class WebViewActivity extends AppCompatActivity {
+/**
+ * 显示游戏信息的界面
+ */
+public class GameActivity extends AppCompatActivity {
     private WebView webView;
     private WebSettings webSettings;
     private ProgressBar progressBar;
-    private String adNameNo;
+    private String gameId;
     private String httpUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web_view);
-
-        adNameNo = getIntent().getStringExtra("adNameNo");
+        setContentView(R.layout.activity_game);
+        gameId = getIntent().getStringExtra("gameId");
     }
 
     /**
      * 等待完善
-     * @param adNameNo
+     * @param gameId
      * @return
      */
-    private String getHttpUrl(String adNameNo){
+    private String getHttpUrl(String gameId){
+
         return null;
     }
 }
