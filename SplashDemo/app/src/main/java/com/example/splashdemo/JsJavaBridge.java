@@ -28,4 +28,14 @@ public class JsJavaBridge {
     public void showToast(String msg){
         Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
     }
+
+    @JavascriptInterface
+    public void toForum(String gameId) {
+        Toast.makeText(activity, gameId, Toast.LENGTH_SHORT).show();
+    }
+
+    @JavascriptInterface
+    public void logout() {
+        Toast.makeText(activity, "logout", Toast.LENGTH_SHORT).show();
+    }
 }
