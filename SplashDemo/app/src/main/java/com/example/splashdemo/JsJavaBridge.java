@@ -1,6 +1,7 @@
 package com.example.splashdemo;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.Toast;
@@ -31,7 +32,10 @@ public class JsJavaBridge {
 
     @JavascriptInterface
     public void toForum(String gameId) {
-        Toast.makeText(activity, gameId, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(activity, WebViewActivity.class);
+        intent.putExtra("url", "GameForum/" + gameId);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
     }
 
     @JavascriptInterface

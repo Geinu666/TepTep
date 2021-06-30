@@ -23,4 +23,10 @@ public class WebViewActivity extends AppCompatActivity {
         WebUtil webUtil = new WebUtil(webView, getApplicationContext());
         webUtil.webViewSetting(url, 1);
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.no_anim, R.anim.rightout_exit);
+    }
 }
