@@ -35,6 +35,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private RatingBar ratingBar;
     private TextView gameName;
     private float score;
+    private String iconUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +60,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         gameId = getIntent().getStringExtra("gameId");
         score = (float) 9.9 / 2;
         gameId = "2";//TODO:暂时这样设置，以后改
+        iconUrl = getIntent().getStringExtra("iconUrl");
 
         ratingBar.setRating(score);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -69,14 +71,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 intent1.putExtra("icon", "")
                         .putExtra("rating", rating)
                         .putExtra("gameId", gameId)
-                        .putExtra("gameName", gameName.getText().toString());
+                        .putExtra("gameName", gameName.getText().toString())
+                        .putExtra("iconUrl", iconUrl);
                 startActivity(intent1);
                 overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
             }
         });
 
         Glide.with(getApplicationContext())
-                .load("https://dss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/c7540fa48a64bbaadb88ce07f0d6a1bb_264_264.jpg")
+                .load(iconUrl)
                 .into(gameIcon);
     }
 

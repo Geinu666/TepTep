@@ -8,7 +8,9 @@
     tools:context=".CommentActivity">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:background="@color/white"
+        android:layout_height="60dp"
+        android:paddingBottom="10dp">
         <ImageView
             android:id="@+id/comment_back"
             android:layout_width="33dp"
@@ -42,7 +44,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="10dp"
         android:alpha="0.1"
         android:background="#000000" />
     <RelativeLayout

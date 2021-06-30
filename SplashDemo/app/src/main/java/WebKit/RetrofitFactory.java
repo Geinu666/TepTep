@@ -2,6 +2,7 @@ package WebKit;
 
 import android.content.Context;
 
+import WebKit.Service.CommentService;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -25,5 +26,10 @@ public class RetrofitFactory {
     public static LoginService getLoginService(Context context){
         Retrofit retrofit = getRetrofit(context);
         return retrofit.create(LoginService.class);
+    }
+
+    public static CommentService getCommentService(Context context){
+        Retrofit retrofit = getRetrofit(context);
+        return retrofit.create(CommentService.class);
     }
 }
