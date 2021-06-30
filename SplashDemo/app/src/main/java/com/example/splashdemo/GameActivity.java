@@ -17,7 +17,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.splashdemo.databinding.ActivityGameBinding;
+
+import org.w3c.dom.Text;
+
+import java.nio.channels.InterruptedByTimeoutException;
 
 /**
  * 显示游戏信息的界面
@@ -30,6 +33,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private RelativeLayout gameComment;
     private ImageView gameBack;
     private RatingBar ratingBar;
+    private TextView gameName;
+    private float score;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,21 +48,32 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         gameComment = findViewById(R.id.game_comment);
         gameBack = findViewById(R.id.game_back);
         ratingBar = findViewById(R.id.rating_bar);
+        gameName = findViewById(R.id.game_name);
 
         gameLike.setOnClickListener(this);
         gameForum.setOnClickListener(this);
         gameComment.setOnClickListener(this);
         gameBack.setOnClickListener(this);
+
+        score = getIntent().getFloatExtra("score", 0);
+        gameId = getIntent().getStringExtra("gameId");
+        score = (float) 9.9 / 2;
+        gameId = "2";//TODO:暂时这样设置，以后改
+
+        ratingBar.setRating(score);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                String i = String.valueOf(ratingBar.getRating());
-                Log.i("test", i);
+                Log.i("test", String.valueOf(rating * 2));
+                Intent intent1 = new Intent(GameActivity.this, CommentActivity.class);
+                intent1.putExtra("icon", "")
+                        .putExtra("rating", rating)
+                        .putExtra("gameId", gameId)
+                        .putExtra("gameName", gameName.getText().toString());
+                startActivity(intent1);
+                overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
             }
         });
-
-        gameId = getIntent().getStringExtra("gameId");
-        gameId = "2";//TODO:暂时这样设置，以后改
 
         Glide.with(getApplicationContext())
                 .load("https://dss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/c7540fa48a64bbaadb88ce07f0d6a1bb_264_264.jpg")
@@ -76,10 +92,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(GameActivity.this, WebViewActivity.class);
                 intent.putExtra("url", "GameForum/" + gameId);
                 startActivity(intent);
+                overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
                 break;
             case R.id.game_back:
                 finish();
                 break;
+
         }
     }
 

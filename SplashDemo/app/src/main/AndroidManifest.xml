@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SplashDemo"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SignupActivity"></activity>
+        <activity android:name=".CommentActivity"></activity>
+        <activity android:name=".SignupActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".WebViewActivity" />
         <activity android:name=".MainActivity" />

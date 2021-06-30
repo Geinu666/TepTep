@@ -29,22 +29,12 @@ public class PersonalFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal, container, false);
-        personalWebView = (WebView) view.findViewById(R.id.personal_webView);
-        /*        WebSettings settings = personalWebView.getSettings();
-//        settings.setJavaScriptEnabled(true);
-//        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-//        settings.setBuiltInZoomControls(true);
-//
-//        settings.setDisplayZoomControls(false);
-//        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
-//        settings.setUseWideViewPort(true);
-//        settings.setLoadWithOverviewMode(true);
-//        personalWebView.loadUrl("http://119.91.130.198/app/#/PersonalCenter");
-//        personalWebView.setWebViewClient(new WebViewClient());
 
-        settings.setSupportZoom(true);**/
+        personalWebView = (WebView) view.findViewById(R.id.personal_webView);
+
         WebUtil webUtil = new WebUtil(personalWebView, getContext());
         webUtil.webViewSetting("PersonalCenter", 0);
+
         personalWebView.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
