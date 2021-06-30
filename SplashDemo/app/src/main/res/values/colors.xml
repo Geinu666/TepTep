@@ -15,4 +15,5 @@
     <color name="button_white">#FBFFFF</color>
     <color name="tab_focused_color">#1489FA</color>
     <color name="grey">#ADADAD</color>
+    <color name="button_blue">#1489FA</color>
 </resources>

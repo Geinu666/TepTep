@@ -1,5 +1,6 @@
 package com.example.splashdemo.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,14 +8,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.example.splashdemo.Game;
+import com.example.splashdemo.GameActivity;
 import com.example.splashdemo.GameAdapter;
 import com.example.splashdemo.R;
 import com.example.splashdemo.databinding.FragmentListBinding;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +62,14 @@ public class ViewPager2ContentFragment extends SupportFragment {
         GameAdapter adapter = new GameAdapter(R.layout.game_display_cardview,games,_mActivity);
         mBinding.gameRecyclerview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(@NonNull @NotNull BaseQuickAdapter<?, ?> adapter, @NonNull @NotNull View view, int position) {
+                Log.i("test", "onclick card");
+                Intent intent = new Intent(getActivity(), GameActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     protected boolean setDoubleClickExit() {

@@ -8,11 +8,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
         android:layout_marginRight="20dp"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,66 +26,94 @@
             android:id="@+id/accountSignupText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="30dp"
             android:layout_marginLeft="40dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="40dp"
-            android:maxLines="1"
-            android:inputType="text"
             android:hint="@string/signup_nickname"
+            android:inputType="text"
+            android:maxLines="1"
             android:textColorHint="@color/hint_color"
-            android:theme="@style/EditTextUnderline"
-            android:textSize="22sp"/>
+            android:textSize="22sp"
+            android:theme="@style/EditTextUnderline"/>
+        <EditText
+            android:id="@+id/nicknameSignupText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="40dp"
+            android:hint="@string/nickname"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColorHint="@color/hint_color"
+            android:textSize="22sp"
+            android:theme="@style/EditTextUnderline"/>
 
         <EditText
             android:id="@+id/passwordSignupText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
             android:layout_marginTop="10dp"
-            android:maxLines="1"
+            android:layout_marginRight="40dp"
             android:hint="@string/signup_password"
-            android:textColorHint="@color/hint_color"
-            android:theme="@style/EditTextUnderline"
             android:inputType="textPassword"
-            android:textSize="22sp"/>
+            android:maxLines="1"
+            android:textColorHint="@color/hint_color"
+            android:textSize="22sp"
+            android:theme="@style/EditTextUnderline"/>
+        <Button
+            android:id="@+id/signupButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/login_button_shape"
+            android:onClick="onClick"
+            android:text="@string/signup_title"
+            android:textColor="@color/button_white"
+            android:textSize="20sp"/>
 
         <EditText
             android:id="@+id/phoneNumberSignupText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="40dp"
-            android:maxLines="1"
             android:hint="@string/phone_number"
             android:inputType="phone"
+            android:maxLines="1"
             android:textColorHint="@color/hint_color"
+            android:textSize="22sp"
             android:theme="@style/EditTextUnderline"
-            android:textSize="22sp"/>
+            android:visibility="invisible"/>
 
         <EditText
             android:id="@+id/mailSignupText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="40dp"
-            android:maxLines="1"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
+            android:maxLines="1"
             android:textColorHint="@color/hint_color"
+            android:textSize="22sp"
             android:theme="@style/EditTextUnderline"
-            android:textSize="22sp"/>
+            android:visibility="invisible"/>
 
         <RadioGroup
             android:id="@+id/genderSignup"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:layout_marginRight="40dp"
+            android:orientation="horizontal"
+            android:visibility="invisible">
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,39 +121,28 @@
                 android:text="@string/male"/>
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="30dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
                 android:text="@string/female"/>
         </RadioGroup>
-        <Button
-            android:id="@+id/signupButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/login_button_shape"
-            android:text="@string/signup_title"
-            android:onClick="onClick"
-            android:textSize="20sp"
-            android:layout_marginTop="40dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:textColor="@color/button_white"/>
+
 
     </LinearLayout>
     <RelativeLayout
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="50dp">
         <TextView
             android:id="@+id/normalLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/normal_login"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="40dp"
             android:clickable="true"
             android:focusable="true"
-            android:layout_marginEnd="40dp"
-            android:layout_alignParentRight="true"
+            android:text="@string/normal_login"
             android:textColor="#00aaff"
             android:textSize="16dp"/>
     </RelativeLayout>
