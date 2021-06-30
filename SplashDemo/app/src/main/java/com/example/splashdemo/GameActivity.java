@@ -12,6 +12,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private RelativeLayout gameLike;
     private RelativeLayout gameComment;
     private ImageView gameBack;
+    private RatingBar ratingBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +42,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         gameLike = findViewById(R.id.game_like);
         gameComment = findViewById(R.id.game_comment);
         gameBack = findViewById(R.id.game_back);
+        ratingBar = findViewById(R.id.rating_bar);
 
         gameLike.setOnClickListener(this);
         gameForum.setOnClickListener(this);
         gameComment.setOnClickListener(this);
         gameBack.setOnClickListener(this);
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                String i = String.valueOf(ratingBar.getRating());
+                Log.i("test", i);
+            }
+        });
 
         gameId = getIntent().getStringExtra("gameId");
         gameId = "2";//TODO:暂时这样设置，以后改
