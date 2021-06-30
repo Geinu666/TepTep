@@ -87,6 +87,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.game_like:
+
                 break;
             case R.id.game_comment:
                 break;

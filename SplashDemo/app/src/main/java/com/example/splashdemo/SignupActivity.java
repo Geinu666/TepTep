@@ -3,8 +3,13 @@ package com.example.splashdemo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -95,13 +100,13 @@ public class SignupActivity extends AppCompatActivity {
     public void signupJudge(){
 //        phone = signupPhoneNumber.getText().toString().trim();
 //        mail = signupMail.getText().toString().trim();
-        // TODO: 2021/6/22 未完注册判定
         Call<LoginBean> call = service.postRegister(nic, psw, act);
         call.enqueue(new Callback<LoginBean>() {
             @Override
             public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "注册成功！", Toast.LENGTH_SHORT).show();
+                    loginAfterRegister(act, psw);
                     LoginActivity.instance.finish();
                     finish();
                 }
@@ -126,5 +131,41 @@ public class SignupActivity extends AppCompatActivity {
     public void finish(){
         super.finish();
         overridePendingTransition(R.anim.no_anim, R.anim.rightout_exit);
+    }
+
+    public void syncCookie(String url, String cookie) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            CookieSyncManager.createInstance(this);
+        }
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        cookieManager.removeAllCookie();
+        cookieManager.setCookie(url, cookie);
+//        CookieSyncManager.getInstance().sync();
+        Log.i("test", "cookie sync" + cookie);
+    }
+
+    private void loginAfterRegister(String Act, String Psw){
+        Call<LoginBean> call = service.postLogin(Act, Psw);
+        call.enqueue(new Callback<LoginBean>() {
+            @Override
+            public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
+                if (response.isSuccessful()) {
+                    LoginBean result = response.body();
+                    String cookies = response.headers().get("Set-Cookie");
+                    SharedPreferences.Editor config = getApplicationContext().getSharedPreferences("config", getApplicationContext().MODE_PRIVATE).edit();
+                    config.putString("cookie", cookies);
+                    config.commit();
+                    //同步cookies到全局WebView
+                    syncCookie("http://119.91.130.198/api/", cookies);
+                    Log.i("test", "login也搞掂了");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginBean> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "登陆失败！", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

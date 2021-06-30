@@ -15,6 +15,7 @@ import android.webkit.CookieSyncManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import WebKit.Bean.LoginBean;
 import WebKit.Bean.LoginData;
@@ -103,32 +104,19 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     LoginBean result = response.body();
                     String cookies = response.headers().get("Set-Cookie");
-                    Headers headers = response.headers();
-                    Log.i("test", cookies);
                     SharedPreferences.Editor config = getApplicationContext().getSharedPreferences("config", getApplicationContext().MODE_PRIVATE).edit();
                     config.putString("cookie", cookies);
                     config.commit();
                     //同步cookies到全局WebView
                     syncCookie("http://119.91.130.198/api/", cookies);
-                    if (result != null) {
-                        LoginData data = result.getData();
-                        String i = data.toString();
-                        isLogin = true;
-                        Log.i("loginPOST", String.valueOf(isLogin));
-                        Log.i("loginPOST", i);
-                    } else {
-                        Log.i("loginPOST", "empty result");
-                    }
                     loginButton = (Button) findViewById(R.id.loginButton);
                     loginButton.setText("login success");
-                } else {
-                    Log.i("loginPOST", "400 Bad request");
                 }
             }
 
             @Override
             public void onFailure(Call<LoginBean> call, Throwable t) {
-
+                Toast.makeText(getApplicationContext(), "登陆失败！", Toast.LENGTH_SHORT).show();
             }
         });
         Log.i("loginPOST", String.valueOf(isLogin));
