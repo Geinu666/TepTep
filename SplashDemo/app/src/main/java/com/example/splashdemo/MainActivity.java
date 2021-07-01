@@ -3,6 +3,7 @@ package com.example.splashdemo;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -13,6 +14,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,11 +45,15 @@ public class MainActivity extends SupportActivity {
     private ActivityMainBinding binding;
     private boolean isEx = false;
     private PopupWindow popupWindow;
+    public static MainActivity instance = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+
+        instance = this;
+
         setContentView(binding.getRoot());
         //设置浅色主题状态栏(Android6以上原生)
         LightStatusBarUtils.setAndroidNativeLightStatusBar(this, true);
@@ -64,6 +70,14 @@ public class MainActivity extends SupportActivity {
         setNavigationItemView(findViewById(R.id.navigation_personal));
 
         SplashActivity.instance.finish();
+
+        binding.navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                return false;
+            }
+        });
+
     }
 
     /**
@@ -196,6 +210,10 @@ public class MainActivity extends SupportActivity {
         super.onResume();
         CookieSyncManager.createInstance(getApplicationContext());
         CookieSyncManager.getInstance().startSync();
+    }
+
+    public void jumpToItem(int id) {
+        binding.navView.findViewById(R.id.navigation_home).performClick();
     }
 
 

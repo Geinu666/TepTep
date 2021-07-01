@@ -92,6 +92,8 @@ public class PersonalFragment extends Fragment {
         if (result) {
             //登陆成功则刷新WebView
             personalWebView.reload();
+        } else {
+            MainActivity.instance.jumpToItem(R.id.navigation_home);
         }
     }
 }
