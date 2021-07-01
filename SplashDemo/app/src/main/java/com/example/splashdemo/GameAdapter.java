@@ -26,7 +26,8 @@ public class GameAdapter extends BaseQuickAdapter<Game, BaseViewHolder> {
         baseViewHolder.setText(R.id.rv_item_game_name, game.getName())
                 .setText(R.id.rv_item_game_sort, game.getType())
                 .setText(R.id.rv_item_game_rank, game.getRank())
-                .setText(R.id.rv_item_game_score, game.getScore());
+                .setText(R.id.rv_item_game_score, game.getScore())
+                .setText(R.id.rv_item_game_id, game.getId());
 
         MaterialButton rankBtn = baseViewHolder.getView(R.id.rv_item_game_rank);
         if (game.getRank() != null) {

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -22,6 +23,7 @@ import com.example.splashdemo.R;
 import com.example.splashdemo.databinding.FragmentListBinding;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,9 +67,12 @@ public class ViewPager2ContentFragment extends SupportFragment {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull @NotNull BaseQuickAdapter<?, ?> adapter, @NonNull @NotNull View view, int position) {
-                Log.i("test", "onclick card");
                 Intent intent = new Intent(getActivity(), GameActivity.class);
+                TextView textView = (TextView) adapter.getViewByPosition(position, R.id.rv_item_game_id);
+                String i = textView.getText().toString();
+                intent.putExtra("gameId", i);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
             }
         });
     }

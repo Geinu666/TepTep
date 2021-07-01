@@ -13,13 +13,9 @@
         android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="240dp">
-
-            <ImageView
-                android:id="@+id/big_img"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/big_pic_height"
-                android:src="@mipmap/mrfz"/>
+            android:background="@color/white"
+            android:layout_height="60dp"
+            android:paddingBottom="10dp">
             <ImageView
                 android:id="@+id/game_back"
                 android:layout_width="33dp"
@@ -27,9 +23,40 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="35dp"
-                android:background="#bbadadad"
+                android:layout_marginTop="15dp"
                 android:src="@drawable/outline_chevron_left_24"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:text="@string/game_details"
+                android:textSize="20sp"/>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha="0.1"
+            android:background="#000000" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="221dp">
+
+            <ImageView
+                android:id="@+id/big_img"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/big_pic_height"/>
+<!--            <ImageView-->
+<!--                android:id="@+id/game_back"-->
+<!--                android:layout_width="33dp"-->
+<!--                android:layout_height="33dp"-->
+<!--                android:layout_alignParentLeft="true"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_marginLeft="15dp"-->
+<!--                android:layout_marginTop="35dp"-->
+<!--                android:background="#bbadadad"-->
+<!--                android:src="@drawable/outline_chevron_left_24"/>-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,7 +92,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
                 android:text="开发 腾讯"
                 android:textSize="16sp"/>
             <TextView
@@ -73,8 +101,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="50dp"
                 android:text="关注 5w"
                 android:textSize="16sp"/>
             <RelativeLayout
@@ -122,6 +150,7 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/baseline_favorite_border_24"/>
                 <TextView
+                    android:id="@+id/like_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -228,6 +257,7 @@
                     app:cornerRadius="10dp" />
             </RelativeLayout>
             <TextView
+                android:id="@+id/game_intro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -256,9 +286,16 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="15dp"
                     android:text="9.9"
                     android:textSize="28sp"/>
+                <TextView
+                    android:id="@+id/comment_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/comment_count"
+                    android:layout_marginTop="55dp"
+                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

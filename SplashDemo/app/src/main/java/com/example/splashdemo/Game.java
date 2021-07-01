@@ -20,6 +20,8 @@ public class Game implements Parcelable {
     //评分
     private String score;
 
+    private String id;
+
     public Game(Parcel in) {
         name = in.readString();
         url = in.readString();
@@ -27,6 +29,7 @@ public class Game implements Parcelable {
         rank = in.readString();
         description = in.readString();
         score = in.readString();
+        id = in.readString();
     }
 
     public static final Creator<Game> CREATOR = new Creator<Game>() {
@@ -99,6 +102,15 @@ public class Game implements Parcelable {
         return this;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public Game setId(String id) {
+        this.id = id;
+        return this;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -112,5 +124,6 @@ public class Game implements Parcelable {
         dest.writeString(rank);
         dest.writeString(description);
         dest.writeString(score);
+        dest.writeString(id);
     }
 }

@@ -17,22 +17,17 @@ public class AddCookiesInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
 
         Request.Builder builder = chain.request().newBuilder();
-        String url = String.valueOf(chain.request().url());
-        Log.i("test", url);
-        if (url.equals("http://119.91.130.198/api/userLogin")) {
-            Log.i("test", "hit login");
-            return chain.proceed(builder.build());
-        } else {
-            String cookie = context.getSharedPreferences("config",
-                    context.MODE_PRIVATE).getString("cookie", null);
-            if (cookie != null){
+        HashSet<String> perferences = (HashSet) context.getSharedPreferences("cookieData", Context.MODE_PRIVATE).getStringSet("cookie", null);
+        if (perferences != null) {
+            for (String cookie : perferences) {
                 builder.addHeader("Cookie", cookie);
             }
-            return chain.proceed(builder.build());
         }
+        return chain.proceed(builder.build());
     }
 
     public AddCookiesInterceptor(Context context){
         this.context = context;
     }
 }
+

@@ -17,6 +17,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.example.splashdemo.JsJavaBridge;
 import com.example.splashdemo.R;
 import com.example.splashdemo.WebUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -53,7 +54,7 @@ public class DynamicFragment extends Fragment {
                 return false;
             }
         });
-        Log.i("dynamicWebView", "loadurl");
+        dynamicWebView.addJavascriptInterface(new JsJavaBridge(getActivity(), dynamicWebView), "$App");
         return view;
     }
 

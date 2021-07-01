@@ -48,7 +48,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         LightStatusBarUtils.setAndroidNativeLightStatusBar(this, true);
 
         gameId = getIntent().getExtras().getString("gameId", "2");
-        outrating = getIntent().getExtras().getFloat("rating");
+        outrating = getIntent().getExtras().getFloat("rating", 0);
         gameName = getIntent().getExtras().getString("gameName", "明日方舟");
         iconUrl = getIntent().getExtras().getString("iconUrl", null);
 
@@ -101,12 +101,14 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()) {
             case R.id.comment_back:
                 finish();
+                break;
             case R.id.release_comment:
                 Log.i("test", "发布");
                 int score = (int) (outrating * 2);
                 Log.i("test", "score: " + score);
                 String content = commentContent.getText().toString().trim();
                 commitComment(gameId, content, score);
+                break;
         }
     }
 

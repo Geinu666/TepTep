@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordLoginText = (EditText) findViewById(R.id.passwordLoginText);
         signupText = (TextView) findViewById(R.id.signup_text);
         loginButton = (Button) findViewById(R.id.loginButton);
-        loginService = RetrofitFactory.getLoginService(getApplicationContext());
+        loginService = RetrofitFactory.getSpecialService(getApplicationContext());
         LightStatusBarUtils.setAndroidNativeLightStatusBar(this, true);
         //跳转注册的逻辑
         signupText.setOnClickListener(new View.OnClickListener() {
@@ -109,8 +109,10 @@ public class LoginActivity extends AppCompatActivity {
                     config.commit();
                     //同步cookies到全局WebView
                     syncCookie("http://119.91.130.198/api/", cookies);
-                    loginButton = (Button) findViewById(R.id.loginButton);
-                    loginButton.setText("login success");
+//                    loginButton = (Button) findViewById(R.id.loginButton);
+//                    loginButton.setText("login success");
+                    Toast.makeText(getApplicationContext(), "登陆成功！", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
 
@@ -119,8 +121,6 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "登陆失败！", Toast.LENGTH_SHORT).show();
             }
         });
-        Log.i("loginPOST", String.valueOf(isLogin));
-        Log.i("loginPOST", "before return");
     }
 
     /**

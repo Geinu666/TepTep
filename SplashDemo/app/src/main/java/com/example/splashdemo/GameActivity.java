@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.InputQueue;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -15,12 +16,23 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import org.w3c.dom.Text;
 
 import java.nio.channels.InterruptedByTimeoutException;
+
+import WebKit.Bean.AllBean;
+import WebKit.Bean.LikeBean;
+import WebKit.Bean.OneGame;
+import WebKit.RetrofitFactory;
+import WebKit.Service.GameService;
+import WebKit.Service.GetGameService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 显示游戏信息的界面
@@ -36,6 +48,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private TextView gameName;
     private float score;
     private String iconUrl;
+    private GameService service;
+    private TextView likeText;
+    private ImageView likeIcon;
+    private TextView avgScore;
+    private TextView gameIntro;
+    private TextView rateScore;
+    private TextView commentCount;
+    private ImageView bigImg;
+    private TextView followersCount;
+    private TextView issuer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,46 +72,68 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         gameBack = findViewById(R.id.game_back);
         ratingBar = findViewById(R.id.rating_bar);
         gameName = findViewById(R.id.game_name);
+        likeIcon = findViewById(R.id.like_icon);
+        likeText = findViewById(R.id.like_text);
+        avgScore = findViewById(R.id.game_score);
+        gameIntro = findViewById(R.id.game_intro);
+        rateScore = findViewById(R.id.rate_score);
+        commentCount = findViewById(R.id.comment_count);
+        bigImg = findViewById(R.id.big_img);
+        followersCount = findViewById(R.id.game_followers);
+        issuer = findViewById(R.id.game_company);
+
+        service = RetrofitFactory.getGameService(getApplicationContext());
 
         gameLike.setOnClickListener(this);
         gameForum.setOnClickListener(this);
         gameComment.setOnClickListener(this);
         gameBack.setOnClickListener(this);
 
-        score = getIntent().getFloatExtra("score", 0);
+        gameId = "2";
         gameId = getIntent().getStringExtra("gameId");
-        score = (float) 9.9 / 2;
-        gameId = "2";//TODO:暂时这样设置，以后改
-        iconUrl = getIntent().getStringExtra("iconUrl");
+        //用gameId拿数据
+        Log.i("test", "gameId:" + gameId);
+        Log.i("test", "before setget");
+        getDataAndSet(gameId);
+        Log.i("test", "after setget");
 
-        ratingBar.setRating(score);
+        iconUrl = getIntent().getStringExtra("iconUrl");
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                Log.i("test", String.valueOf(rating * 2));
-                Intent intent1 = new Intent(GameActivity.this, CommentActivity.class);
-                intent1.putExtra("icon", "")
-                        .putExtra("rating", rating)
-                        .putExtra("gameId", gameId)
-                        .putExtra("gameName", gameName.getText().toString())
-                        .putExtra("iconUrl", iconUrl);
-                startActivity(intent1);
-                overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
+                if (fromUser) {
+                    Log.i("test", String.valueOf(rating * 2));
+                    Intent intent1 = new Intent(GameActivity.this, CommentActivity.class);
+                    intent1.putExtra("icon", "")
+                            .putExtra("rating", rating)
+                            .putExtra("gameId", gameId)
+                            .putExtra("gameName", gameName.getText().toString())
+                            .putExtra("iconUrl", iconUrl);
+                    startActivity(intent1);
+                    overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
+                }
             }
         });
 
-        Glide.with(getApplicationContext())
-                .load(iconUrl)
-                .into(gameIcon);
+//        Glide.with(getApplicationContext())
+//                .load(iconUrl)
+//                .into(gameIcon);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.game_like:
-
+                likeGame(gameId);
                 break;
             case R.id.game_comment:
+                Intent intent1 = new Intent(GameActivity.this, CommentActivity.class);
+                intent1.putExtra("icon", "")
+                        .putExtra("gameId", gameId)
+                        .putExtra("gameName", gameName.getText().toString())
+                        .putExtra("iconUrl", iconUrl);
+                startActivity(intent1);
+                overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
                 break;
             case R.id.game_forum:
                 Log.i("test", "onclick");
@@ -105,9 +149,96 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * 暂时走不通的收藏
+     * @param gameId
+     */
+    public void likeGame(String gameId){
+        Call<LikeBean> call = service.postLikeGame(gameId);
+        call.enqueue(new Callback<LikeBean>() {
+            @Override
+            public void onResponse(Call<LikeBean> call, Response<LikeBean> response) {
+                    LikeBean result = response.body();
+                    if (result != null) {
+                        Boolean isLike = result.getData().isLikes();
+                        if (isLike) {
+                            Toast.makeText(getApplicationContext(), "关注成功！", Toast.LENGTH_SHORT).show();
+                            likeIcon.setImageResource(R.drawable.baseline_favorite_24);
+                            likeText.setText(R.string.game_is_like);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "取关成功！", Toast.LENGTH_SHORT).show();
+                            likeIcon.setImageResource(R.drawable.baseline_favorite_border_24);
+                            likeText.setText(R.string.game_like);
+                        }
+
+                    } else {
+                        Log.i("test", "result is empty");
+                    }
+            }
+
+            @Override
+            public void onFailure(Call<LikeBean> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "网络异常！", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     public void finish(){
         super.finish();
         overridePendingTransition(R.anim.no_anim, R.anim.rightout_exit);
+    }
+
+    /**
+     * 用id请求数据
+     * @param Id
+     */
+    public void getDataAndSet(String Id) {
+        Log.i("test", "begin getset");
+        GetGameService service = RetrofitFactory.getGetGameService(getApplicationContext());
+        Call<OneGame> call = service.getOneGame(Id);
+        call.enqueue(new Callback<OneGame>() {
+            @Override
+            public void onResponse(Call<OneGame> call, Response<OneGame> response) {
+                if (response.isSuccessful()) {
+                    OneGame result = response.body();
+                    if (result != null) {
+                        double getScore = result.getData().getAvgScore();
+                        String newScore =  String.format("%.1f", getScore);
+                        avgScore.setText(newScore);
+                        ratingBar.setRating((float) getScore / 2);
+                        rateScore.setText(newScore);
+
+                        gameIntro.setText(result.getData().getBriefIntro());
+                        commentCount.setText(result.getData().getCommentCount().toString() + " 人评分");
+                        Glide.with(getApplicationContext())
+                                .load(result.getData().getDisplayDrawings())
+                                .into(bigImg);
+//                        result.getData().getDownloads();
+                        Glide.with(getApplicationContext())
+                                .load(result.getData().getIcon())
+                                .into(gameIcon);
+                        followersCount.setText("关注 " + result.getData().getInterestCount());
+                        issuer.setText("厂商 " + result.getData().getIssuer());
+                        gameName.setText(result.getData().getName());
+//                        result.getData().getSize();
+                        if (result.getData().getCurrentUserLikes()) {
+                            likeIcon.setImageResource(R.drawable.baseline_favorite_24);
+                            likeText.setText(R.string.game_is_like);
+                        } else {
+                            likeIcon.setImageResource(R.drawable.baseline_favorite_border_24);
+                            likeText.setText(R.string.game_like);
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "result is null !", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OneGame> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "初始化失败！", Toast.LENGTH_SHORT);
+            }
+        });
     }
 }

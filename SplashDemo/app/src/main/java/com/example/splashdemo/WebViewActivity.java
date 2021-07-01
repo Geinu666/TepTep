@@ -22,6 +22,7 @@ public class WebViewActivity extends AppCompatActivity {
         webView = findViewById(R.id.tempWebView);
         WebUtil webUtil = new WebUtil(webView, getApplicationContext());
         webUtil.webViewSetting(url, 1);
+        webView.addJavascriptInterface(new JsJavaBridge(this, webView), "$App");
     }
 
     @Override

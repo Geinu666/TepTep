@@ -20,6 +20,7 @@ public class DataServer {
                         .setType("塔防")
                         .setUrl("https://cdn.jsdelivr.net/gh/Lyw2017/image-hosting@master/images/mrfz.2w3y70akdfw0.jpg")
                         .setScore("9.5")
+                        .setId("2")
         );
         games.add(
                 new Game().setName("王者荣耀")
@@ -89,6 +90,7 @@ public class DataServer {
                         .setUrl("https://cdn.jsdelivr.net/gh/Lyw2017/image-hosting@master/images/mrfz.2w3y70akdfw0.jpg")
                         .setScore("9.5")
                         .setRank("NO.1")
+                        .setId("2")
         );
         games.add(
                 new Game().setName("王者荣耀")
