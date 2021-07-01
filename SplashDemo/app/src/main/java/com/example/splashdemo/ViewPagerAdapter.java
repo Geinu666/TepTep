@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -17,7 +16,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     }
 
     @NonNull
-    @NotNull
     @Override
     public Fragment createFragment(int position) {
         return fragments.get(position);

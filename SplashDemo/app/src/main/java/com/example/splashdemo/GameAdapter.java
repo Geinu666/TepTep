@@ -9,8 +9,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.material.button.MaterialButton;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class GameAdapter extends BaseQuickAdapter<Game, BaseViewHolder> {
     }
 
     @Override
-    protected void convert(@NotNull BaseViewHolder baseViewHolder, Game game) {
+    protected void convert(@NonNull BaseViewHolder baseViewHolder, Game game) {
         baseViewHolder.setText(R.id.rv_item_game_name, game.getName())
                 .setText(R.id.rv_item_game_sort, game.getType())
                 .setText(R.id.rv_item_game_rank, game.getRank())

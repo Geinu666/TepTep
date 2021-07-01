@@ -1,5 +1,6 @@
 package com.example.splashdemo;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import WebKit.Bean.LoginBean;
 import WebKit.Bean.LoginData;
+import WebKit.CookieUtil;
 import WebKit.Service.LoginService;
 import WebKit.RetrofitFactory;
 import okhttp3.Headers;
@@ -58,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                 String transAct = accountLoginText.getText().toString().trim();
                 Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
                 intent.putExtra("actTrans", transAct);
-                startActivity(intent);
+                startActivityForResult(intent, 101);
                 overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
             }
         });
@@ -108,10 +110,12 @@ public class LoginActivity extends AppCompatActivity {
                     config.putString("cookie", cookies);
                     config.commit();
                     //同步cookies到全局WebView
-                    syncCookie("http://119.91.130.198/api/", cookies);
+                    CookieUtil.syncCookie("http://119.91.130.198/api/", cookies, getApplicationContext());
 //                    loginButton = (Button) findViewById(R.id.loginButton);
 //                    loginButton.setText("login success");
                     Toast.makeText(getApplicationContext(), "登陆成功！", Toast.LENGTH_SHORT).show();
+                    setLoginState(true);
+                    getLogState();
                     finish();
                 }
             }
@@ -128,6 +132,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     @Override
     public void finish(){
+        getLogState();
         super.finish();
         overridePendingTransition(R.anim.no_anim, R.anim.rightout_exit);
     }
@@ -138,18 +143,37 @@ public class LoginActivity extends AppCompatActivity {
      * @param cookie
      */
     public void syncCookie(String url, String cookie) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            CookieSyncManager.createInstance(this);
-        }
+        CookieSyncManager.createInstance(this);
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         cookieManager.removeAllCookie();
         cookieManager.setCookie(url, cookie);
-//        CookieSyncManager.getInstance().sync();
+        CookieSyncManager.getInstance().sync();
         Log.i("test", "cookie sync" + cookie);
     }
 
     public String getStringData(int id) {
         return getResources().getString(id);
+    }
+
+    public void getLogState(){
+        Intent intent = new Intent();
+        intent.putExtra("result", isLogin);
+        setResult(100, intent);
+    }
+
+    public void setLoginState(Boolean i) {
+        isLogin = i;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Boolean result = data.getExtras().getBoolean("result", false);
+        if (result) {
+            setLoginState(true);
+            getLogState();
+            finish();
+        }
     }
 }

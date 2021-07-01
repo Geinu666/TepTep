@@ -44,7 +44,6 @@ public class MainActivity extends SupportActivity {
     private boolean isEx = false;
     private PopupWindow popupWindow;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +62,8 @@ public class MainActivity extends SupportActivity {
         setNavigationItemView(findViewById(R.id.navigation_rank));
         setNavigationItemView(findViewById(R.id.navigation_dynamic));
         setNavigationItemView(findViewById(R.id.navigation_personal));
+
+        SplashActivity.instance.finish();
     }
 
     /**
@@ -196,4 +197,6 @@ public class MainActivity extends SupportActivity {
         CookieSyncManager.createInstance(getApplicationContext());
         CookieSyncManager.getInstance().startSync();
     }
+
+
 }

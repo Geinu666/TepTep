@@ -2,9 +2,13 @@ package com.example.splashdemo;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.Toast;
+
+import WebKit.CookieUtil;
 
 /**
  * 通过WebView与前端交互的类，
@@ -34,6 +38,7 @@ public class JsJavaBridge {
     public void toForum(String gameId) {
         Intent intent = new Intent(activity, WebViewActivity.class);
         intent.putExtra("url", "GameForum/" + gameId);
+        intent.putExtra("gameId", gameId);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
     }
@@ -41,5 +46,11 @@ public class JsJavaBridge {
     @JavascriptInterface
     public void logout() {
         Toast.makeText(activity, "logout", Toast.LENGTH_SHORT).show();
+        CookieUtil.removeCookie(activity);
+        SharedPreferences sp = activity.getSharedPreferences("cookieData", activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.remove("cookie");
+        editor.commit();
+
     }
 }

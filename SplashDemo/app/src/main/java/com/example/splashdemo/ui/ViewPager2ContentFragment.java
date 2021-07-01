@@ -22,7 +22,7 @@ import com.example.splashdemo.GameAdapter;
 import com.example.splashdemo.R;
 import com.example.splashdemo.databinding.FragmentListBinding;
 
-import org.jetbrains.annotations.NotNull;
+import androidx.annotation.NonNull;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class ViewPager2ContentFragment extends SupportFragment {
         adapter.notifyDataSetChanged();
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(@NonNull @NotNull BaseQuickAdapter<?, ?> adapter, @NonNull @NotNull View view, int position) {
+            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
                 Intent intent = new Intent(getActivity(), GameActivity.class);
                 TextView textView = (TextView) adapter.getViewByPosition(position, R.id.rv_item_game_id);
                 String i = textView.getText().toString();

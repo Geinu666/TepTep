@@ -107,8 +107,6 @@ public class SignupActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "注册成功！", Toast.LENGTH_SHORT).show();
                     loginAfterRegister(act, psw);
-                    LoginActivity.instance.finish();
-                    finish();
                 }
             }
 
@@ -146,7 +144,8 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void loginAfterRegister(String Act, String Psw){
-        Call<LoginBean> call = service.postLogin(Act, Psw);
+        LoginService loginService = RetrofitFactory.getSpecialService(this);
+        Call<LoginBean> call = loginService.postLogin(Act, Psw);
         call.enqueue(new Callback<LoginBean>() {
             @Override
             public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
@@ -156,9 +155,11 @@ public class SignupActivity extends AppCompatActivity {
                     SharedPreferences.Editor config = getApplicationContext().getSharedPreferences("config", getApplicationContext().MODE_PRIVATE).edit();
                     config.putString("cookie", cookies);
                     config.commit();
+                    Log.i("test", cookies);
                     //同步cookies到全局WebView
                     syncCookie("http://119.91.130.198/api/", cookies);
-                    Log.i("test", "login也搞掂了");
+                    getRegisterState(true);
+                    finish();
                 }
             }
 
@@ -167,5 +168,11 @@ public class SignupActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "登陆失败！", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void getRegisterState(Boolean isReg){
+        Intent intent = new Intent();
+        intent.putExtra("result", isReg);
+        setResult(101, intent);
     }
 }

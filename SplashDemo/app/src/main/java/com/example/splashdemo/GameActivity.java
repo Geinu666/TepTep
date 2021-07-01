@@ -63,6 +63,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+
         LightStatusBarUtils.setAndroidNativeLightStatusBar(this, true);
 
         gameIcon = findViewById(R.id.game_icon);
@@ -139,6 +140,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Log.i("test", "onclick");
                 Intent intent = new Intent(GameActivity.this, WebViewActivity.class);
                 intent.putExtra("url", "GameForum/" + gameId);
+                intent.putExtra("gameId", gameId);
                 startActivity(intent);
                 overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
                 break;

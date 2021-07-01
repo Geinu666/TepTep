@@ -15,7 +15,7 @@ import com.example.splashdemo.databinding.FragmentRankBinding;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-import org.jetbrains.annotations.NotNull;
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class RankFragment extends SupportFragment {
     private View mRootView;
 
     @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         mBinding = FragmentRankBinding.inflate(inflater);
         mRootView = mBinding.getRoot();
@@ -79,7 +79,7 @@ public class RankFragment extends SupportFragment {
         tabNameList.add("预约榜");
         new TabLayoutMediator(mBinding.tabRank, mBinding.viewPager, true, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
-            public void onConfigureTab(@NotNull TabLayout.Tab tab, int position) {
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 tab.setText(tabNameList.get(position));
             }
         }).attach();
