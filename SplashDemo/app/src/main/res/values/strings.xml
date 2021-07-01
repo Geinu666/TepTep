@@ -32,7 +32,9 @@
     <string name="nickname">昵称</string>
     <string name="mrfz">明日方舟</string>
     <string name="game_details">游戏详情</string>
+    <string name="last_name">10小时前</string>
     <string name="comment_hint">写下您的宝贵意见</string>
+    <string name="sample_count">250</string>
     <string name="comment_count">100人评分</string>
     <string name="intro_content">这是一段有亿点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点长的简介</string>
     <string name="login_only_can_input">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890</string>

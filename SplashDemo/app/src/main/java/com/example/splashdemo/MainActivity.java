@@ -71,13 +71,6 @@ public class MainActivity extends SupportActivity {
 
         SplashActivity.instance.finish();
 
-        binding.navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                return false;
-            }
-        });
-
     }
 
     /**

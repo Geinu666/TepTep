@@ -1,7 +1,9 @@
 package WebKit;
 
+import com.example.splashdemo.Comment;
 import com.example.splashdemo.Game;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -108,5 +110,70 @@ public class DataServer {
 
         );
         return games;
+    }
+
+    public static ArrayList<Comment> getComment(){
+        ArrayList<Comment> comments = new ArrayList<>();
+        comments.add(
+                new Comment().setCommentId("1")
+                .setGameId("2")
+                .setUserId("123123")
+                .setContent("这是内容")
+                .setLikesCount(30)
+                .setCommentAt(123)
+                .setAvatar("https://img.taplb.com/md5/22/f1/22f1196f825298281376608459bfa7fe")
+                .setNickname("小明")
+        );
+        comments.add(
+                new Comment().setCommentId("1")
+                        .setGameId("2")
+                        .setUserId("123123")
+                        .setContent("这是内容")
+                        .setLikesCount(30)
+                        .setCommentAt(123)
+                        .setAvatar("https://img.taplb.com/md5/22/f1/22f1196f825298281376608459bfa7fe")
+                        .setNickname("小明")
+        );
+        comments.add(
+                new Comment().setCommentId("1")
+                        .setGameId("2")
+                        .setUserId("123123")
+                        .setContent("这是内容")
+                        .setLikesCount(30)
+                        .setCommentAt(123)
+                        .setAvatar("https://img.taplb.com/md5/22/f1/22f1196f825298281376608459bfa7fe")
+                        .setNickname("小明")
+        );
+        comments.add(
+                new Comment().setCommentId("1")
+                        .setGameId("2")
+                        .setUserId("123123")
+                        .setContent("这是内容")
+                        .setLikesCount(30)
+                        .setCommentAt(123)
+                        .setAvatar("https://img.taplb.com/md5/22/f1/22f1196f825298281376608459bfa7fe")
+                        .setNickname("小明")
+        );
+        comments.add(
+                new Comment().setCommentId("1")
+                        .setGameId("2")
+                        .setUserId("123123")
+                        .setContent("这是内容")
+                        .setLikesCount(30)
+                        .setCommentAt(123)
+                        .setAvatar("https://img.taplb.com/md5/22/f1/22f1196f825298281376608459bfa7fe")
+                        .setNickname("小明")
+        );
+        comments.add(
+                new Comment().setCommentId("1")
+                        .setGameId("2")
+                        .setUserId("123123")
+                        .setContent("这是内容")
+                        .setLikesCount(30)
+                        .setCommentAt(123)
+                        .setAvatar("https://img.taplb.com/md5/22/f1/22f1196f825298281376608459bfa7fe")
+                        .setNickname("小明")
+        );
+        return comments;
     }
 }

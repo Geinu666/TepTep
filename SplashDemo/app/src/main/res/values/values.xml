@@ -2,4 +2,10 @@
 <resources>
     <dimen name="game_split">23dp</dimen>
     <dimen name="big_pic_height">300dp</dimen>
+    <style name="foodRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/star_style</item>
+        <item name="android:minHeight">22dip</item>
+        <item name="android:maxHeight">22dip</item>
+    </style>
+
 </resources>

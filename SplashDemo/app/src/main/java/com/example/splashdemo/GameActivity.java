@@ -1,6 +1,8 @@
 package com.example.splashdemo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.media.Image;
@@ -12,6 +14,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -23,10 +26,13 @@ import com.bumptech.glide.Glide;
 import org.w3c.dom.Text;
 
 import java.nio.channels.InterruptedByTimeoutException;
+import java.util.ArrayList;
+import java.util.List;
 
 import WebKit.Bean.AllBean;
 import WebKit.Bean.LikeBean;
 import WebKit.Bean.OneGame;
+import WebKit.DataServer;
 import WebKit.RetrofitFactory;
 import WebKit.Service.GameService;
 import WebKit.Service.GetGameService;
@@ -58,6 +64,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView bigImg;
     private TextView followersCount;
     private TextView issuer;
+    private List<Comment> commentList = new ArrayList<Comment>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +72,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
         LightStatusBarUtils.setAndroidNativeLightStatusBar(this, true);
+
+        commentList = DataServer.getComment();
+        CommentRecyclerView();
 
         gameIcon = findViewById(R.id.game_icon);
         gameForum = findViewById(R.id.game_forum);
@@ -105,8 +115,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 if (fromUser) {
                     Log.i("test", String.valueOf(rating * 2));
                     Intent intent1 = new Intent(GameActivity.this, CommentActivity.class);
-                    intent1.putExtra("icon", "")
-                            .putExtra("rating", rating)
+                    intent1.putExtra("rating", rating)
                             .putExtra("gameId", gameId)
                             .putExtra("gameName", gameName.getText().toString())
                             .putExtra("iconUrl", iconUrl);
@@ -115,10 +124,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
-
-//        Glide.with(getApplicationContext())
-//                .load(iconUrl)
-//                .into(gameIcon);
     }
 
     @Override
@@ -129,8 +134,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.game_comment:
                 Intent intent1 = new Intent(GameActivity.this, CommentActivity.class);
-                intent1.putExtra("icon", "")
-                        .putExtra("gameId", gameId)
+                intent1.putExtra("gameId", gameId)
                         .putExtra("gameName", gameName.getText().toString())
                         .putExtra("iconUrl", iconUrl);
                 startActivity(intent1);
@@ -152,7 +156,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * 暂时走不通的收藏
+     * 关注游戏，再按取关
      * @param gameId
      */
     public void likeGame(String gameId){
@@ -192,8 +196,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * 用id请求数据
-     * @param Id
+     * 用id请求数据并刷新布局
+     * @param Id 从Intent传进来的gameId
      */
     public void getDataAndSet(String Id) {
         Log.i("test", "begin getset");
@@ -220,6 +224,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         Glide.with(getApplicationContext())
                                 .load(result.getData().getIcon())
                                 .into(gameIcon);
+                        iconUrl = result.getData().getIcon();
                         followersCount.setText("关注 " + result.getData().getInterestCount());
                         issuer.setText("厂商 " + result.getData().getIssuer());
                         gameName.setText(result.getData().getName());
@@ -242,5 +247,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(getApplicationContext(), "初始化失败！", Toast.LENGTH_SHORT);
             }
         });
+    }
+
+    private void CommentRecyclerView(){
+        RecyclerView recyclerView = findViewById(R.id.comment_recyclerview);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        CommentAdapter adapter = new CommentAdapter(commentList);
+        recyclerView.setAdapter(adapter);
     }
 }
