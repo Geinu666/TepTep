@@ -1,10 +1,13 @@
 package WebKit.Service;
 
+import WebKit.Bean.AllCommentBean;
 import WebKit.Bean.CommentBean;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * 评论接口
@@ -15,4 +18,7 @@ public interface CommentService {
     Call<CommentBean> postComment(@Field("content") String content,
                                   @Field("gameId") String gameId,
                                   @Field("score") int score);
+
+    @GET("comment/all")
+    Call<AllCommentBean> getAllComment(@Query("gameId") String gameId);
 }

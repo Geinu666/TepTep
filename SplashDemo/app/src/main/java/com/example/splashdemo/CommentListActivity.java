@@ -10,20 +10,28 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import WebKit.Bean.AllCommentBean;
 import WebKit.DataServer;
+import WebKit.RetrofitFactory;
+import WebKit.Service.CommentService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CommentListActivity extends AppCompatActivity {
     private String gameId;
     private String iconUrl;
     private String gameName;
     private ImageView showCommentBack;
-    private List<Comment> commentList = new ArrayList<>();
+    private CommentService service;
+//    private List<Comment> commentList = new ArrayList<>();
     private FloatingActionButton button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +40,8 @@ public class CommentListActivity extends AppCompatActivity {
         gameId = getIntent().getExtras().getString("gameId", null);
         gameName = getIntent().getExtras().getString("gameName", null);
         iconUrl = getIntent().getExtras().getString("iconUrl", null);
+
+        service = RetrofitFactory.getCommentService(this);
 
         showCommentBack = findViewById(R.id.show_comment_back);
         button = findViewById(R.id.floating);
@@ -56,21 +66,31 @@ public class CommentListActivity extends AppCompatActivity {
 
 
         if (gameId != null) {
-            getCommentById(gameId);
+            Call<AllCommentBean> call = service.getAllComment(gameId);
+            call.enqueue(new Callback<AllCommentBean>() {
+                @Override
+                public void onResponse(Call<AllCommentBean> call, Response<AllCommentBean> response) {
+                    if (response.isSuccessful()) {
+                        AllCommentBean result = response.body();
+                        List<Comment> comments = result.getData();
+                        CommentRecyclerView(comments);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<AllCommentBean> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "获取评论失败", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
-        CommentRecyclerView();
+//        CommentRecyclerView();
     }
 
-    public void getCommentById(String id) {
-        // TODO: 2021/7/2 以后写请求，现在先造假
-        commentList = DataServer.getComment();
-    }
-
-    private void CommentRecyclerView(){
+    private void CommentRecyclerView(List<Comment> commentList){
         RecyclerView recyclerView = findViewById(R.id.comment_recyclerview);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         CommentAdapter adapter = new CommentAdapter(commentList);

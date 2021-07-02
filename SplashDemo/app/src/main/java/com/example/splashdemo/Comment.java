@@ -10,7 +10,7 @@ public class Comment {
     private long commentAt;
     private String avatar;
     private String nickname;
-    private Boolean isLike;
+    private Boolean like;
 
     public Comment setGameId(String gameId) {
         this.gameId = gameId;
@@ -94,11 +94,11 @@ public class Comment {
     }
 
     public Comment setLike(Boolean like) {
-        isLike = like;
+        this.like = like;
         return this;
     }
 
     public Boolean getLike() {
-        return isLike;
+        return like;
     }
 }

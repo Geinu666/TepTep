@@ -1,7 +1,7 @@
 package WebKit.Bean;
 
 /**
- * 解析评论请求
+ * 解析评论请求 考虑加入deprecate
  */
 public class CommentBean {
     private Integer status;
@@ -40,6 +40,10 @@ public class CommentBean {
         private Integer score;
         private Integer likesCount;
         private String commentAt;
+
+        private String avatar;
+        private String nickname;
+        private Boolean like;
 
         public void setGameId(String gameId) {
             this.gameId = gameId;
@@ -95,6 +99,30 @@ public class CommentBean {
 
         public String getContent() {
             return content;
+        }
+
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
+        }
+
+        public Boolean getLike() {
+            return like;
+        }
+
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
+        }
+
+        public String getAvatar() {
+            return avatar;
+        }
+
+        public void setLike(Boolean like) {
+            this.like = like;
+        }
+
+        public String getNickname() {
+            return nickname;
         }
     }
 }

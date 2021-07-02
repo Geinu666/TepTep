@@ -30,10 +30,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import WebKit.Bean.AllBean;
+import WebKit.Bean.AllCommentBean;
 import WebKit.Bean.LikeBean;
 import WebKit.Bean.OneGame;
 import WebKit.DataServer;
 import WebKit.RetrofitFactory;
+import WebKit.Service.CommentService;
 import WebKit.Service.GameService;
 import WebKit.Service.GetGameService;
 import retrofit2.Call;
@@ -55,6 +57,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private float score;
     private String iconUrl;
     private GameService service;
+
     private TextView likeText;
     private ImageView likeIcon;
     private TextView avgScore;
@@ -110,7 +113,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-        initComment();
+
 
         service = RetrofitFactory.getGameService(getApplicationContext());
 
@@ -127,7 +130,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Log.i("test", "before setget");
         getDataAndSet(gameId);
         Log.i("test", "after setget");
-
+        initComment();
         iconUrl = getIntent().getStringExtra("iconUrl");
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -288,8 +291,42 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         commentContent = findViewById(R.id.comment_content);
         commentLike = findViewById(R.id.comment_like);
         commentLikeCount = findViewById(R.id.comment_like_count);
+        //这行指定评论
+//        Comment comment = commentList.get(0);
+//        setComment(comment);
+        getAndSetComment();
+    }
 
-        Comment comment = commentList.get(0);
+    private void getAndSetComment(){
+        CommentService commentService = RetrofitFactory.getCommentService(this);
+        Log.i("test", "获取gameId=" + gameId);
+        Call<AllCommentBean> call = commentService.getAllComment(gameId);
+        call.enqueue(new Callback<AllCommentBean>() {
+            @Override
+            public void onResponse(Call<AllCommentBean> call, Response<AllCommentBean> response) {
+                if (response.isSuccessful()) {
+                    AllCommentBean result = response.body();
+                    if (result != null) {
+                        Comment comment = result.getData().get(0);
+                        setComment(comment);
+                        Log.i("test", "获取一条评论成功");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AllCommentBean> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "获取评论失败", Toast.LENGTH_SHORT).show();
+                Log.i("test", "网络爆炸");
+            }
+        });
+    }
+
+    /**
+     * 操作评论卡
+     * @param comment
+     */
+    private void setComment(Comment comment){
         Glide.with(getApplicationContext())
                 .load(comment.getAvatar())
                 .into(commentUserAvatar);

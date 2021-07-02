@@ -1,13 +1,23 @@
 package WebKit;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.example.splashdemo.Comment;
 import com.example.splashdemo.Game;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
+
+import WebKit.Bean.AllCommentBean;
+import WebKit.Service.CommentService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
- * 伪 从网络获取数据
+ * 造假中心(
  */
 public class DataServer {
     /**
@@ -85,6 +95,7 @@ public class DataServer {
      * @return
      */
     public static ArrayList<Game> getRankData() {
+
         ArrayList<Game> games = new ArrayList<>();
         games.add(
                 new Game().setName("明日方舟")
@@ -113,6 +124,25 @@ public class DataServer {
     }
 
     public static ArrayList<Comment> getComment(){
+
+
+//        call.enqueue(new Callback<AllCommentBean>() {
+//            @Override
+//            public void onResponse(Call<AllCommentBean> call, Response<AllCommentBean> response) {
+//                if (response.isSuccessful()) {
+//                    AllCommentBean result = response.body();
+//                    if (result != null) {
+//                        List<Comment> comments = new ArrayList<>();
+//                        comments = result.getData();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<AllCommentBean> call, Throwable t) {
+//                Toast.makeText(context, "请求评论列表失败", Toast.LENGTH_SHORT).show();
+//            }
+//        });
         ArrayList<Comment> comments = new ArrayList<>();
         comments.add(
                 new Comment().setCommentId("1")
