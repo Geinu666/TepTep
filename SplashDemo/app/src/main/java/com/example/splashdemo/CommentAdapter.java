@@ -1,11 +1,13 @@
 package com.example.splashdemo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     private List<Comment> mcommentList;
     private Context mContext;
     private String userId;
+    private String gameName;
+    private String iconUrl;
+    private float commentScore;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         View commentView;
@@ -44,6 +49,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         TextView commentLikeCount;
         TextView commentId;
         TextView commentWriterId;
+        RelativeLayout commentEdit;
+        TextView commentGameId;
+        TextView commentGameName;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -61,12 +69,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             commentLikeCount = itemView.findViewById(R.id.comment_like_count);
             commentId = itemView.findViewById(R.id.comment_id);
             commentWriterId = itemView.findViewById(R.id.comment_writer_id);
+            commentEdit = itemView.findViewById(R.id.comment_edit);
+            commentGameId = itemView.findViewById(R.id.comment_game_id);
+            commentGameName = itemView.findViewById(R.id.comment_game_name);
         }
     }
 
-    public CommentAdapter(List<Comment> commentList, String userId) {
+    public CommentAdapter(List<Comment> commentList, String userId, String gameName, String iconUrl) {
         this.mcommentList = commentList;
         this.userId = userId;
+        this.gameName = gameName;
+        this.iconUrl = iconUrl;
     }
 
     @NonNull
@@ -121,6 +134,22 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             }
         });
 
+        holder.commentEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, CommentActivity.class);
+                intent.putExtra("gameId", holder.commentGameId.getText().toString());
+                intent.putExtra("gameName", gameName);
+                intent.putExtra("iconUrl", iconUrl);
+                intent.putExtra("userId", userId);
+                intent.putExtra("content", holder.commentContent.getText().toString());
+                intent.putExtra("rating", commentScore / 2);
+                intent.putExtra("isChange", true);
+                intent.putExtra("commentId", holder.commentId.getText().toString());
+                mContext.startActivity(intent);
+            }
+        });
+
         return holder;
     }
 
@@ -128,7 +157,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Comment comment = mcommentList.get(position);
         Glide.with(mContext)
-                .load(comment.getAvatar())
+                .load(comment.getAvatar() == null?"https://img.taplb.com/md5/22/f1/22f1196f825298281376608459bfa7fe": comment.getAvatar())
                 .into(holder.avatar);
         holder.commentNickname.setText(comment.getNickname());
         //commentLastTime
@@ -158,6 +187,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
         holder.commentId.setText(comment.getCommentId());
         holder.commentWriterId.setText(comment.getUserId());
+        if (comment.getUserId().equals(userId)) {
+            holder.commentEdit.setVisibility(View.VISIBLE);
+        } else {
+            holder.commentEdit.setVisibility(View.INVISIBLE);
+        }
+        holder.commentGameId.setText(comment.getGameId());
+        holder.commentGameName.setText(gameName);
+        commentScore = comment.getScore();
     }
 
     @Override

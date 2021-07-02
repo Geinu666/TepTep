@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -54,7 +55,8 @@ public class CommentListActivity extends AppCompatActivity {
                 Intent intent= new Intent(CommentListActivity.this, CommentActivity.class);
                 intent.putExtra("gameId", gameId)
                         .putExtra("gameName", gameName)
-                        .putExtra("iconUrl", iconUrl);
+                        .putExtra("iconUrl", iconUrl)
+                        .putExtra("userId", userId);
                 startActivity(intent);
                 overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
             }
@@ -65,8 +67,26 @@ public class CommentListActivity extends AppCompatActivity {
                 finish();
             }
         });
+//        CommentRecyclerView();
+    }
 
+    private void CommentRecyclerView(List<Comment> commentList){
+        RecyclerView recyclerView = findViewById(R.id.comment_recyclerview);
 
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        CommentAdapter adapter = new CommentAdapter(commentList, userId, gameName, iconUrl);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.no_anim, R.anim.rightout_exit);
+    }
+
+    private void refreshView(){
         if (gameId != null) {
             Call<AllCommentBean> call = service.getAllComment(gameId);
             call.enqueue(new Callback<AllCommentBean>() {
@@ -85,23 +105,11 @@ public class CommentListActivity extends AppCompatActivity {
                 }
             });
         }
-
-//        CommentRecyclerView();
-    }
-
-    private void CommentRecyclerView(List<Comment> commentList){
-        RecyclerView recyclerView = findViewById(R.id.comment_recyclerview);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        CommentAdapter adapter = new CommentAdapter(commentList, userId);
-        recyclerView.setAdapter(adapter);
     }
 
     @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.no_anim, R.anim.rightout_exit);
+    protected void onStart() {
+        super.onStart();
+        refreshView();
     }
 }

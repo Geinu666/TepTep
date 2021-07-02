@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import WebKit.Bean.ChangeContent;
 import WebKit.Bean.CommentBean;
 import WebKit.Bean.Failure;
 import WebKit.RetrofitFactory;
@@ -39,6 +40,10 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private TextView release;
     private CommentService service;
     private EditText commentContent;
+    private String userId;
+    private String content;
+    private Boolean isChange = false;
+    private String commentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +52,14 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
         LightStatusBarUtils.setAndroidNativeLightStatusBar(this, true);
 
-        gameId = getIntent().getExtras().getString("gameId", "2");
+        gameId = getIntent().getExtras().getString("gameId");
         outrating = getIntent().getExtras().getFloat("rating", 0);
-        gameName = getIntent().getExtras().getString("gameName", "明日方舟");
+        gameName = getIntent().getExtras().getString("gameName");
         iconUrl = getIntent().getExtras().getString("iconUrl", null);
+        userId = getIntent().getExtras().getString("userId", null);
+        content = getIntent().getExtras().getString("content", null);
+        isChange = getIntent().getExtras().getBoolean("isChange", false);
+        commentId = getIntent().getExtras().getString("commentId", null);
 
         back = findViewById(R.id.comment_back);
         bar = findViewById(R.id.comment_bar);
@@ -59,6 +68,10 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         gameIcon = findViewById(R.id.game_icon);
         release = findViewById(R.id.release_comment);
         commentContent = findViewById(R.id.comment_content);
+
+        if (content != null) {
+            commentContent.setText(content);
+        }
 
         service = RetrofitFactory.getCommentService(getApplicationContext());
 
@@ -103,12 +116,17 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.release_comment:
-                Log.i("test", "发布");
-                int score = (int) (outrating * 2);
-                Log.i("test", "score: " + score);
+                Integer score = (Integer)(int) (outrating * 2);
                 String content = commentContent.getText().toString().trim();
-                commitComment(gameId, content, score);
-                break;
+                if (!isChange){
+                    Log.i("test", "发");
+                    commitComment(gameId, content, score);
+                    break;
+                } else {
+                    Log.i("test", "改");
+                    changeComment(commentId, content, score);
+                    break;
+                }
         }
     }
 
@@ -138,7 +156,11 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void commitComment(String gameId, String content, int score){
-        Call<CommentBean> call = service.postComment(content, gameId, score);
+        CommentBean.Comment comment = new CommentBean.Comment();
+        comment.setGameId(gameId);
+        comment.setContent(content);
+        comment.setScore(score);
+        Call<CommentBean> call = service.postComment(comment);
         call.enqueue(new Callback<CommentBean>() {
             @Override
             public void onResponse(Call<CommentBean> call, Response<CommentBean> response) {
@@ -150,7 +172,27 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onFailure(Call<CommentBean> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "发布失败", Toast.LENGTH_SHORT).show();
+                if (userId != null) {
+                    Toast.makeText(getApplicationContext(), "发布失败", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "尚未登陆！", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    public void changeComment(String commentId, String content, Integer score) {
+        Call<ChangeContent> call = service.postChangeContent(commentId, content, score);
+        call.enqueue(new Callback<ChangeContent>() {
+            @Override
+            public void onResponse(Call<ChangeContent> call, Response<ChangeContent> response) {
+                Toast.makeText(getApplicationContext(), "修改成功!", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<ChangeContent> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "修改失败!", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -29,6 +29,7 @@ public class WebViewActivity extends AppCompatActivity {
     private WebView webView;
     private String gameId = null;
     private String url = null;
+    private String func;
     private FloatingActionButton button;
     private PopupWindow popupWindow;
     @Override
@@ -39,6 +40,7 @@ public class WebViewActivity extends AppCompatActivity {
         //从intent里找有没有传gameId
         url = getIntent().getExtras().getString("url", null);
         gameId = getIntent().getExtras().getString("gameId", null);
+        func = getIntent().getExtras().getString("func");
         button = (FloatingActionButton) findViewById(R.id.floating);
 
         button.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
@@ -49,10 +51,15 @@ public class WebViewActivity extends AppCompatActivity {
 //                initPopupWindow(v);
                 Intent intent = new Intent(WebViewActivity.this, WebViewActivity.class);
                 intent.putExtra("url", "CreatePost/" + gameId);
+                intent.putExtra("func", "CreatePost");
                 startActivity(intent);
                 overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
             }
         });
+
+        if (!func.equals("GameForum")) {
+            button.setVisibility(View.INVISIBLE);
+        }
 
         webView = findViewById(R.id.tempWebView);
         WebUtil webUtil = new WebUtil(webView, getApplicationContext());

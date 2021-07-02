@@ -60,6 +60,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private String iconUrl;
     private GameService service;
     private String userId;
+    private LinearLayout commentCard;
 
     private TextView likeText;
     private ImageView likeIcon;
@@ -71,7 +72,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private TextView followersCount;
     private TextView issuer;
     private Button showComment;
-    private List<Comment> commentList = new ArrayList<Comment>();
 
     private ImageView commentUserAvatar;
     private TextView commentUserNickname;
@@ -92,11 +92,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        judgeState();
 
         LightStatusBarUtils.setAndroidNativeLightStatusBar(this, true);
-
-        commentList = DataServer.getComment();
-//        CommentRecyclerView();
 
         gameIcon = findViewById(R.id.game_icon);
         gameForum = findViewById(R.id.game_forum);
@@ -115,6 +113,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         followersCount = findViewById(R.id.game_followers);
         issuer = findViewById(R.id.game_company);
         showComment = findViewById(R.id.button_show_comment);
+        commentCard = findViewById(R.id.comment_card);
 
 
 
@@ -127,8 +126,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         gameComment.setOnClickListener(this);
         gameBack.setOnClickListener(this);
         showComment.setOnClickListener(this);
+        commentCard.setOnClickListener(this);
 
-        gameId = "2";
         gameId = getIntent().getStringExtra("gameId");
         //用gameId拿数据
         Log.i("test", "gameId:" + gameId);
@@ -146,7 +145,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     intent1.putExtra("rating", rating)
                             .putExtra("gameId", gameId)
                             .putExtra("gameName", gameName.getText().toString())
-                            .putExtra("iconUrl", iconUrl);
+                            .putExtra("iconUrl", iconUrl)
+                            .putExtra("userId", userId);
                     startActivity(intent1);
                     overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
                 }
@@ -164,22 +164,29 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent1 = new Intent(GameActivity.this, CommentActivity.class);
                 intent1.putExtra("gameId", gameId)
                         .putExtra("gameName", gameName.getText().toString())
-                        .putExtra("iconUrl", iconUrl);
+                        .putExtra("iconUrl", iconUrl)
+                        .putExtra("userId", userId);
                 startActivity(intent1);
                 overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
                 break;
             case R.id.game_forum:
-                Log.i("test", "onclick");
-                Intent intent = new Intent(GameActivity.this, WebViewActivity.class);
-                intent.putExtra("url", "GameForum/" + gameId);
-                intent.putExtra("gameId", gameId);
-                startActivity(intent);
-                overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
+                if (userId != null) {
+                    Log.i("test", "onclick");
+                    Intent intent = new Intent(GameActivity.this, WebViewActivity.class);
+                    intent.putExtra("url", "GameForum/" + gameId);
+                    intent.putExtra("gameId", gameId);
+                    intent.putExtra("func", "GameForum");
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
+                } else {
+                    Toast.makeText(getApplicationContext(), "尚未登陆！", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.game_back:
                 finish();
                 break;
             case R.id.button_show_comment:
+            case R.id.comment_card:
                 Intent intent2 = new Intent(GameActivity.this, CommentListActivity.class);
                 intent2.putExtra("gameId", gameId)
                         .putExtra("gameName", gameName.getText().toString())
@@ -220,7 +227,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFailure(Call<LikeBean> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "网络异常！", Toast.LENGTH_SHORT).show();
+                if (userId != null) {
+                    Toast.makeText(getApplicationContext(), "网络异常！", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "尚未登陆！", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -336,7 +347,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void setComment(Comment comment){
         Glide.with(getApplicationContext())
-                .load(comment.getAvatar())
+                .load(comment.getAvatar() == null?"https://img.taplb.com/md5/22/f1/22f1196f825298281376608459bfa7fe": comment.getAvatar())
                 .into(commentUserAvatar);
         commentUserNickname.setText(comment.getNickname());
         //commentLastTime.setText(comment.get);
@@ -378,6 +389,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 if (response.isSuccessful()) {
                     LoginBean result = response.body();
                     userId = result.getData().getUserId();
+                    Log.i("test", "gameactivity: " + userId);
                 }
             }
 
@@ -388,14 +400,4 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
-
-//    private void CommentRecyclerView(){
-//        RecyclerView recyclerView = findViewById(R.id.comment_recyclerview);
-//
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        recyclerView.setLayoutManager(layoutManager);
-//        CommentAdapter adapter = new CommentAdapter(commentList);
-//        recyclerView.setAdapter(adapter);
-//    }
 }

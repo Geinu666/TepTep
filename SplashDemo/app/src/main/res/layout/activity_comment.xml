@@ -102,7 +102,6 @@
         android:autofillHints="@string/comment_hint"
         android:background="@null"
         android:hint="@string/comment_hint"
-        android:inputType="text"
         android:padding="10dp"
         android:scrollbars="vertical"/>
 </LinearLayout>

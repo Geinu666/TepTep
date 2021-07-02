@@ -325,6 +325,7 @@
 <!--                android:layout_height="match_parent"-->
 <!--                android:nestedScrollingEnabled="false"/>-->
             <LinearLayout
+                android:id="@+id/comment_card"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:background="@color/comment_back"

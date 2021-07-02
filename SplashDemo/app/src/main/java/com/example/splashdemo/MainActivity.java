@@ -87,10 +87,6 @@ public class MainActivity extends SupportActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
                 break;
-            case R.id.floating:
-                initPopupWindow(v);
-                Log.i("floating", "clicked");
-                break;
             case R.id.http_test:
                 OkHttpClient client = new OkHttpClient.Builder()
                         .addInterceptor(new AddCookiesInterceptor(getApplicationContext()))

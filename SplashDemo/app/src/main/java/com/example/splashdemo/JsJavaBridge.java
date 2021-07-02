@@ -39,6 +39,7 @@ public class JsJavaBridge {
         Intent intent = new Intent(activity, WebViewActivity.class);
         intent.putExtra("url", "GameForum/" + gameId);
         intent.putExtra("gameId", gameId);
+        intent.putExtra("func", "GameForum");
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
     }

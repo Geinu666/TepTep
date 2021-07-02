@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/comment_back"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:layout_marginBottom="20dp"
-    android:layout_height="wrap_content">
+    android:background="@color/comment_back"
+    android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -21,76 +21,113 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible"/>
+        <TextView
+            android:id="@+id/comment_game_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"/>
+        <TextView
+            android:id="@+id/comment_game_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"/>
+        <TextView
+            android:id="@+id/comment_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"/>
         <com.shehuan.niv.NiceImageView
             android:id="@+id/comment_user_avatar"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:is_circle="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"/>
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            app:is_circle="true"/>
         <TextView
             android:id="@+id/comment_user_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/nickname"
-            android:textStyle="bold"
-            android:layout_toRightOf="@+id/comment_user_avatar"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="22dp"/>
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/comment_user_avatar"
+            android:text="@string/nickname"
+            android:textStyle="bold"/>
         <TextView
             android:id="@+id/comment_last_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/last_name"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="41dp"
             android:layout_toRightOf="@+id/comment_user_avatar"
-            android:layout_marginTop="43dp"
-            android:layout_marginLeft="10dp"/>
+            android:text="@string/last_name"/>
+        <RelativeLayout
+            android:id="@+id/comment_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="35dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/edit_image"
+                android:text="@string/comment_edit"
+                android:textColor="@color/button_blue"/>
+            <ImageView
+                android:id="@+id/edit_image"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/baseline_edit_24"/>
+        </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_height="wrap_content">
+        android:layout_marginTop="5dp">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/star_one"
                 android:layout_width="10dp"
-                android:src="@drawable/baseline_star_rate_24"
-                android:layout_height="10dp"/>
+                android:layout_height="10dp"
+                android:src="@drawable/baseline_star_rate_24"/>
             <ImageView
                 android:id="@+id/star_two"
                 android:layout_width="10dp"
-                android:src="@drawable/baseline_star_rate_24"
-                android:layout_height="10dp"/>
+                android:layout_height="10dp"
+                android:src="@drawable/baseline_star_rate_24"/>
             <ImageView
                 android:id="@+id/star_three"
                 android:layout_width="10dp"
-                android:src="@drawable/baseline_star_rate_24"
-                android:layout_height="10dp"/>
+                android:layout_height="10dp"
+                android:src="@drawable/baseline_star_rate_24"/>
             <ImageView
                 android:id="@+id/star_four"
                 android:layout_width="10dp"
-                android:src="@drawable/baseline_star_rate_24"
-                android:layout_height="10dp"/>
+                android:layout_height="10dp"
+                android:src="@drawable/baseline_star_rate_24"/>
             <ImageView
                 android:id="@+id/star_five"
                 android:layout_width="10dp"
-                android:src="@drawable/baseline_star_rate_24"
-                android:layout_height="10dp"/>
+                android:layout_height="10dp"
+                android:src="@drawable/baseline_star_rate_24"/>
         </LinearLayout>
     </RelativeLayout>
     <TextView
         android:id="@+id/comment_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/intro_content"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"/>
+        android:text="@string/intro_content"/>
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -106,9 +143,9 @@
             android:id="@+id/comment_like_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/comment_like"
-            android:layout_marginTop="2dp"
             android:layout_marginLeft="4dp"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@id/comment_like"
             android:text="@string/sample_count"/>
     </RelativeLayout>
 </LinearLayout>
