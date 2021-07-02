@@ -69,7 +69,9 @@ public class MainActivity extends SupportActivity {
         setNavigationItemView(findViewById(R.id.navigation_dynamic));
         setNavigationItemView(findViewById(R.id.navigation_personal));
 
-        SplashActivity.instance.finish();
+        if (SplashActivity.instance != null) {
+            SplashActivity.instance.finish();
+        }
 
     }
 

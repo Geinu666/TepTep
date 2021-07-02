@@ -32,12 +32,14 @@ import java.util.List;
 import WebKit.Bean.AllBean;
 import WebKit.Bean.AllCommentBean;
 import WebKit.Bean.LikeBean;
+import WebKit.Bean.LoginBean;
 import WebKit.Bean.OneGame;
 import WebKit.DataServer;
 import WebKit.RetrofitFactory;
 import WebKit.Service.CommentService;
 import WebKit.Service.GameService;
 import WebKit.Service.GetGameService;
+import WebKit.Service.LoginService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,6 +59,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private float score;
     private String iconUrl;
     private GameService service;
+    private String userId;
 
     private TextView likeText;
     private ImageView likeIcon;
@@ -180,6 +183,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent2 = new Intent(GameActivity.this, CommentListActivity.class);
                 intent2.putExtra("gameId", gameId)
                         .putExtra("gameName", gameName.getText().toString())
+                        .putExtra("userId", userId)
                         .putExtra("iconUrl", iconUrl);
                 startActivity(intent2);
                 overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
@@ -360,6 +364,29 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
         commentId.setText(comment.getCommentId());
         commentWriterId.setText(comment.getUserId());
+    }
+
+    /**
+     * 进入Activity的时候检测一次登陆状态并获取userId
+     */
+    private void judgeState(){
+        LoginService service = RetrofitFactory.getLoginService(this);
+        Call<LoginBean> call = service.getUserMessage();
+        call.enqueue(new Callback<LoginBean>() {
+            @Override
+            public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
+                if (response.isSuccessful()) {
+                    LoginBean result = response.body();
+                    userId = result.getData().getUserId();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginBean> call, Throwable t) {
+                Log.i("test", "没登陆就进来？");
+                userId = null;
+            }
+        });
     }
 
 //    private void CommentRecyclerView(){

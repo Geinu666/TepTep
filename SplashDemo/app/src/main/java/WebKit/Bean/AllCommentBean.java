@@ -4,6 +4,9 @@ import com.example.splashdemo.Comment;
 
 import java.util.List;
 
+/**
+ * 获取评论列表的实体类
+ */
 public class AllCommentBean {
     private Integer status;
     private String msg;

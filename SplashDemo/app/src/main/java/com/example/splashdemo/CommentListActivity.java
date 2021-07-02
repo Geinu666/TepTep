@@ -29,6 +29,7 @@ public class CommentListActivity extends AppCompatActivity {
     private String gameId;
     private String iconUrl;
     private String gameName;
+    private String userId;
     private ImageView showCommentBack;
     private CommentService service;
 //    private List<Comment> commentList = new ArrayList<>();
@@ -40,6 +41,7 @@ public class CommentListActivity extends AppCompatActivity {
         gameId = getIntent().getExtras().getString("gameId", null);
         gameName = getIntent().getExtras().getString("gameName", null);
         iconUrl = getIntent().getExtras().getString("iconUrl", null);
+        userId = getIntent().getExtras().getString("userId");
 
         service = RetrofitFactory.getCommentService(this);
 
@@ -93,7 +95,7 @@ public class CommentListActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        CommentAdapter adapter = new CommentAdapter(commentList);
+        CommentAdapter adapter = new CommentAdapter(commentList, userId);
         recyclerView.setAdapter(adapter);
     }
 

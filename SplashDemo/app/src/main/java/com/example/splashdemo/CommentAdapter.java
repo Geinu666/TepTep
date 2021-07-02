@@ -27,6 +27,7 @@ import retrofit2.Response;
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder>{
     private List<Comment> mcommentList;
     private Context mContext;
+    private String userId;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         View commentView;
@@ -63,8 +64,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         }
     }
 
-    public CommentAdapter(List<Comment> commentList) {
+    public CommentAdapter(List<Comment> commentList, String userId) {
         this.mcommentList = commentList;
+        this.userId = userId;
     }
 
     @NonNull
@@ -85,32 +87,37 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.commentLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                Comment comment = mcommentList.get(position);
-                String commentId = comment.getCommentId();
-                CommentService service = RetrofitFactory.getCommentService(mContext);
-                Call<LikeBean> call = service.postLikeGame(commentId);
-                call.enqueue(new Callback<LikeBean>() {
-                    @Override
-                    public void onResponse(Call<LikeBean> call, Response<LikeBean> response) {
-                        if (response.isSuccessful()) {
-                            LikeBean result = response.body();
-                            if (result != null) {
-                                if (result.getData().isLikes()) {
-                                    holder.commentLike.setImageResource(R.drawable.baseline_favorite_24);
-                                } else {
-                                    holder.commentLike.setImageResource(R.drawable.baseline_favorite_border_24);
+                //没登陆?
+                if (userId == null) {
+                    Toast.makeText(mContext, "尚未登陆！", Toast.LENGTH_SHORT).show();
+                } else {
+                    int position = holder.getAdapterPosition();
+                    Comment comment = mcommentList.get(position);
+                    String commentId = comment.getCommentId();
+                    CommentService service = RetrofitFactory.getCommentService(mContext);
+                    Call<LikeBean> call = service.postLikeGame(commentId);
+                    call.enqueue(new Callback<LikeBean>() {
+                        @Override
+                        public void onResponse(Call<LikeBean> call, Response<LikeBean> response) {
+                            if (response.isSuccessful()) {
+                                LikeBean result = response.body();
+                                if (result != null) {
+                                    if (result.getData().isLikes()) {
+                                        holder.commentLike.setImageResource(R.drawable.baseline_favorite_24);
+                                    } else {
+                                        holder.commentLike.setImageResource(R.drawable.baseline_favorite_border_24);
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<LikeBean> call, Throwable t) {
-                        Toast.makeText(mContext, "点赞失败！", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<LikeBean> call, Throwable t) {
+                            Toast.makeText(mContext, "点赞失败！", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 //                likeComment(commentId);
+                }
             }
         });
 

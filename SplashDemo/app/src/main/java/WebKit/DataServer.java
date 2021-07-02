@@ -17,7 +17,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * 造假中心(
+ * 造假中心(不太实际，即将弃用）
  */
 public class DataServer {
     /**

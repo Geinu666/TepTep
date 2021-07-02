@@ -34,6 +34,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText signupNickname;
     private String nic;
     private LoginService service;
+    private Boolean isReg = false;
 //    private String phone;
 //    private String mail;
     @Override
@@ -127,6 +128,7 @@ public class SignupActivity extends AppCompatActivity {
 
     @Override
     public void finish(){
+        getRegisterState();
         super.finish();
         overridePendingTransition(R.anim.no_anim, R.anim.rightout_exit);
     }
@@ -158,7 +160,7 @@ public class SignupActivity extends AppCompatActivity {
                     Log.i("test", cookies);
                     //同步cookies到全局WebView
                     syncCookie("http://119.91.130.198/api/", cookies);
-                    getRegisterState(true);
+                    setIsReg(true);
                     finish();
                 }
             }
@@ -170,7 +172,11 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-    public void getRegisterState(Boolean isReg){
+    public void setIsReg(Boolean is) {
+        isReg = is;
+    }
+
+    public void getRegisterState(){
         Intent intent = new Intent();
         intent.putExtra("result", isReg);
         setResult(101, intent);
