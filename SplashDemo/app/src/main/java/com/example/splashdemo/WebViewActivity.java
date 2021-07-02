@@ -42,6 +42,7 @@ public class WebViewActivity extends AppCompatActivity {
         button = (FloatingActionButton) findViewById(R.id.floating);
 
         button.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
+        //这个方法仅限论坛跳动态
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

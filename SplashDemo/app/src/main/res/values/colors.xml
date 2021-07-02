@@ -15,5 +15,6 @@
     <color name="button_white">#FBFFFF</color>
     <color name="tab_focused_color">#1489FA</color>
     <color name="grey">#ADADAD</color>
+    <color name="comment_back">#F5F7F8</color>
     <color name="button_blue">#1489FA</color>
 </resources>

@@ -5,10 +5,12 @@ public class Comment {
     private String gameId;
     private String userId;
     private String content;
+    private int score;
     private int likesCount;
     private long commentAt;
     private String avatar;
     private String nickname;
+    private Boolean isLike;
 
     public Comment setGameId(String gameId) {
         this.gameId = gameId;
@@ -80,5 +82,23 @@ public class Comment {
 
     public long getCommentAt() {
         return commentAt;
+    }
+
+    public Comment setScore(int score) {
+        this.score = score;
+        return this;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public Comment setLike(Boolean like) {
+        isLike = like;
+        return this;
+    }
+
+    public Boolean getLike() {
+        return isLike;
     }
 }

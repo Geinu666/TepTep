@@ -118,11 +118,13 @@ public class DataServer {
                 new Comment().setCommentId("1")
                 .setGameId("2")
                 .setUserId("123123")
-                .setContent("这是内容")
+                .setContent("这是亿点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点点长的评论")
                 .setLikesCount(30)
                 .setCommentAt(123)
                 .setAvatar("https://img.taplb.com/md5/22/f1/22f1196f825298281376608459bfa7fe")
                 .setNickname("小明")
+                .setScore(6)
+                .setLike(true)
         );
         comments.add(
                 new Comment().setCommentId("1")
@@ -131,8 +133,10 @@ public class DataServer {
                         .setContent("这是内容")
                         .setLikesCount(30)
                         .setCommentAt(123)
+                        .setLike(true)
                         .setAvatar("https://img.taplb.com/md5/22/f1/22f1196f825298281376608459bfa7fe")
-                        .setNickname("小明")
+                        .setNickname("小红明")
+                        .setScore(8)
         );
         comments.add(
                 new Comment().setCommentId("1")
@@ -141,8 +145,22 @@ public class DataServer {
                         .setContent("这是内容")
                         .setLikesCount(30)
                         .setCommentAt(123)
+                        .setLike(true)
                         .setAvatar("https://img.taplb.com/md5/22/f1/22f1196f825298281376608459bfa7fe")
                         .setNickname("小明")
+                        .setScore(5)
+        );
+        comments.add(
+                new Comment().setCommentId("1")
+                        .setGameId("2")
+                        .setUserId("123123")
+                        .setContent("这是内容")
+                        .setLikesCount(30)
+                        .setLike(true)
+                        .setCommentAt(123)
+                        .setAvatar("https://img.taplb.com/md5/22/f1/22f1196f825298281376608459bfa7fe")
+                        .setNickname("小明")
+                        .setScore(8)
         );
         comments.add(
                 new Comment().setCommentId("1")
@@ -151,8 +169,10 @@ public class DataServer {
                         .setContent("这是内容")
                         .setLikesCount(30)
                         .setCommentAt(123)
+                        .setLike(false)
                         .setAvatar("https://img.taplb.com/md5/22/f1/22f1196f825298281376608459bfa7fe")
                         .setNickname("小明")
+                        .setScore(2)
         );
         comments.add(
                 new Comment().setCommentId("1")
@@ -160,19 +180,11 @@ public class DataServer {
                         .setUserId("123123")
                         .setContent("这是内容")
                         .setLikesCount(30)
+                        .setLike(true)
                         .setCommentAt(123)
                         .setAvatar("https://img.taplb.com/md5/22/f1/22f1196f825298281376608459bfa7fe")
                         .setNickname("小明")
-        );
-        comments.add(
-                new Comment().setCommentId("1")
-                        .setGameId("2")
-                        .setUserId("123123")
-                        .setContent("这是内容")
-                        .setLikesCount(30)
-                        .setCommentAt(123)
-                        .setAvatar("https://img.taplb.com/md5/22/f1/22f1196f825298281376608459bfa7fe")
-                        .setNickname("小明")
+                        .setScore(1)
         );
         return comments;
     }

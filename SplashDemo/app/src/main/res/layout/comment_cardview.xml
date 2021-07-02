@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@color/comment_back"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginBottom="20dp"
     android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.shehuan.niv.NiceImageView
             android:id="@+id/comment_user_avatar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:is_circle="true"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
@@ -22,16 +25,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nickname"
+            android:textStyle="bold"
             android:layout_toRightOf="@+id/comment_user_avatar"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"/>
+            android:layout_marginTop="22dp"/>
         <TextView
             android:id="@+id/comment_last_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/last_name"
             android:layout_toRightOf="@+id/comment_user_avatar"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="43dp"
             android:layout_marginLeft="10dp"/>
     </RelativeLayout>
     <RelativeLayout
@@ -79,13 +83,14 @@
         android:layout_marginTop="5dp"/>
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp">
         <ImageView
             android:id="@+id/comment_like"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="4dp"
             android:src="@drawable/baseline_favorite_border_24"/>
         <TextView
             android:id="@+id/comment_like_count"
@@ -96,7 +101,4 @@
             android:layout_marginLeft="4dp"
             android:text="@string/sample_count"/>
     </RelativeLayout>
-
-
-
 </LinearLayout>

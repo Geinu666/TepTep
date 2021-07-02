@@ -64,7 +64,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView bigImg;
     private TextView followersCount;
     private TextView issuer;
+    private Button showComment;
     private List<Comment> commentList = new ArrayList<Comment>();
+
+    private ImageView commentUserAvatar;
+    private TextView commentUserNickname;
+    private TextView commentLastTime;
+    private ImageView starOne;
+    private ImageView starTwo;
+    private ImageView starThree;
+    private ImageView starFour;
+    private ImageView starFive;
+    private TextView commentContent;
+    private ImageView commentLike;
+    private TextView commentLikeCount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +88,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         LightStatusBarUtils.setAndroidNativeLightStatusBar(this, true);
 
         commentList = DataServer.getComment();
-        CommentRecyclerView();
+//        CommentRecyclerView();
 
         gameIcon = findViewById(R.id.game_icon);
         gameForum = findViewById(R.id.game_forum);
@@ -92,6 +106,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         bigImg = findViewById(R.id.big_img);
         followersCount = findViewById(R.id.game_followers);
         issuer = findViewById(R.id.game_company);
+        showComment = findViewById(R.id.button_show_comment);
+
+
+
+        initComment();
 
         service = RetrofitFactory.getGameService(getApplicationContext());
 
@@ -99,6 +118,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         gameForum.setOnClickListener(this);
         gameComment.setOnClickListener(this);
         gameBack.setOnClickListener(this);
+        showComment.setOnClickListener(this);
 
         gameId = "2";
         gameId = getIntent().getStringExtra("gameId");
@@ -151,7 +171,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.game_back:
                 finish();
                 break;
-
+            case R.id.button_show_comment:
+                Intent intent2 = new Intent(GameActivity.this, CommentListActivity.class);
+                intent2.putExtra("gameId", gameId)
+                        .putExtra("gameName", gameName.getText().toString())
+                        .putExtra("iconUrl", iconUrl);
+                startActivity(intent2);
+                overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
+                break;
         }
     }
 
@@ -249,13 +276,56 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    private void CommentRecyclerView(){
-        RecyclerView recyclerView = findViewById(R.id.comment_recyclerview);
+    public void initComment(){
+        commentUserAvatar = findViewById(R.id.comment_user_avatar);
+        commentUserNickname = findViewById(R.id.comment_user_nickname);
+        commentLastTime = findViewById(R.id.comment_last_time);
+        starOne = findViewById(R.id.star_one);
+        starTwo = findViewById(R.id.star_two);
+        starThree = findViewById(R.id.star_three);
+        starFour = findViewById(R.id.star_four);
+        starFive = findViewById(R.id.star_five);
+        commentContent = findViewById(R.id.comment_content);
+        commentLike = findViewById(R.id.comment_like);
+        commentLikeCount = findViewById(R.id.comment_like_count);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        CommentAdapter adapter = new CommentAdapter(commentList);
-        recyclerView.setAdapter(adapter);
+        Comment comment = commentList.get(0);
+        Glide.with(getApplicationContext())
+                .load(comment.getAvatar())
+                .into(commentUserAvatar);
+        commentUserNickname.setText(comment.getNickname());
+        //commentLastTime.setText(comment.get);
+        int score = comment.getScore() / 2;
+        if (score <= 1.0) {
+            starTwo.setVisibility(View.INVISIBLE);
+            starThree.setVisibility(View.INVISIBLE);
+            starFour.setVisibility(View.INVISIBLE);
+            starFive.setVisibility(View.INVISIBLE);
+        } else if (score <= 2.0) {
+            starThree.setVisibility(View.INVISIBLE);
+            starFour.setVisibility(View.INVISIBLE);
+            starFive.setVisibility(View.INVISIBLE);
+        } else if (score <= 3.0) {
+            starFour.setVisibility(View.INVISIBLE);
+            starFive.setVisibility(View.INVISIBLE);
+        } else if (score <= 4.0) {
+            starFive.setVisibility(View.INVISIBLE);
+        }
+        commentContent.setText(comment.getContent());
+        commentLikeCount.setText(String.valueOf(comment.getLikesCount()));
+        //差个点赞识别
+        if (comment.getLike()) {
+            commentLike.setImageResource(R.drawable.baseline_favorite_24);
+        }
     }
+
+//    private void CommentRecyclerView(){
+//        RecyclerView recyclerView = findViewById(R.id.comment_recyclerview);
+//
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        recyclerView.setLayoutManager(layoutManager);
+//        CommentAdapter adapter = new CommentAdapter(commentList);
+//        recyclerView.setAdapter(adapter);
+//    }
 }

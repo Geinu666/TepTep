@@ -90,8 +90,27 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         //commentLastTime
         holder.commentContent.setText(comment.getContent());
         //commentLike
-//        holder.commentLikeCount.setText(comment.getLikesCount());
-
+        holder.commentLikeCount.setText(String.valueOf(comment.getLikesCount()));
+        //经典回顾之假造星星
+        int score = comment.getScore() / 2;
+        if (score <= 1.0) {
+            holder.starTwo.setVisibility(View.INVISIBLE);
+            holder.starThree.setVisibility(View.INVISIBLE);
+            holder.starFour.setVisibility(View.INVISIBLE);
+            holder.starFive.setVisibility(View.INVISIBLE);
+        } else if (score <= 2.0) {
+            holder.starThree.setVisibility(View.INVISIBLE);
+            holder.starFour.setVisibility(View.INVISIBLE);
+            holder.starFive.setVisibility(View.INVISIBLE);
+        } else if (score <= 3.0) {
+            holder.starFour.setVisibility(View.INVISIBLE);
+            holder.starFive.setVisibility(View.INVISIBLE);
+        } else if (score <= 4.0) {
+            holder.starFive.setVisibility(View.INVISIBLE);
+        }
+        if (comment.getLike()) {
+            holder.commentLike.setImageResource(R.drawable.baseline_favorite_24);
+        }
     }
 
     @Override
