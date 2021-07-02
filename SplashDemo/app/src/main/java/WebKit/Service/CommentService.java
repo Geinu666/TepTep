@@ -2,6 +2,7 @@ package WebKit.Service;
 
 import WebKit.Bean.AllCommentBean;
 import WebKit.Bean.CommentBean;
+import WebKit.Bean.LikeBean;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -21,4 +22,8 @@ public interface CommentService {
 
     @GET("comment/all")
     Call<AllCommentBean> getAllComment(@Query("gameId") String gameId);
+
+    @FormUrlEncoded
+    @POST("comment/userLikesComment")
+    Call<LikeBean> postLikeGame(@Field("commentId") String commentId);
 }

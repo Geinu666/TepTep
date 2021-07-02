@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,13 @@ import com.bumptech.glide.Glide;
 import com.shehuan.niv.NiceImageView;
 
 import java.util.List;
+
+import WebKit.Bean.LikeBean;
+import WebKit.RetrofitFactory;
+import WebKit.Service.CommentService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder>{
     private List<Comment> mcommentList;
@@ -33,6 +41,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         TextView commentContent;
         ImageView commentLike;
         TextView commentLikeCount;
+        TextView commentId;
+        TextView commentWriterId;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -48,6 +58,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             commentContent = itemView.findViewById(R.id.comment_content);
             commentLike = itemView.findViewById(R.id.comment_like);
             commentLikeCount = itemView.findViewById(R.id.comment_like_count);
+            commentId = itemView.findViewById(R.id.comment_id);
+            commentWriterId = itemView.findViewById(R.id.comment_writer_id);
         }
     }
 
@@ -73,7 +85,32 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.commentLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                likeComment();
+                int position = holder.getAdapterPosition();
+                Comment comment = mcommentList.get(position);
+                String commentId = comment.getCommentId();
+                CommentService service = RetrofitFactory.getCommentService(mContext);
+                Call<LikeBean> call = service.postLikeGame(commentId);
+                call.enqueue(new Callback<LikeBean>() {
+                    @Override
+                    public void onResponse(Call<LikeBean> call, Response<LikeBean> response) {
+                        if (response.isSuccessful()) {
+                            LikeBean result = response.body();
+                            if (result != null) {
+                                if (result.getData().isLikes()) {
+                                    holder.commentLike.setImageResource(R.drawable.baseline_favorite_24);
+                                } else {
+                                    holder.commentLike.setImageResource(R.drawable.baseline_favorite_border_24);
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<LikeBean> call, Throwable t) {
+                        Toast.makeText(mContext, "点赞失败！", Toast.LENGTH_SHORT).show();
+                    }
+                });
+//                likeComment(commentId);
             }
         });
 
@@ -111,6 +148,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         if (comment.getLike()) {
             holder.commentLike.setImageResource(R.drawable.baseline_favorite_24);
         }
+
+        holder.commentId.setText(comment.getCommentId());
+        holder.commentWriterId.setText(comment.getUserId());
     }
 
     @Override
@@ -119,5 +159,24 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     }
 
     // TODO: 2021/7/2 写点赞评论
-    public void likeComment(){};
+    public void likeComment(String commentId){
+        CommentService service = RetrofitFactory.getCommentService(mContext);
+        Call<LikeBean> call = service.postLikeGame(commentId);
+        call.enqueue(new Callback<LikeBean>() {
+            @Override
+            public void onResponse(Call<LikeBean> call, Response<LikeBean> response) {
+                if (response.isSuccessful()) {
+                    LikeBean result = response.body();
+                    if (result.getData().isLikes()) {
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LikeBean> call, Throwable t) {
+                Toast.makeText(mContext, "点赞失败！", Toast.LENGTH_SHORT).show();
+            }
+        });
+    };
 }

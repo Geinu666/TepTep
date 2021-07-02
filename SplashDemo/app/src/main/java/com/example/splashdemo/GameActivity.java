@@ -81,6 +81,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private TextView commentContent;
     private ImageView commentLike;
     private TextView commentLikeCount;
+    private TextView commentId;
+    private TextView commentWriterId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -291,6 +293,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         commentContent = findViewById(R.id.comment_content);
         commentLike = findViewById(R.id.comment_like);
         commentLikeCount = findViewById(R.id.comment_like_count);
+        commentId = findViewById(R.id.comment_id);
+        commentWriterId = findViewById(R.id.comment_writer_id);
         //这行指定评论
 //        Comment comment = commentList.get(0);
 //        setComment(comment);
@@ -354,6 +358,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         if (comment.getLike()) {
             commentLike.setImageResource(R.drawable.baseline_favorite_24);
         }
+        commentId.setText(comment.getCommentId());
+        commentWriterId.setText(comment.getUserId());
     }
 
 //    private void CommentRecyclerView(){
