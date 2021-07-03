@@ -45,7 +45,6 @@ public class HomeFragment extends SupportFragment {
         return mRootView;
     }
 
-    // TODO: 2021/7/3 在这里写获取游戏
     private void getRecommend() {
         GetGameService service = RetrofitFactory.getGetGameService(getContext());
         Call<AllBean> call = service.getRandom(5);
@@ -71,7 +70,7 @@ public class HomeFragment extends SupportFragment {
 
     private void getHot() {
         GetGameService service = RetrofitFactory.getGetGameService(getContext());
-        Call<AllBean> call = service.getAllGame();
+        Call<AllBean> call = service.getHot();
         call.enqueue(new Callback<AllBean>() {
             @Override
             public void onResponse(Call<AllBean> call, Response<AllBean> response) {
@@ -94,7 +93,7 @@ public class HomeFragment extends SupportFragment {
 
     private void getRank() {
         GetGameService service = RetrofitFactory.getGetGameService(getContext());
-        Call<AllBean> call = service.getRandom(5);
+        Call<AllBean> call = service.getNice();
         call.enqueue(new Callback<AllBean>() {
             @Override
             public void onResponse(Call<AllBean> call, Response<AllBean> response) {

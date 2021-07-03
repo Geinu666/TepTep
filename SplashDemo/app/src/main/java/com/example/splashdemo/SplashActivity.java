@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     private ImageView ad_image;
     private ImageView bottom_image;
     private Button ad_timer;
-    private Integer ms = 4;
+    private Integer ms = 4;//4
     private CountDownTimer textTimer;
     private Intent it;
     String adGameId;
@@ -50,16 +50,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //检测最近一次登陆时间，如果3分钟以内不显示开屏
-//        long i = (long) SharedPreferencesUtil.get(SplashActivity.this, "latestLogin", System.currentTimeMillis() / 60000);
-//        long j = System.currentTimeMillis() / 60000;
-//        SharedPreferencesUtil.put(SplashActivity.this, "latestLogin", j);
-//        if (j - i < 3) {
-//            it = new Intent(SplashActivity.this, MainActivity.class);
-//            startActivity(it);
-//            Log.i("test", "最近登陆过");
-//            finish();
-//        }
+
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -86,13 +77,24 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
             ad_image.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/adImage.jpg"));
             //ad_image.setImageURI(Uri.fromFile(PicFile));
         } else {
-            ad_image.setImageResource(R.mipmap.test_image1);
+            ad_image.setImageResource(R.mipmap.welcome);
             //加载默认图
             SharedPreferencesUtil.put(SplashActivity.this, "version", "0");
         }
 
         verifyStoragePermissions(SplashActivity.this);
         adCountDown();
+        //检测最近一次登陆时间，如果3分钟以内不显示开屏
+//        long i = (long) SharedPreferencesUtil.get(SplashActivity.this, "latestLogin", System.currentTimeMillis() / 60000);
+//        long j = System.currentTimeMillis() / 60000;
+//        SharedPreferencesUtil.put(SplashActivity.this, "latestLogin", j);
+//        if (j - i < 3) {
+//            textTimer.cancel();
+//            it = new Intent(SplashActivity.this, MainActivity.class);
+//            startActivity(it);
+//            Log.i("test", "最近登陆过");
+//            finish();
+//        }
         verifyNetwork();
 
     }
@@ -141,7 +143,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
      * 倒计时实现
      */
     public void adCountDown(){
-        textTimer = new CountDownTimer(3000, 1000) {
+        textTimer = new CountDownTimer(2000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 ms -= 1;

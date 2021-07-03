@@ -93,7 +93,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 Comment comment = mcommentList.get(position);
-                Log.i("test", "comment被你点到啦" + comment.getContent());
             }
         });
 

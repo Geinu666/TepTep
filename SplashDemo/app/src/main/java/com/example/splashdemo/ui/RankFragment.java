@@ -3,13 +3,19 @@ package com.example.splashdemo.ui;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.example.splashdemo.CommentAdapter;
 import com.example.splashdemo.Game;
+import com.example.splashdemo.RankAdapter;
 import com.example.splashdemo.ViewPagerAdapter;
 import com.example.splashdemo.databinding.FragmentRankBinding;
 import com.google.android.material.tabs.TabLayout;
@@ -20,13 +26,18 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import WebKit.Bean.AllBean;
 import WebKit.DataServer;
+import WebKit.RetrofitFactory;
+import WebKit.Service.GetGameService;
 import me.yokeyword.fragmentation.SupportFragment;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RankFragment extends SupportFragment {
     private FragmentRankBinding mBinding;
-    private List<Fragment> fragments;
-    private ArrayList<Game> games;
+    private ArrayList<AllBean.GameBean> rankedGames;
     private View mRootView;
 
     @Override
@@ -39,57 +50,49 @@ public class RankFragment extends SupportFragment {
         return mRootView;
     }
 
-
-    private void loadData() {
-        games = DataServer.getRankData();
-    }
-
-
     /**
-     * 初始化ViewPager2
+     * 获取排行榜
      */
-    private void initViewPager2() {
-        initViewPagerFragments();
-
-        mBinding.viewPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
-        mBinding.viewPager.setAdapter(new ViewPagerAdapter(RankFragment.this,fragments));
-        mBinding.viewPager.setOffscreenPageLimit(2);
-
-        mediateTabLayoutAndViewPager2();
-    }
-
-
-    /**
-     * 创建ViewPager2中要加载的fragment列表
-     */
-    private void initViewPagerFragments() {
-        fragments = new ArrayList<>();
-//        fragments.add(ViewPager2ContentFragment.create(games));
-//        fragments.add(ViewPager2ContentFragment.create(games));
-//        fragments.add(ViewPager2ContentFragment.create(games));
-    }
-
-    /**
-     * 联动ViewPager2与TabLayout
-     */
-    private void mediateTabLayoutAndViewPager2(){
-        List<String> tabNameList = new ArrayList<>();
-        tabNameList.add("热门榜");
-        tabNameList.add("新品榜");
-        tabNameList.add("预约榜");
-        new TabLayoutMediator(mBinding.tabRank, mBinding.viewPager, true, new TabLayoutMediator.TabConfigurationStrategy() {
+    private void getRanked() {
+        GetGameService service = RetrofitFactory.getGetGameService(getContext());
+        Call<AllBean> call = service.getNice();
+        call.enqueue(new Callback<AllBean>() {
             @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                tab.setText(tabNameList.get(position));
+            public void onResponse(Call<AllBean> call, Response<AllBean> response) {
+                if (response.isSuccessful()) {
+                    AllBean result = response.body();
+                    if (result != null) {
+                        ArrayList<AllBean.GameBean> gameList = result.getData();
+                        rankedGames = gameList;
+                        RankRecyclerView();
+                    }
+                }
             }
-        }).attach();
+
+            @Override
+            public void onFailure(Call<AllBean> call, Throwable t) {
+                Toast.makeText(getContext(), "获取游戏列表失败！", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+    public void RankRecyclerView(){
+        RecyclerView recyclerView = mBinding.rankCycleView;
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        RankAdapter adapter = new RankAdapter(rankedGames);
+        recyclerView.setAdapter(adapter);
+    }
+
+
+
+
     protected Object setLayout() {
         return mBinding.getRoot();
     }
 
     protected void onBindView(Bundle savedInstanceState, View rootView) {
-        loadData();
-        initViewPager2();
+        getRanked();
     }
 }
