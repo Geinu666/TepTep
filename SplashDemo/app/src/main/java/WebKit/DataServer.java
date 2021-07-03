@@ -30,7 +30,8 @@ public class DataServer {
         games.add(
                 new Game().setName("明日方舟")
                         .setType("塔防")
-                        .setUrl("https://cdn.jsdelivr.net/gh/Lyw2017/image-hosting@master/images/mrfz.2w3y70akdfw0.jpg")
+                        //
+                        .setUrl("https://img.tapimg.com/market/images/207696c2f229569914514eb800b7e998.jpg?imageView2/0/w/1080/h/9999/q/80/format/jpg/interlace/1/ignore-error/1")
                         .setScore("9.5")
                         .setId("2")
         );
@@ -100,7 +101,8 @@ public class DataServer {
         games.add(
                 new Game().setName("明日方舟")
                         .setType("塔防")
-                        .setUrl("https://cdn.jsdelivr.net/gh/Lyw2017/image-hosting@master/images/mrfz.2w3y70akdfw0.jpg")
+//                        .setUrl("https://cdn.jsdelivr.net/gh/Lyw2017/image-hosting@master/images/mrfz.2w3y70akdfw0.jpg")
+                        .setUrl("https://img.tapimg.com/market/images/207696c2f229569914514eb800b7e998.jpg?imageView2/0/w/1080/h/9999/q/80/format/jpg/interlace/1/ignore-error/1")
                         .setScore("9.5")
                         .setRank("NO.1")
                         .setId("2")

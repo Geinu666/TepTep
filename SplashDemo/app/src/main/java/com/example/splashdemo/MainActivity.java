@@ -80,51 +80,7 @@ public class MainActivity extends SupportActivity {
      * @param v 控件实例
      */
     public void onClick(View v){
-        switch (v.getId()) {
-            case R.id.newActivity:
-                Log.i("press", "true");
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
-                break;
-            case R.id.http_test:
-                OkHttpClient client = new OkHttpClient.Builder()
-                        .addInterceptor(new AddCookiesInterceptor(getApplicationContext()))
-                        .addInterceptor(new ReceivedCookiesInterceptor(getApplicationContext()))
-                        .build();
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://119.91.130.198/api/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(client)
-                        .build();
-                LoginService service = retrofit.create(LoginService.class);
-                Call<LoginBean> call = service.postLogin("test001", "test001");
-                call.enqueue(new Callback<LoginBean>() {
-                    @Override
-                    public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
-                        if (response.isSuccessful()) {
-                            LoginBean bean = response.body();
-                            if (bean != null) {
-                                Log.i("httptest", bean.getMsg());
-                                Log.i("httptest", String.valueOf(bean.getStatus()));
-                                Log.i("httptest", bean.getData().toString());
-                            }
-                            Headers headers = response.headers();
-                            Log.i("header", headers.toString());
-                        }
-                    }
 
-                    @Override
-                    public void onFailure(Call<LoginBean> call, Throwable t) {
-
-                    }
-                });
-                break;
-            case R.id.getGame:
-                Intent intent1 = new Intent(MainActivity.this, GameActivity.class);
-                startActivity(intent1);
-                break;
-        }
     }
 
     /**

@@ -14,33 +14,34 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
-public class GameAdapter extends BaseQuickAdapter<Game, BaseViewHolder> {
+import WebKit.Bean.AllBean;
+
+public class GameAdapter extends BaseQuickAdapter<AllBean.GameBean, BaseViewHolder> {
     private Context context;
-    public GameAdapter(int layoutResId, @Nullable List<Game> data, Context context) {
+    public GameAdapter(int layoutResId, @Nullable List<AllBean.GameBean> data, Context context) {
         super(layoutResId, data);
         this.context = context;
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder baseViewHolder, Game game) {
+    protected void convert(@NonNull BaseViewHolder baseViewHolder, AllBean.GameBean game) {
         baseViewHolder.setText(R.id.rv_item_game_name, game.getName())
-                .setText(R.id.rv_item_game_sort, game.getType())
-                .setText(R.id.rv_item_game_rank, game.getRank())
-                .setText(R.id.rv_item_game_score, game.getScore())
-                .setText(R.id.rv_item_game_id, game.getId());
-
-        MaterialButton rankBtn = baseViewHolder.getView(R.id.rv_item_game_rank);
-        if (game.getRank() != null) {
-            rankBtn.setVisibility(View.VISIBLE);
-            rankBtn.setText(game.getRank());
-        } else {
-            rankBtn.setVisibility(View.GONE);
-        }
-
-
+                .setText(R.id.rv_item_game_score, String.format("%.1f", game.getAvgScore()))
+                .setText(R.id.rv_item_game_id, game.getGameId())
+                .setText(R.id.rv_item_game_description, game.getBriefIntro());
+        MaterialButton sortBtn = baseViewHolder.getView(R.id.rv_item_game_sort);
+        sortBtn.setVisibility(View.GONE);
+//        MaterialButton rankBtn = baseViewHolder.getView(R.id.rv_item_game_rank);
+//        if (game.getRank() != null) {
+//            rankBtn.setVisibility(View.VISIBLE);
+//            rankBtn.setText(game.getRank());
+//        } else {
+//            rankBtn.setVisibility(View.GONE);
+//        }
+        //加载大图
         ImageView gameImg = baseViewHolder.getView(R.id.rv_item_game_img);
         Glide.with(getContext())
-                .load(game.getUrl())
+                .load(game.getDisplayDrawings())
                 .into(gameImg);
     }
 }

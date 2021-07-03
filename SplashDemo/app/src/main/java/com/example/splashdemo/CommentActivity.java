@@ -37,6 +37,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private TextView rateText;
     private TextView rateTitle;
     private ImageView gameIcon;
+    private TextView gameNameView;
     private TextView release;
     private CommentService service;
     private EditText commentContent;
@@ -55,6 +56,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         gameId = getIntent().getExtras().getString("gameId");
         outrating = getIntent().getExtras().getFloat("rating", 0);
         gameName = getIntent().getExtras().getString("gameName");
+        Log.i("test", gameName);
         iconUrl = getIntent().getExtras().getString("iconUrl", null);
         userId = getIntent().getExtras().getString("userId", null);
         content = getIntent().getExtras().getString("content", null);
@@ -68,6 +70,9 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         gameIcon = findViewById(R.id.game_icon);
         release = findViewById(R.id.release_comment);
         commentContent = findViewById(R.id.comment_content);
+        gameNameView = findViewById(R.id.comment_game_name);
+
+        gameNameView.setText(gameName);
 
         if (content != null) {
             commentContent.setText(content);
@@ -120,6 +125,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                 String content = commentContent.getText().toString().trim();
                 if (!isChange){
                     Log.i("test", "发");
+                    Log.i("test", "gameId: " + gameId + "content: " + content + "score: " + score);
                     commitComment(gameId, content, score);
                     break;
                 } else {

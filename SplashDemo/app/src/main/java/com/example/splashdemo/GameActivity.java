@@ -166,6 +166,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         .putExtra("gameName", gameName.getText().toString())
                         .putExtra("iconUrl", iconUrl)
                         .putExtra("userId", userId);
+                Log.i("test", "传到commentActivity的gamename: " + gameName.getText().toString());
                 startActivity(intent1);
                 overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
                 break;
@@ -192,6 +193,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         .putExtra("gameName", gameName.getText().toString())
                         .putExtra("userId", userId)
                         .putExtra("iconUrl", iconUrl);
+                Log.i("test", "传到commentActivity的gamename: " + gameName.getText().toString());
                 startActivity(intent2);
                 overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
                 break;
@@ -326,9 +328,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 if (response.isSuccessful()) {
                     AllCommentBean result = response.body();
                     if (result != null) {
-                        Comment comment = result.getData().get(0);
-                        setComment(comment);
-                        Log.i("test", "获取一条评论成功");
+                        List<Comment> commentList = result.getData();
+                        if (!commentList.isEmpty()){
+                            Comment comment = result.getData().get(0);
+                            setComment(comment);
+                            Log.i("test", "获取一条评论成功");
+                        } else {
+                            Log.i("test", "此游戏还没有评论");
+                            commentCard.setVisibility(View.GONE);
+                        }
                     }
                 }
             }

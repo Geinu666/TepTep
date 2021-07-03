@@ -117,8 +117,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                                 if (result != null) {
                                     if (result.getData().isLikes()) {
                                         holder.commentLike.setImageResource(R.drawable.baseline_favorite_24);
+                                        int i = Integer.parseInt(holder.commentLikeCount.getText().toString());
+                                        holder.commentLikeCount.setText(String.valueOf(i + 1));
                                     } else {
                                         holder.commentLike.setImageResource(R.drawable.baseline_favorite_border_24);
+                                        int i = Integer.parseInt(holder.commentLikeCount.getText().toString());
+                                        holder.commentLikeCount.setText(String.valueOf(i - 1));
                                     }
                                 }
                             }

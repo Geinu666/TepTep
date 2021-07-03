@@ -1,16 +1,20 @@
 package WebKit.Bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AllBean {
 
     private Integer status;
     private String msg;
-    private List<GameBean> data;
+    private ArrayList<GameBean> data;
 
-    public void setData(List<GameBean> data) {
+    public void setData(ArrayList<GameBean> data) {
         this.data = data;
     }
 
@@ -30,11 +34,11 @@ public class AllBean {
         return status;
     }
 
-    public List<GameBean> getData() {
+    public ArrayList<GameBean> getData() {
         return data;
     }
 
-    public static class GameBean {
+    public static class GameBean implements Parcelable {
         private String gameId;
         private String name;
         private Integer size;
@@ -46,6 +50,35 @@ public class AllBean {
         private String icon;
         private String displayDrawings;
         private String briefIntro;
+
+        public GameBean(Parcel in) {
+            gameId = in.readString();
+            name = in.readString();
+            size = in.readInt();
+            issuer = in.readString();
+            downloads = in.readInt();
+            avgScore = in.readDouble();
+            commentCount = in.readInt();
+            interestCount = in.readInt();
+            icon = in.readString();
+            displayDrawings = in.readString();
+            briefIntro = in.readString();
+        }
+
+        public GameBean(){
+
+        }
+        public static final Creator<GameBean> CREATOR = new Creator<GameBean>() {
+            @Override
+            public GameBean createFromParcel(Parcel source) {
+                return new GameBean(source);
+            }
+
+            @Override
+            public GameBean[] newArray(int size) {
+                return new GameBean[size];
+            }
+        };
 
         public void setName(String name) {
             this.name = name;
@@ -133,6 +166,26 @@ public class AllBean {
 
         public Integer getCommentCount() {
             return commentCount;
+        }
+
+        @Override
+        public int describeContents(){
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(gameId);
+            dest.writeString(name);
+            dest.writeInt(size);
+            dest.writeString(issuer);
+            dest.writeInt(downloads);
+            dest.writeDouble(avgScore);
+            dest.writeInt(commentCount);
+            dest.writeInt(interestCount);
+            dest.writeString(icon);
+            dest.writeString(displayDrawings);
+            dest.writeString(briefIntro);
         }
     }
 }

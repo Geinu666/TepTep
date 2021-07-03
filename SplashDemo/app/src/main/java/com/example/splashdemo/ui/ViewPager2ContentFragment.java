@@ -28,6 +28,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+import WebKit.Bean.AllBean;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
@@ -35,9 +36,9 @@ import me.yokeyword.fragmentation.SupportFragment;
  */
 public class ViewPager2ContentFragment extends SupportFragment {
     private FragmentListBinding mBinding;
-    private List<Game> games;
+    private List<AllBean.GameBean> games;
 
-    public static ViewPager2ContentFragment create(ArrayList<Game> games){
+    public static ViewPager2ContentFragment create(ArrayList<AllBean.GameBean> games){
         ViewPager2ContentFragment viewPager2ContentFragment = new ViewPager2ContentFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("games",games);
@@ -64,6 +65,8 @@ public class ViewPager2ContentFragment extends SupportFragment {
         GameAdapter adapter = new GameAdapter(R.layout.game_display_cardview,games,_mActivity);
         mBinding.gameRecyclerview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        //游戏卡点击事件
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {

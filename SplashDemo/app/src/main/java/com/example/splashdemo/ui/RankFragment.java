@@ -64,9 +64,9 @@ public class RankFragment extends SupportFragment {
      */
     private void initViewPagerFragments() {
         fragments = new ArrayList<>();
-        fragments.add(ViewPager2ContentFragment.create(games));
-        fragments.add(ViewPager2ContentFragment.create(games));
-        fragments.add(ViewPager2ContentFragment.create(games));
+//        fragments.add(ViewPager2ContentFragment.create(games));
+//        fragments.add(ViewPager2ContentFragment.create(games));
+//        fragments.add(ViewPager2ContentFragment.create(games));
     }
 
     /**

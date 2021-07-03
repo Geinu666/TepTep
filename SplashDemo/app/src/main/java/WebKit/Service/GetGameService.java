@@ -18,4 +18,7 @@ public interface GetGameService {
 
     @GET("game/one")
     Call<OneGame> getOneGame(@Query("gameId") String gameId);
+
+    @GET("game/random")
+    Call<AllBean> getRandom(@Query("count") int count);
 }
