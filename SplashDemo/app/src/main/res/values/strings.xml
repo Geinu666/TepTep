@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Splash Demo</string>
+    <string name="app_name">TepTep</string>
     <string name="skip_ad">跳过 3 秒</string>
     <string name="title_home">首页</string>
     <string name="title_dynamic">动态</string>

@@ -46,12 +46,10 @@ public class JsJavaBridge {
 
     @JavascriptInterface
     public void logout() {
-        Toast.makeText(activity, "logout", Toast.LENGTH_SHORT).show();
         CookieUtil.removeCookie(activity);
         SharedPreferences sp = activity.getSharedPreferences("cookieData", activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.remove("cookie");
         editor.commit();
-
     }
 }
