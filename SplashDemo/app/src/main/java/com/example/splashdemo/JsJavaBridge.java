@@ -1,6 +1,7 @@
 package com.example.splashdemo;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.webkit.CookieManager;
@@ -18,8 +19,9 @@ public class JsJavaBridge {
 
     private Activity activity;
     private WebView webView;
+    private Context context;
 
-    public JsJavaBridge(Activity activity, WebView webView){
+    public JsJavaBridge(Activity activity, WebView webView, Context context){
         this.activity = activity;
         this.webView = webView;
     }
@@ -46,10 +48,17 @@ public class JsJavaBridge {
 
     @JavascriptInterface
     public void logout() {
-        CookieUtil.removeCookie(activity);
-        SharedPreferences sp = activity.getSharedPreferences("cookieData", activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.remove("cookie");
-        editor.commit();
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                CookieUtil.removeCookie(activity);
+                SharedPreferences sp = activity.getSharedPreferences("cookieData", activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.remove("cookie");
+                editor.commit();
+                ((MainActivity) activity).jumpToItem(R.id.navigation_home);
+            }
+        });
+
     }
 }

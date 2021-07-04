@@ -62,7 +62,7 @@ public class PersonalFragment extends Fragment {
             }
         });
         //给Vue调用
-        personalWebView.addJavascriptInterface(new JsJavaBridge(getActivity(), personalWebView), "$App");
+        personalWebView.addJavascriptInterface(new JsJavaBridge(getActivity(), personalWebView, getContext()), "$App");
         return view;
     }
 

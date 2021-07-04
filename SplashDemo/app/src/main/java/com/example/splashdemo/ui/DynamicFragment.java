@@ -63,7 +63,7 @@ public class DynamicFragment extends Fragment {
                 return false;
             }
         });
-        dynamicWebView.addJavascriptInterface(new JsJavaBridge(getActivity(), dynamicWebView), "$App");
+        dynamicWebView.addJavascriptInterface(new JsJavaBridge(getActivity(), dynamicWebView, getContext()), "$App");
         return view;
     }
 
