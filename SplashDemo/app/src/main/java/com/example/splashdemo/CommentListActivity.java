@@ -39,6 +39,8 @@ public class CommentListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_list);
+
+        LightStatusBarUtils.setAndroidNativeLightStatusBar(this, true);
         gameId = getIntent().getExtras().getString("gameId", null);
         gameName = getIntent().getExtras().getString("gameName", null);
         iconUrl = getIntent().getExtras().getString("iconUrl", null);

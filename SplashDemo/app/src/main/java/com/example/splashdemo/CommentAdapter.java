@@ -198,6 +198,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.commentGameId.setText(comment.getGameId());
         holder.commentGameName.setText(gameName);
         commentScore = comment.getScore();
+        holder.commentLastTime.setText(Time.CalculateTime(comment.getCommentAt()));
     }
 
     @Override

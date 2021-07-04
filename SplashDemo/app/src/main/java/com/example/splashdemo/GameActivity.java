@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.InputQueue;
 import android.view.View;
@@ -275,8 +276,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                                 .into(gameIcon);
                         iconUrl = result.getData().getIcon();
                         followersCount.setText("关注 " + result.getData().getInterestCount());
-                        issuer.setText("厂商 " + result.getData().getIssuer());
+                        String textfollow = "关注 "
+                                + "<b><tt>" + result.getData().getInterestCount() + "</tt></b>";
+                        followersCount.setText(Html.fromHtml(textfollow));
                         gameName.setText(result.getData().getName());
+                        String textissue = "厂商 "
+                                + "<b><tt>" + result.getData().getIssuer() + "</tt></b>";
+                        issuer.setText(Html.fromHtml(textissue));
 //                        result.getData().getSize();
                         if (result.getData().getCurrentUserLikes()) {
                             likeIcon.setImageResource(R.drawable.baseline_favorite_24);
@@ -383,6 +389,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
         commentId.setText(comment.getCommentId());
         commentWriterId.setText(comment.getUserId());
+        commentLastTime.setText(Time.CalculateTime(comment.getCommentAt()));
     }
 
     /**
