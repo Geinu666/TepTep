@@ -163,6 +163,7 @@
                         android:layout_marginLeft="4dp"
                         android:layout_toRightOf="@+id/like_icon"
                         android:text="@string/game_like"
+                        android:textColor="@color/black"
                         android:textSize="15sp"/>
                     </RelativeLayout>
                 </RelativeLayout>
@@ -192,6 +193,7 @@
                         android:layout_marginLeft="4dp"
                         android:layout_toRightOf="@+id/comment_icon"
                         android:text="@string/game_comment"
+                        android:textColor="@color/black"
                         android:textSize="15sp"/>
                     </RelativeLayout>
 
@@ -228,6 +230,7 @@
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         android:text="@string/game_forum"
+                        android:textColor="@color/black"
                         android:textSize="15sp"/>
                     </RelativeLayout>
                 </RelativeLayout>
@@ -247,6 +250,7 @@
                         android:layout_centerVertical="true"
                         android:text="@string/brief_info"
                         android:textSize="22sp"
+                        android:textColor="@color/black"
                         android:textStyle="bold"/>
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/game_category"
@@ -257,8 +261,10 @@
                         android:layout_toRightOf="@+id/brief_info"
                         android:backgroundTint="#686464"
                         android:clickable="false"
+                        android:visibility="gone"
                         android:padding="2dp"
                         android:text="塔防"
+                        android:textColor="@color/black"
                         android:textSize="12sp"
                         app:cornerRadius="10dp" />
                 </RelativeLayout>
@@ -269,8 +275,9 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"
                     android:text="@string/intro_content"
-                    android:textSize="16sp"/>
+                    android:textSize="15sp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -281,6 +288,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/rate_title"
+                    android:textColor="@color/black"
                     android:textSize="22sp"
                     android:textStyle="bold"/>
                 <RelativeLayout
@@ -360,6 +368,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/nickname"
+                        android:textColor="@color/black"
                         android:textStyle="bold"
                         android:layout_toRightOf="@+id/comment_user_avatar"
                         android:layout_marginLeft="10dp"
@@ -414,6 +423,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/intro_content"
                     android:layout_marginLeft="20dp"
+                    android:textColor="@color/black"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="5dp"/>
                 <RelativeLayout

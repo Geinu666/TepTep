@@ -134,9 +134,9 @@ public class HomeFragment extends SupportFragment {
      */
     private void initViewPagerFragments() {
         fragments = new ArrayList<>();
-        fragments.add(ViewPager2ContentFragment.create(recommendGames));
-        fragments.add(ViewPager2ContentFragment.create(hotGames));
-        fragments.add(ViewPager2ContentFragment.create(rankGames));
+        fragments.add(ViewPager2ContentFragment.create(recommendGames, true));
+        fragments.add(ViewPager2ContentFragment.create(hotGames, false));
+        fragments.add(ViewPager2ContentFragment.create(rankGames, false));
     }
 
     /**
