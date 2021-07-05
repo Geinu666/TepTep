@@ -106,9 +106,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
+        //同步登陆状态
         judgeState();
-
+        //设置浅色状态栏
         LightStatusBarUtils.setAndroidNativeLightStatusBar(this, true);
 
         gameIcon = findViewById(R.id.game_icon);
@@ -137,7 +137,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         categoryTwo = findViewById(R.id.game_category_2);
         categoryThree = findViewById(R.id.game_category_3);
 
-
         service = RetrofitFactory.getGameService(getApplicationContext());
 
         gameLike.setOnClickListener(this);
@@ -147,16 +146,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         showComment.setOnClickListener(this);
         commentCard.setOnClickListener(this);
 
+        iconUrl = getIntent().getStringExtra("iconUrl");
         gameId = getIntent().getStringExtra("gameId");
+
         //用gameId拿数据
-
-
-
         getDataAndSet(gameId);
-
         initComment();
 
-        iconUrl = getIntent().getStringExtra("iconUrl");
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
@@ -173,12 +169,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
-
-
-
-
-
-
     }
 
     @Override
@@ -386,7 +376,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
-
+    //做评论的绑定和加载
     public void initComment(){
         commentUserAvatar = findViewById(R.id.comment_user_avatar);
         commentUserNickname = findViewById(R.id.comment_user_nickname);
@@ -407,6 +397,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         getAndSetComment();
     }
 
+    /**
+     * 网络请求拿评论，有就把第一条展示，没有就隐藏评论卡片
+     */
     private void getAndSetComment(){
         CommentService commentService = RetrofitFactory.getCommentService(this);
         Log.i("test", "获取gameId=" + gameId);
@@ -439,8 +432,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * 操作评论卡
-     * @param comment
+     * 根据数据加载评论到视图
+     * @param comment 读入的评论
      */
     private void setComment(Comment comment){
         Glide.with(getApplicationContext())
@@ -499,6 +492,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    /**
+     * 初始化轮播的进度条
+     * @param drawings 轮播图片链表
+     */
     private void initIndicator(List<String> drawings){
         for (int i = 0; i < drawings.size() - 1; i++) {
             ImageView imageView = new ImageView(this);
