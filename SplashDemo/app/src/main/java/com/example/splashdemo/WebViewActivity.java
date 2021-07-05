@@ -9,9 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -25,6 +23,9 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.example.splashdemo.utils.JsJavaBridge;
+import com.example.splashdemo.utils.LightStatusBarUtils;
+import com.example.splashdemo.utils.WebUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**

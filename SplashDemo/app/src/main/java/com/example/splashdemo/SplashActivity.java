@@ -20,11 +20,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.splashdemo.SharedPreferencesUtil;
+import com.example.splashdemo.entity.advertisement;
+import com.example.splashdemo.utils.SharedPreferencesUtil;
+import com.example.splashdemo.utils.updateAdvertisement;
 
 import java.io.File;
 import java.util.List;
 
+import WebKit.Service.adInterface;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;

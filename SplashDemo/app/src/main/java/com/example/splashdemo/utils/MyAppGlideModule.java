@@ -1,4 +1,4 @@
-package com.example.splashdemo;
+package com.example.splashdemo.utils;
 
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;

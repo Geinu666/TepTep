@@ -1,6 +1,6 @@
 package WebKit.Bean;
 
-import com.example.splashdemo.Comment;
+import com.example.splashdemo.entity.Comment;
 
 import java.util.List;
 

@@ -1,8 +1,5 @@
 package com.example.splashdemo;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.media.Rating;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,11 +9,13 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
+import com.example.splashdemo.utils.LightStatusBarUtils;
 
 import WebKit.Bean.ChangeContent;
 import WebKit.Bean.CommentBean;
-import WebKit.Bean.Failure;
 import WebKit.RetrofitFactory;
 import WebKit.Service.CommentService;
 import retrofit2.Call;

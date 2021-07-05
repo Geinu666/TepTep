@@ -1,4 +1,4 @@
-package com.example.splashdemo;
+package com.example.splashdemo.entity;
 
 public class advertisement {
     private String updateTime;

@@ -1,9 +1,7 @@
 package com.example.splashdemo;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -11,10 +9,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.graphics.drawable.ColorDrawable;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,26 +21,11 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.example.splashdemo.databinding.ActivityMainBinding;
+import com.example.splashdemo.utils.LightStatusBarUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import WebKit.AddCookiesInterceptor;
-import WebKit.Bean.LoginBean;
-import WebKit.Service.LoginService;
-import WebKit.ReceivedCookiesInterceptor;
 import me.yokeyword.fragmentation.SupportActivity;
-import okhttp3.Headers;
-import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends SupportActivity {
     private ActivityMainBinding binding;

@@ -1,30 +1,23 @@
 package com.example.splashdemo.ui;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.example.splashdemo.JsJavaBridge;
+import com.example.splashdemo.utils.JsJavaBridge;
 import com.example.splashdemo.LoginActivity;
 import com.example.splashdemo.MainActivity;
 import com.example.splashdemo.R;
-import com.example.splashdemo.WebUtil;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.splashdemo.utils.WebUtil;
 
 import WebKit.Bean.LoginBean;
 import WebKit.RetrofitFactory;
@@ -36,19 +29,22 @@ import retrofit2.Response;
 public class DynamicFragment extends Fragment {
 
     private WebView dynamicWebView;
-    private long exitTime = 0;
     public static DynamicFragment instance = null;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         judgeState();
         instance = this;
+
         View view = inflater.inflate(R.layout.fragment_dynamic, container, false);
-        Log.i("dynamicWebView", "start");
+
         dynamicWebView = (WebView) view.findViewById(R.id.dynamicWebView);
 
         WebUtil webUtil = new WebUtil(dynamicWebView, getContext());
         webUtil.webViewSetting("TimeLine", 1);
+
+        //好像没有效果的监听返回
         dynamicWebView.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -67,6 +63,10 @@ public class DynamicFragment extends Fragment {
         return view;
     }
 
+    /**
+     * 检测登陆状态
+     * 未登录则跳转
+     */
     private void judgeState(){
         LoginService service = RetrofitFactory.getLoginService(getActivity());
         Call<LoginBean> call = service.getUserMessage();
@@ -94,6 +94,7 @@ public class DynamicFragment extends Fragment {
             //登陆成功则刷新WebView
             dynamicWebView.reload();
         } else {
+            //未登录则跳转首页
             MainActivity.instance.jumpToItem(R.id.navigation_home);
         }
     }

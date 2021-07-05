@@ -1,4 +1,4 @@
-package com.example.splashdemo;
+package com.example.splashdemo.utils;
 
 import android.util.Log;
 
@@ -7,6 +7,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 用来将Timestamp转成人话的类
+ */
 public class Time {
     public static String CalculateTime(long time){
         long nowTime=System.currentTimeMillis();  //获取当前时间的毫秒数

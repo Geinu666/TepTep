@@ -1,20 +1,9 @@
-package WebKit;
+package Deprecate;
 
-import android.content.Context;
-import android.widget.Toast;
+import com.example.splashdemo.entity.Comment;
+import com.example.splashdemo.entity.Game;
 
-import com.example.splashdemo.Comment;
-import com.example.splashdemo.Game;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
-
-import WebKit.Bean.AllCommentBean;
-import WebKit.Service.CommentService;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * 造假中心(不太实际，即将弃用）

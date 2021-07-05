@@ -1,4 +1,4 @@
-package com.example.splashdemo;
+package com.example.splashdemo.utils;
 
 import android.app.Activity;
 import android.view.View;

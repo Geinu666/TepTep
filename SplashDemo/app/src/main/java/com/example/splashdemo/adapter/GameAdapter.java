@@ -1,4 +1,4 @@
-package com.example.splashdemo;
+package com.example.splashdemo.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.example.splashdemo.R;
 import com.google.android.material.button.MaterialButton;
 
 import androidx.annotation.NonNull;

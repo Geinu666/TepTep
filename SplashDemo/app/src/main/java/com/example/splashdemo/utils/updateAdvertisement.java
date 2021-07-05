@@ -1,4 +1,4 @@
-package com.example.splashdemo;
+package com.example.splashdemo.utils;
 
 import android.content.Context;
 import android.os.Environment;
@@ -6,6 +6,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.os.Handler;
+
+import com.example.splashdemo.entity.advertisement;
 
 import java.io.File;
 import java.io.FileOutputStream;

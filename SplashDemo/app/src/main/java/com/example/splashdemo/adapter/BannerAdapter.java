@@ -1,16 +1,16 @@
-package com.example.splashdemo;
+package com.example.splashdemo.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.splashdemo.R;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.ViewHolder
     private Context mContext;
     private int Count;
 
-    BannerAdapter(List<String> drawings, Context context) {
+    public BannerAdapter(List<String> drawings, Context context) {
         this.drawings = drawings;
         mContext = context;
         Count = drawings.size();

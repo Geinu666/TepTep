@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.splashdemo.utils.LightStatusBarUtils;
+
 import WebKit.Bean.LoginBean;
 import WebKit.RetrofitFactory;
 import WebKit.Service.LoginService;
@@ -35,8 +37,7 @@ public class SignupActivity extends AppCompatActivity {
     private String nic;
     private LoginService service;
     private Boolean isReg = false;
-//    private String phone;
-//    private String mail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

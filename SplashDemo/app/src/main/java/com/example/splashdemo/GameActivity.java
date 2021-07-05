@@ -1,46 +1,37 @@
 package com.example.splashdemo;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
 import android.util.Log;
-import android.view.InputQueue;
 import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.splashdemo.adapter.BannerAdapter;
+import com.example.splashdemo.entity.Comment;
+import com.example.splashdemo.utils.LightStatusBarUtils;
+import com.example.splashdemo.utils.Time;
 import com.google.android.material.button.MaterialButton;
 
-import org.w3c.dom.Text;
-
-import java.nio.channels.InterruptedByTimeoutException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import WebKit.Bean.AllBean;
 import WebKit.Bean.AllCommentBean;
 import WebKit.Bean.LikeBean;
 import WebKit.Bean.LoginBean;
 import WebKit.Bean.OneGame;
-import WebKit.DataServer;
 import WebKit.RetrofitFactory;
 import WebKit.Service.CommentService;
 import WebKit.Service.GameService;
@@ -285,9 +276,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
                         commentCount.setText(result.getData().getCommentCount().toString() + " 人评分");
 
-//                        Glide.with(getApplicationContext())
-//                                .load(result.getData().getDisplayDrawings())
-//                                .into(bigImg);
                         String[] list = result.getData().getDisplayDrawings().split("\\|");
                         List<String> drawings = new ArrayList<>(Arrays.asList(list));
                         Glide.with(getApplicationContext())
@@ -391,9 +379,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         commentLikeCount = findViewById(R.id.comment_like_count);
         commentId = findViewById(R.id.comment_id);
         commentWriterId = findViewById(R.id.comment_writer_id);
-        //这行指定评论
-//        Comment comment = commentList.get(0);
-//        setComment(comment);
+
         getAndSetComment();
     }
 

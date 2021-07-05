@@ -1,4 +1,4 @@
-package WebKit.Bean;
+package Deprecate;
 
 /**
  * 用处不详，即将加入垃圾堆

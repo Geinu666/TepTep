@@ -1,4 +1,4 @@
-package com.example.splashdemo;
+package com.example.splashdemo.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.splashdemo.GameActivity;
+import com.example.splashdemo.R;
 
 import java.util.List;
 

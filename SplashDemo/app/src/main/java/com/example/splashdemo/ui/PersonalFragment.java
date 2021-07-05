@@ -10,19 +10,14 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.splashdemo.JsJavaBridge;
+import com.example.splashdemo.utils.JsJavaBridge;
 import com.example.splashdemo.LoginActivity;
 import com.example.splashdemo.MainActivity;
 import com.example.splashdemo.R;
-import com.example.splashdemo.WebUtil;
+import com.example.splashdemo.utils.WebUtil;
 
 import WebKit.Bean.LoginBean;
 import WebKit.RetrofitFactory;
@@ -34,7 +29,7 @@ import retrofit2.Response;
 
 public class PersonalFragment extends Fragment {
     private WebView personalWebView;
-    private long exitTime = 0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,6 +61,9 @@ public class PersonalFragment extends Fragment {
         return view;
     }
 
+    /**
+     * 经典登录检验
+     */
     private void judgeState(){
         LoginService service = RetrofitFactory.getLoginService(getActivity());
         Call<LoginBean> call = service.getUserMessage();
@@ -93,6 +91,7 @@ public class PersonalFragment extends Fragment {
             //登陆成功则刷新WebView
             personalWebView.reload();
         } else {
+            //没登陆就回到首页
             MainActivity.instance.jumpToItem(R.id.navigation_home);
         }
     }

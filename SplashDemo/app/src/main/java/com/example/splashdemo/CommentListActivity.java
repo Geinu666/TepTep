@@ -10,16 +10,16 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.splashdemo.adapter.CommentAdapter;
+import com.example.splashdemo.entity.Comment;
+import com.example.splashdemo.utils.LightStatusBarUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import WebKit.Bean.AllCommentBean;
-import WebKit.DataServer;
 import WebKit.RetrofitFactory;
 import WebKit.Service.CommentService;
 import retrofit2.Call;

@@ -1,4 +1,4 @@
-package com.example.splashdemo;
+package com.example.splashdemo.entity;
 
 public class Comment {
     private String commentId;

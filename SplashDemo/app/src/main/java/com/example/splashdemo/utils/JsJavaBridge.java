@@ -1,4 +1,4 @@
-package com.example.splashdemo;
+package com.example.splashdemo.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,6 +8,10 @@ import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.Toast;
+
+import com.example.splashdemo.MainActivity;
+import com.example.splashdemo.R;
+import com.example.splashdemo.WebViewActivity;
 
 import WebKit.CookieUtil;
 

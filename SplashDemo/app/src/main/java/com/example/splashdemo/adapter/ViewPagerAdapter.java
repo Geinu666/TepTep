@@ -1,4 +1,4 @@
-package com.example.splashdemo;
+package com.example.splashdemo.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

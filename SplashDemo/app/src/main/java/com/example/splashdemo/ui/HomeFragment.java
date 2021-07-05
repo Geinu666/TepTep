@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.splashdemo.ViewPagerAdapter;
+import com.example.splashdemo.adapter.ViewPagerAdapter;
 import com.example.splashdemo.databinding.FragmentHomeBinding;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -45,6 +45,9 @@ public class HomeFragment extends SupportFragment {
         return mRootView;
     }
 
+    /**
+     * 获取推荐
+     */
     private void getRecommend() {
         GetGameService service = RetrofitFactory.getGetGameService(getContext());
         Call<AllBean> call = service.getRandom(5);
@@ -68,6 +71,9 @@ public class HomeFragment extends SupportFragment {
         });
     }
 
+    /**
+     * 获取热门
+     */
     private void getHot() {
         GetGameService service = RetrofitFactory.getGetGameService(getContext());
         Call<AllBean> call = service.getHot();
@@ -91,6 +97,9 @@ public class HomeFragment extends SupportFragment {
         });
     }
 
+    /**
+     * 获取排行
+     */
     private void getRank() {
         GetGameService service = RetrofitFactory.getGetGameService(getContext());
         Call<AllBean> call = service.getNice();

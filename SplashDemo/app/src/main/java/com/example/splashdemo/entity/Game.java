@@ -1,4 +1,4 @@
-package com.example.splashdemo;
+package com.example.splashdemo.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;

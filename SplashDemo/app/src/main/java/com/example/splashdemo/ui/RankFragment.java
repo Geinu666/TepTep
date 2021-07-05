@@ -2,32 +2,22 @@ package com.example.splashdemo.ui;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.splashdemo.CommentAdapter;
-import com.example.splashdemo.Game;
-import com.example.splashdemo.RankAdapter;
-import com.example.splashdemo.ViewPagerAdapter;
+import com.example.splashdemo.adapter.RankAdapter;
 import com.example.splashdemo.databinding.FragmentRankBinding;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import WebKit.Bean.AllBean;
-import WebKit.DataServer;
 import WebKit.RetrofitFactory;
 import WebKit.Service.GetGameService;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -42,11 +32,9 @@ public class RankFragment extends SupportFragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         mBinding = FragmentRankBinding.inflate(inflater);
         mRootView = mBinding.getRoot();
         onBindView(savedInstanceState,mRootView);
-//        return super.onCreateView(inflater, container, savedInstanceState);
         return mRootView;
     }
 
@@ -84,9 +72,6 @@ public class RankFragment extends SupportFragment {
         RankAdapter adapter = new RankAdapter(rankedGames);
         recyclerView.setAdapter(adapter);
     }
-
-
-
 
     protected Object setLayout() {
         return mBinding.getRoot();

@@ -5,11 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.os.Handler;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,16 +17,12 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
-import com.example.splashdemo.Game;
 import com.example.splashdemo.GameActivity;
-import com.example.splashdemo.GameAdapter;
+import com.example.splashdemo.adapter.GameAdapter;
 import com.example.splashdemo.R;
 import com.example.splashdemo.databinding.FragmentListBinding;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,6 +89,7 @@ public class ViewPager2ContentFragment extends SupportFragment {
                 getActivity().overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
             }
         });
+
         //触底刷新判定
         if (canLoad) {
             mBinding.gameRecyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -103,7 +97,6 @@ public class ViewPager2ContentFragment extends SupportFragment {
                 public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                     super.onScrollStateChanged(recyclerView, newState);
                     if (!recyclerView.canScrollVertically(1) && newState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) {
-                        Log.i("test", "到底部！");
                         GetGameService service = RetrofitFactory.getGetGameService(getContext());
                         Call<AllBean> call = service.getRandom(5);
                         call.enqueue(new Callback<AllBean>() {
@@ -112,8 +105,6 @@ public class ViewPager2ContentFragment extends SupportFragment {
                                 if (response.isSuccessful()) {
                                     AllBean result = response.body();
                                     if (result != null) {
-                                        Log.i("test", "我在加数据！");
-                                        Log.i("test", String.valueOf(games.size()));
                                         ArrayList<AllBean.GameBean> gameList = result.getData();
                                         for (int i = 0; i < 5; i++) {
                                             addItem(games.size(), gameList.get(i));

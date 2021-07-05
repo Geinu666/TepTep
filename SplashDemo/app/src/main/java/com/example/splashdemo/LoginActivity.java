@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.DigitsKeyListener;
@@ -18,12 +17,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.splashdemo.utils.LightStatusBarUtils;
+
 import WebKit.Bean.LoginBean;
-import WebKit.Bean.LoginData;
 import WebKit.CookieUtil;
 import WebKit.Service.LoginService;
 import WebKit.RetrofitFactory;
-import okhttp3.Headers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

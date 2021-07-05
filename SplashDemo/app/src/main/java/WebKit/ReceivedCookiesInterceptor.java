@@ -1,12 +1,8 @@
 package WebKit;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-
-import com.example.splashdemo.MainActivity;
-import com.example.splashdemo.SharedPreferencesUtil;
 
 import java.io.IOException;
 import java.util.HashSet;
