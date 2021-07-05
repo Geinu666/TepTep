@@ -314,8 +314,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                                 @Override
                                 public void onPageSelected(int position) {
                                     super.onPageSelected(position);
-                                    int current = position % 4;
-                                    int last = lastPosition % 4;
+                                    int current = position % (drawings.size() - 1);
+                                    int last = lastPosition % (drawings.size() - 1);
                                     indicatorContainer.getChildAt(current).setBackgroundResource(R.drawable.blue_indicator);
                                     indicatorContainer.getChildAt(last).setBackgroundResource(R.drawable.white_indicator);
                                     lastPosition = position;
