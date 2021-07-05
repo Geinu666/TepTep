@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Handler;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,12 +96,13 @@ public class ViewPager2ContentFragment extends SupportFragment {
                 getActivity().overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
             }
         });
+        //触底刷新判定
         if (canLoad) {
             mBinding.gameRecyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                     super.onScrollStateChanged(recyclerView, newState);
-                    if (!recyclerView.canScrollVertically(1)) {
+                    if (!recyclerView.canScrollVertically(1) && newState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) {
                         Log.i("test", "到底部！");
                         GetGameService service = RetrofitFactory.getGetGameService(getContext());
                         Call<AllBean> call = service.getRandom(5);

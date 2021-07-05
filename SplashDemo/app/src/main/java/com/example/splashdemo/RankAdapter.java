@@ -29,6 +29,7 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.ViewHolder>{
         TextView gameScore;
         TextView gameId;
         TextView gameName;
+        TextView gameCategory;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -38,6 +39,7 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.ViewHolder>{
             gameScore = itemView.findViewById(R.id.game_score);
             gameId = itemView.findViewById(R.id.game_id);
             gameName = itemView.findViewById(R.id.game_name);
+            gameCategory = itemView.findViewById(R.id.rank_category);
         }
     }
 
@@ -73,6 +75,12 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.ViewHolder>{
         holder.gameId.setText(game.getGameId());
         holder.gameRank.setText(String.valueOf(position + 1));
         holder.gameName.setText(game.getName());
+        if (game.getCategory() != null) {
+            holder.gameCategory.setVisibility(View.VISIBLE);
+            holder.gameCategory.setText(game.getCategory().replace(" ", "·"));
+        } else {
+            holder.gameCategory.setVisibility(View.GONE);
+        }
     }
 
     @Override

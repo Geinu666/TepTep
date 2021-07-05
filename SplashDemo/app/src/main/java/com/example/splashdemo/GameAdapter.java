@@ -12,6 +12,8 @@ import com.google.android.material.button.MaterialButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import WebKit.Bean.AllBean;
@@ -30,7 +32,13 @@ public class GameAdapter extends BaseQuickAdapter<AllBean.GameBean, BaseViewHold
                 .setText(R.id.rv_item_game_id, game.getGameId())
                 .setText(R.id.rv_item_game_description, game.getBriefIntro());
         MaterialButton sortBtn = baseViewHolder.getView(R.id.rv_item_game_sort);
-        sortBtn.setVisibility(View.GONE);
+        if (game.getCategory() != null) {
+            sortBtn.setVisibility(View.VISIBLE);
+            String[] i = game.getCategory().split(" ");
+            sortBtn.setText(i[0]);
+        } else {
+            sortBtn.setVisibility(View.GONE);
+        }
 //        MaterialButton rankBtn = baseViewHolder.getView(R.id.rv_item_game_rank);
 //        if (game.getRank() != null) {
 //            rankBtn.setVisibility(View.VISIBLE);
@@ -40,8 +48,10 @@ public class GameAdapter extends BaseQuickAdapter<AllBean.GameBean, BaseViewHold
 //        }
         //加载大图
         ImageView gameImg = baseViewHolder.getView(R.id.rv_item_game_img);
+        String[] list = game.getDisplayDrawings().split("\\|");
+        List<String> drawings = new ArrayList<>(Arrays.asList(list));
         Glide.with(getContext())
-                .load(game.getDisplayDrawings())
+                .load(drawings.get(0))
                 .into(gameImg);
     }
 }

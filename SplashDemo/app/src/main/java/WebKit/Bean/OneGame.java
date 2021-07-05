@@ -1,5 +1,7 @@
 package WebKit.Bean;
 
+import java.util.List;
+
 public class OneGame {
     private Integer status;
     private String msg;
@@ -42,6 +44,15 @@ public class OneGame {
         private String displayDrawings;
         private String briefIntro;
         private Boolean currentUserLikes;
+        private String category;
+
+        public void setCategory(String category) {
+            this.category = category;
+        }
+
+        public String getCategory() {
+            return category;
+        }
 
         public void setGameId(String gameId) {
             this.gameId = gameId;
