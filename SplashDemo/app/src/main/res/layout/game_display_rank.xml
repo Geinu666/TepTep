@@ -51,7 +51,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:text="9.9"
+                android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/game_star"/>
+            <TextView
+                android:id="@+id/rank_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_toRightOf="@+id/game_score"
+                android:text="休闲·放置"
+                android:layout_centerVertical="true"
+                android:textSize="12sp"/>
+
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

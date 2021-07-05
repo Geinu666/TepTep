@@ -50,6 +50,7 @@ public class AllBean {
         private String icon;
         private String displayDrawings;
         private String briefIntro;
+        private String category;
 
         public GameBean(Parcel in) {
             gameId = in.readString();
@@ -63,6 +64,7 @@ public class AllBean {
             icon = in.readString();
             displayDrawings = in.readString();
             briefIntro = in.readString();
+            category = in.readString();
         }
 
         public GameBean(){
@@ -168,6 +170,14 @@ public class AllBean {
             return commentCount;
         }
 
+        public void setCategory(String category) {
+            this.category = category;
+        }
+
+        public String getCategory() {
+            return category;
+        }
+
         @Override
         public int describeContents(){
             return 0;
@@ -186,6 +196,7 @@ public class AllBean {
             dest.writeString(icon);
             dest.writeString(displayDrawings);
             dest.writeString(briefIntro);
+            dest.writeString(category);
         }
     }
 }

@@ -3,14 +3,17 @@ package com.example.splashdemo;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Html;
 import android.util.Log;
 import android.view.InputQueue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -23,11 +26,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.button.MaterialButton;
 
 import org.w3c.dom.Text;
 
 import java.nio.channels.InterruptedByTimeoutException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import WebKit.Bean.AllBean;
@@ -62,6 +67,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private GameService service;
     private String userId;
     private LinearLayout commentCard;
+    private ViewPager2 viewPager2;
+    private LinearLayout indicatorContainer;
+    private int lastPosition;
+    private Handler mHandler = new Handler();
+    private LinearLayout tagContainer;
+    private RelativeLayout scrollPic;
+    private MaterialButton categoryOne;
+    private MaterialButton categoryTwo;
+    private MaterialButton categoryThree;
 
     private TextView likeText;
     private ImageView likeIcon;
@@ -115,9 +129,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         issuer = findViewById(R.id.game_company);
         showComment = findViewById(R.id.button_show_comment);
         commentCard = findViewById(R.id.comment_card);
-
-
-
+        viewPager2 = findViewById(R.id.banner_viewpager);
+        indicatorContainer = findViewById(R.id.banner_indicator);
+        tagContainer = findViewById(R.id.tag_container);
+        scrollPic = findViewById(R.id.scroll_pic);
+        categoryOne = findViewById(R.id.game_category_1);
+        categoryTwo = findViewById(R.id.game_category_2);
+        categoryThree = findViewById(R.id.game_category_3);
 
 
         service = RetrofitFactory.getGameService(getApplicationContext());
@@ -131,11 +149,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         gameId = getIntent().getStringExtra("gameId");
         //用gameId拿数据
-        Log.i("test", "gameId:" + gameId);
-        Log.i("test", "before setget");
+
+
+
         getDataAndSet(gameId);
-        Log.i("test", "after setget");
+
         initComment();
+
         iconUrl = getIntent().getStringExtra("iconUrl");
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -153,6 +173,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
+
+
+
+
+
+
     }
 
     @Override
@@ -266,30 +292,87 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         rateScore.setText(newScore);
 
                         gameIntro.setText(result.getData().getBriefIntro());
+
                         commentCount.setText(result.getData().getCommentCount().toString() + " 人评分");
+
+//                        Glide.with(getApplicationContext())
+//                                .load(result.getData().getDisplayDrawings())
+//                                .into(bigImg);
+                        String[] list = result.getData().getDisplayDrawings().split("\\|");
+                        List<String> drawings = new ArrayList<>(Arrays.asList(list));
                         Glide.with(getApplicationContext())
-                                .load(result.getData().getDisplayDrawings())
+                                .load(drawings.get(0))
                                 .into(bigImg);
-//                        result.getData().getDownloads();
+                        if (drawings.size() > 1) {
+                            initIndicator(drawings);
+                            BannerAdapter adapter = new BannerAdapter(drawings, getApplicationContext());
+                            viewPager2.setAdapter(adapter);
+                            viewPager2.setCurrentItem(500);
+                            lastPosition = 500;
+
+                            viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                                @Override
+                                public void onPageSelected(int position) {
+                                    super.onPageSelected(position);
+                                    int current = position % 4;
+                                    int last = lastPosition % 4;
+                                    indicatorContainer.getChildAt(current).setBackgroundResource(R.drawable.blue_indicator);
+                                    indicatorContainer.getChildAt(last).setBackgroundResource(R.drawable.white_indicator);
+                                    lastPosition = position;
+                                }
+                            });
+                        } else {
+                            scrollPic.setVisibility(View.GONE);
+                        }
                         Glide.with(getApplicationContext())
                                 .load(result.getData().getIcon())
                                 .into(gameIcon);
+
                         iconUrl = result.getData().getIcon();
+
                         followersCount.setText("关注 " + result.getData().getInterestCount());
                         String textfollow = "关注 "
                                 + "<b><tt>" + result.getData().getInterestCount() + "</tt></b>";
                         followersCount.setText(Html.fromHtml(textfollow));
+
                         gameName.setText(result.getData().getName());
                         String textissue = "厂商 "
                                 + "<b><tt>" + result.getData().getIssuer() + "</tt></b>";
                         issuer.setText(Html.fromHtml(textissue));
-//                        result.getData().getSize();
+
                         if (result.getData().getCurrentUserLikes()) {
                             likeIcon.setImageResource(R.drawable.baseline_favorite_24);
                             likeText.setText(R.string.game_is_like);
                         } else {
                             likeIcon.setImageResource(R.drawable.baseline_favorite_border_24);
                             likeText.setText(R.string.game_like);
+                        }
+
+
+                        String listOrigin = result.getData().getCategory();
+                        if (listOrigin != null) {
+                            String[] cList = listOrigin.split(" ");
+                            List<String> category = new ArrayList<>(Arrays.asList(cList));
+                            switch (category.size()) {
+                                case 1:
+                                    categoryTwo.setVisibility(View.GONE);
+                                    categoryThree.setVisibility(View.GONE);
+                                    categoryOne.setText(category.get(0));
+                                    break;
+                                case 2:
+                                    categoryThree.setVisibility(View.GONE);
+                                    categoryOne.setText(category.get(0));
+                                    categoryTwo.setText(category.get(1));
+                                    break;
+                                case 3:
+                                    categoryOne.setText(category.get(0));
+                                    categoryTwo.setText(category.get(1));
+                                    categoryThree.setText(category.get(2));
+                            }
+                        } else {
+                            categoryOne.setVisibility(View.GONE);
+                            categoryTwo.setVisibility(View.GONE);
+                            categoryThree.setVisibility(View.GONE);
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), "result is null !", Toast.LENGTH_SHORT).show();
@@ -414,5 +497,43 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 userId = null;
             }
         });
+    }
+
+    private void initIndicator(List<String> drawings){
+        for (int i = 0; i < drawings.size() - 1; i++) {
+            ImageView imageView = new ImageView(this);
+            if (i == 0) {
+                imageView.setBackgroundResource(R.drawable.blue_indicator);
+            } else {
+                imageView.setBackgroundResource(R.drawable.white_indicator);
+            }
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMarginEnd(4);
+            imageView.setLayoutParams(layoutParams);
+            indicatorContainer.addView(imageView);
+        }
+    }
+    //设置轮播
+    private final Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            //获得轮播图当前的位置
+            int currentPosition = viewPager2.getCurrentItem();
+            currentPosition++;
+            viewPager2.setCurrentItem(currentPosition,true);
+            mHandler.postDelayed(runnable,5000);
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mHandler.removeCallbacks(runnable);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mHandler.postDelayed(runnable, 5000);
     }
 }
