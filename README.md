@@ -11,7 +11,7 @@
 部分使用BaseRecyclerViewAdapterHelper:3.0.4
 ### 页面切换框架
 部分使用fragmentation:1.0.2
-### Cookie维护
-使用<kbd>CookieManager</kbd>
+### Cookie拦截/添加/维护
+使用<kbd>CookieManager</kbd><kbd>Interceptor</kbd>
 ### 前端交互方式
 通过JavaScriptInterface
