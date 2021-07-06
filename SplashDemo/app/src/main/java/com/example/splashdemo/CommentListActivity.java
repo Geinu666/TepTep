@@ -33,8 +33,8 @@ public class CommentListActivity extends AppCompatActivity {
     private String userId;
     private ImageView showCommentBack;
     private CommentService service;
-//    private List<Comment> commentList = new ArrayList<>();
     private FloatingActionButton button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +69,6 @@ public class CommentListActivity extends AppCompatActivity {
                 finish();
             }
         });
-//        CommentRecyclerView();
     }
 
     private void CommentRecyclerView(List<Comment> commentList){
@@ -109,6 +108,9 @@ public class CommentListActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 确保修改评论后能马上刷新，不影响观感
+     */
     @Override
     protected void onStart() {
         super.onStart();

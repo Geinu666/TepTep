@@ -1,5 +1,8 @@
 package com.example.splashdemo.entity;
 
+/**
+ * 评论实体
+ */
 public class Comment {
     private String commentId;
     private String gameId;

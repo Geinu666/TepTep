@@ -59,8 +59,6 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //全屏
         setContentView(R.layout.activity_splash);
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.hide();
         ad_image = (ImageView) findViewById(R.id.ad_image);
         ad_timer = (Button) findViewById(R.id.ad_timer);
         bottom_image = (ImageView) findViewById(R.id.bottom_image);
@@ -114,12 +112,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 break;
             case R.id.ad_timer:
-                Log.i("onClick", "准备goNextActivity");
-                textTimer.cancel();
-                goNextActivity();
-                break;
             case R.id.bottom_image:
-                Log.i("onClick", "准备goNextActivity");
                 textTimer.cancel();
                 goNextActivity();
                 break;
@@ -172,7 +165,6 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
             return;
         } else {
             Log.i("当前网络可用", networkInfo.toString());
-            //getAdMsg();
         }
     }
 
@@ -184,33 +176,4 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         startActivity(it);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
-
-    /**
-     * 联网获取并解析开屏资源
-     */
-    public void getAdMsg(){
-        OkHttpClient client = new OkHttpClient();
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(client)
-                .baseUrl("")//请求开屏资源链接
-                .addConverterFactory(GsonConverterFactory.create())//使用Gson解析
-                .build();
-        adInterface ad = retrofit.create(adInterface.class);
-        Call<List<advertisement>> adCall = ad.getAdMsg();
-        adCall.enqueue(new Callback<List<advertisement>>() {
-            @Override
-            public void onResponse(Call<List<advertisement>> call, Response<List<advertisement>> response) {
-                Log.i("getAdMsg successfully", response.body().toString());
-                updateAdvertisement ad = new updateAdvertisement();
-                ad.getLatestVersion(SplashActivity.this, response);
-            }
-
-            @Override
-            public void onFailure(Call<List<advertisement>> call, Throwable t) {
-                Log.i("getAdMsg fail", " " + t);
-            }
-        });
-    }
-
-
 }

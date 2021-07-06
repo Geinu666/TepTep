@@ -14,6 +14,9 @@ import com.example.splashdemo.R;
 
 import java.util.List;
 
+/**
+ * 轮播图适配器，将获取的drawings加载到Viewpager
+ */
 public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.ViewHolder>{
     private List<String> drawings;
     private Context mContext;

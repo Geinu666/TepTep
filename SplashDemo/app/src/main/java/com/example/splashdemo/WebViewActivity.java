@@ -37,10 +37,10 @@ public class WebViewActivity extends AppCompatActivity {
     private String url = null;
     private String func;
     private FloatingActionButton button;
-    private PopupWindow popupWindow;
 
     private ValueCallback<Uri> uploadFile;
     private ValueCallback<Uri[]> uploadFiles;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +57,6 @@ public class WebViewActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                initPopupWindow(v);
                 Intent intent = new Intent(WebViewActivity.this, WebViewActivity.class);
                 intent.putExtra("url", "CreatePost/" + gameId);
                 intent.putExtra("func", "CreatePost");
@@ -91,6 +90,9 @@ public class WebViewActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 选择文件
+     */
     private void openFileChooseProcess() {
         Intent i = new Intent(Intent.ACTION_GET_CONTENT);
         i.addCategory(Intent.CATEGORY_OPENABLE);
@@ -137,53 +139,5 @@ public class WebViewActivity extends AppCompatActivity {
         super.finish();
         overridePendingTransition(R.anim.no_anim, R.anim.rightout_exit);
     }
-    //暂时没用
-    public void initPopupWindow(View v) {
-        View view = LayoutInflater.from(this).inflate(R.layout.popwindow_style, null, false);
-        Button button1 = view.findViewById(R.id.button1);
-        Button button2 = view.findViewById(R.id.button2);
 
-        popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-
-        popupWindow.setTouchable(true);
-        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
-        popupWindow.setAnimationStyle(R.style.anim_menu_bottombar);
-        //设置背景
-        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
-        //偏移量
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                backgroundAlpha(1f);
-            }
-        });
-        //
-        DisplayMetrics dm = getResources().getDisplayMetrics();
-        int screenWidth = dm.widthPixels;
-        int screenHeight = dm.heightPixels;
-        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, screenWidth - 100, screenHeight - 600);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_SHORT).show();
-            }
-        });
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "2", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-    //popupwindow的工具，暂时没用
-    public void backgroundAlpha(float bgAlpha){
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.alpha = bgAlpha;//0.0-1.0
-        getWindow().setAttributes(lp);
-    }
 }

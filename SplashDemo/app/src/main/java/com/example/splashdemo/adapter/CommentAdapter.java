@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.splashdemo.CommentActivity;
+import com.example.splashdemo.CommentListActivity;
 import com.example.splashdemo.R;
 import com.example.splashdemo.utils.Time;
 import com.example.splashdemo.entity.Comment;
@@ -29,6 +30,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * 评论区适配器
+ */
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder>{
     private List<Comment> mcommentList;
     private Context mContext;
@@ -153,6 +157,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 intent.putExtra("isChange", true);
                 intent.putExtra("commentId", holder.commentId.getText().toString());
                 mContext.startActivity(intent);
+                ((CommentListActivity) mContext).overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
             }
         });
 
@@ -208,26 +213,4 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public int getItemCount() {
         return mcommentList.size();
     }
-
-    // TODO: 2021/7/2 写点赞评论
-    public void likeComment(String commentId){
-        CommentService service = RetrofitFactory.getCommentService(mContext);
-        Call<LikeBean> call = service.postLikeGame(commentId);
-        call.enqueue(new Callback<LikeBean>() {
-            @Override
-            public void onResponse(Call<LikeBean> call, Response<LikeBean> response) {
-                if (response.isSuccessful()) {
-                    LikeBean result = response.body();
-                    if (result.getData().isLikes()) {
-
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LikeBean> call, Throwable t) {
-                Toast.makeText(mContext, "点赞失败！", Toast.LENGTH_SHORT).show();
-            }
-        });
-    };
 }

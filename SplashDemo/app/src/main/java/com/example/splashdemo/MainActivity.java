@@ -29,7 +29,6 @@ import me.yokeyword.fragmentation.SupportActivity;
 
 public class MainActivity extends SupportActivity {
     private ActivityMainBinding binding;
-    private boolean isEx = false;
     private PopupWindow popupWindow;
     public static MainActivity instance = null;
 
@@ -58,7 +57,6 @@ public class MainActivity extends SupportActivity {
         if (SplashActivity.instance != null) {
             SplashActivity.instance.finish();
         }
-
     }
 
     /**
@@ -67,16 +65,6 @@ public class MainActivity extends SupportActivity {
      */
     public void onClick(View v){
 
-    }
-
-    /**
-     * 弹PopupWindow时设置背景用(暂时没用)
-     * @param bgAlpha 1代表原来的透明度
-     */
-    public void backgroundAlpha(float bgAlpha){
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.alpha = bgAlpha;//0.0-1.0
-        getWindow().setAttributes(lp);
     }
 
     /**
@@ -91,52 +79,6 @@ public class MainActivity extends SupportActivity {
             }
         });
     }
-    /**
-     * 初始化设置DynamicFragment里面的弹出按钮
-     * @param v
-     */
-    public void initPopupWindow(View v) {
-        View view = LayoutInflater.from(this).inflate(R.layout.popwindow_style, null, false);
-        Button button1 = view.findViewById(R.id.button1);
-        Button button2 = view.findViewById(R.id.button2);
-
-        popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-
-        popupWindow.setTouchable(true);
-        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
-        popupWindow.setAnimationStyle(R.style.anim_menu_bottombar);
-        //设置背景
-        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
-        //偏移量
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                backgroundAlpha(1f);
-            }
-        });
-        //
-        DisplayMetrics dm = getResources().getDisplayMetrics();
-        int screenWidth = dm.widthPixels;
-        int screenHeight = dm.heightPixels;
-        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, screenWidth - 100, screenHeight - 600);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
-            }
-        });
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "2", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     @Override
     public void onResume(){
@@ -144,10 +86,8 @@ public class MainActivity extends SupportActivity {
         CookieSyncManager.createInstance(getApplicationContext());
         CookieSyncManager.getInstance().startSync();
     }
-
+    //操作切换Fragment
     public void jumpToItem(int id) {
-        binding.navView.findViewById(R.id.navigation_home).performClick();
+        binding.navView.findViewById(id).performClick();
     }
-
-
 }

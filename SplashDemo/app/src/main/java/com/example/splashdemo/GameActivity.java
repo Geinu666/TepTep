@@ -142,6 +142,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         //用gameId拿数据
         getDataAndSet(gameId);
+        //初始化评论
         initComment();
 
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -419,6 +420,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * 根据数据加载评论到视图
+     * （人肉adapter）
      * @param comment 读入的评论
      */
     private void setComment(Comment comment){

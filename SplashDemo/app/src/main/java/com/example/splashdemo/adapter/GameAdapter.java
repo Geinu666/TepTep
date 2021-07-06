@@ -19,6 +19,9 @@ import java.util.List;
 
 import WebKit.Bean.AllBean;
 
+/**
+ * 滚动CardView的适配器
+ */
 public class GameAdapter extends BaseQuickAdapter<AllBean.GameBean, BaseViewHolder> {
     private Context context;
     public GameAdapter(int layoutResId, @Nullable List<AllBean.GameBean> data, Context context) {
@@ -32,6 +35,7 @@ public class GameAdapter extends BaseQuickAdapter<AllBean.GameBean, BaseViewHold
                 .setText(R.id.rv_item_game_score, String.format("%.1f", game.getAvgScore()))
                 .setText(R.id.rv_item_game_id, game.getGameId())
                 .setText(R.id.rv_item_game_description, game.getBriefIntro());
+
         MaterialButton sortBtn = baseViewHolder.getView(R.id.rv_item_game_sort);
         if (game.getCategory() != null) {
             sortBtn.setVisibility(View.VISIBLE);
@@ -40,13 +44,7 @@ public class GameAdapter extends BaseQuickAdapter<AllBean.GameBean, BaseViewHold
         } else {
             sortBtn.setVisibility(View.GONE);
         }
-//        MaterialButton rankBtn = baseViewHolder.getView(R.id.rv_item_game_rank);
-//        if (game.getRank() != null) {
-//            rankBtn.setVisibility(View.VISIBLE);
-//            rankBtn.setText(game.getRank());
-//        } else {
-//            rankBtn.setVisibility(View.GONE);
-//        }
+
         //加载大图
         ImageView gameImg = baseViewHolder.getView(R.id.rv_item_game_img);
         String[] list = game.getDisplayDrawings().split("\\|");

@@ -20,6 +20,9 @@ import java.util.List;
 
 import WebKit.Bean.AllBean;
 
+/**
+ * 排行榜适配器
+ */
 public class RankAdapter extends RecyclerView.Adapter<RankAdapter.ViewHolder>{
     private List<AllBean.GameBean> mgameBeanList;
     private Context mContext;

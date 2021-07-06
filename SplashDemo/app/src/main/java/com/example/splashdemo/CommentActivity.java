@@ -23,7 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * 评论
+ * 发评论
  */
 public class CommentActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -44,6 +44,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private String content;
     private Boolean isChange = false;
     private String commentId;
+    private TextView commentTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +71,16 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         release = findViewById(R.id.release_comment);
         commentContent = findViewById(R.id.comment_content);
         gameNameView = findViewById(R.id.comment_game_name);
+        commentTitle = findViewById(R.id.comment_title);
 
         gameNameView.setText(gameName);
 
         if (content != null) {
             commentContent.setText(content);
+        }
+
+        if (isChange) {
+            commentTitle.setText("编辑评价");
         }
 
         service = RetrofitFactory.getCommentService(getApplicationContext());
@@ -123,12 +129,9 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                 Integer score = (Integer)(int) (outrating * 2);
                 String content = commentContent.getText().toString().trim();
                 if (!isChange){
-                    Log.i("test", "发");
-                    Log.i("test", "gameId: " + gameId + "content: " + content + "score: " + score);
                     commitComment(gameId, content, score);
                     break;
                 } else {
-                    Log.i("test", "改");
                     changeComment(commentId, content, score);
                     break;
                 }
@@ -140,6 +143,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         super.finish();
         overridePendingTransition(R.anim.no_anim, R.anim.rightout_exit);
     }
+
     //初始化RatingBar
     public void setRatingText(){
         if (outrating <= 1.0) {
@@ -160,6 +164,12 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    /**
+     * 发送评论
+     * @param gameId
+     * @param content
+     * @param score
+     */
     public void commitComment(String gameId, String content, int score){
         CommentBean.Comment comment = new CommentBean.Comment();
         comment.setGameId(gameId);
@@ -186,6 +196,12 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         });
     }
 
+    /**
+     * 修改评论
+     * @param commentId
+     * @param content
+     * @param score
+     */
     public void changeComment(String commentId, String content, Integer score) {
         Call<ChangeContent> call = service.postChangeContent(commentId, content, score);
         call.enqueue(new Callback<ChangeContent>() {

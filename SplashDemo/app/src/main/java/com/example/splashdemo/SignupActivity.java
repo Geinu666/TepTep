@@ -43,13 +43,13 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        signupAct = (EditText) findViewById(R.id.accountSignupText);
-        signupPsd = (EditText) findViewById(R.id.passwordSignupText);
-        signupPhoneNumber = (EditText) findViewById(R.id.phoneNumberSignupText);
-        signupMail = (EditText) findViewById(R.id.mailSignupText);
-        signupButton = (Button) findViewById(R.id.signupButton);
-        normalLogin = (TextView) findViewById(R.id.normalLogin);
-        signupNickname = (EditText) findViewById(R.id.nicknameSignupText);
+        signupAct = findViewById(R.id.accountSignupText);
+        signupPsd = findViewById(R.id.passwordSignupText);
+        signupPhoneNumber = findViewById(R.id.phoneNumberSignupText);
+        signupMail = findViewById(R.id.mailSignupText);
+        signupButton = findViewById(R.id.signupButton);
+        normalLogin = findViewById(R.id.normalLogin);
+        signupNickname =  findViewById(R.id.nicknameSignupText);
 
         service = RetrofitFactory.getLoginService(getApplicationContext());
 
