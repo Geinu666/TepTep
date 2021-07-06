@@ -37,6 +37,7 @@ public class WebViewActivity extends AppCompatActivity {
     private String url = null;
     private String func;
     private FloatingActionButton button;
+    private WebViewActivity instance;
 
     private ValueCallback<Uri> uploadFile;
     private ValueCallback<Uri[]> uploadFiles;
@@ -45,6 +46,8 @@ public class WebViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
+
+        instance = this;
         LightStatusBarUtils.setAndroidNativeLightStatusBar(this, true);
         //从intent里找有没有传gameId
         url = getIntent().getExtras().getString("url", null);
@@ -88,6 +91,8 @@ public class WebViewActivity extends AppCompatActivity {
                 openFileChooseProcess();
             }
         });
+
+        webView.addJavascriptInterface(new JsJavaBridge(instance, webView, getApplicationContext()), "$App");
     }
 
     /**
@@ -140,4 +145,9 @@ public class WebViewActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.no_anim, R.anim.rightout_exit);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        webView.reload();
+    }
 }

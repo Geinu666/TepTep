@@ -23,6 +23,7 @@ import com.example.splashdemo.entity.Comment;
 import com.example.splashdemo.utils.LightStatusBarUtils;
 import com.example.splashdemo.utils.Time;
 import com.google.android.material.button.MaterialButton;
+import com.shehuan.niv.NiceImageView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -79,7 +80,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private TextView issuer;
     private Button showComment;
 
-    private ImageView commentUserAvatar;
+    private NiceImageView commentUserAvatar;
     private TextView commentUserNickname;
     private TextView commentLastTime;
     private ImageView starOne;

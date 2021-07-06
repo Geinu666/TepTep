@@ -63,6 +63,10 @@ public class JsJavaBridge {
                 ((MainActivity) activity).jumpToItem(R.id.navigation_home);
             }
         });
+    }
 
+    @JavascriptInterface
+    public void createPostQuit(){
+        activity.finish();
     }
 }

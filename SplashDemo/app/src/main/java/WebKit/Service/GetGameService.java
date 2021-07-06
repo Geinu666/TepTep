@@ -23,8 +23,11 @@ public interface GetGameService {
     Call<AllBean> getRandom(@Query("count") int count);
 
     @GET("game/allByInterestCount")
-    Call<AllBean> getHot();
+    Call<AllBean> getFans();
 
     @GET("game/allByAvgScore")
     Call<AllBean> getNice();
+
+    @GET("game/allByHeat")
+    Call<AllBean> getHot();
 }

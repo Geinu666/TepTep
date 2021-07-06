@@ -17,6 +17,7 @@ import com.example.splashdemo.entity.Comment;
 import com.example.splashdemo.utils.LightStatusBarUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Collections;
 import java.util.List;
 
 import WebKit.Bean.AllCommentBean;
@@ -96,6 +97,7 @@ public class CommentListActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         AllCommentBean result = response.body();
                         List<Comment> comments = result.getData();
+                        Collections.reverse(comments);
                         CommentRecyclerView(comments);
                     }
                 }

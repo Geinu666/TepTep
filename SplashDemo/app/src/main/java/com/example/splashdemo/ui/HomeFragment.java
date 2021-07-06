@@ -31,8 +31,8 @@ public class HomeFragment extends SupportFragment {
     private FragmentHomeBinding mBinding;
     private List<Fragment> fragments;
     private ArrayList<AllBean.GameBean> recommendGames;
+    private ArrayList<AllBean.GameBean> fansGames;
     private ArrayList<AllBean.GameBean> hotGames;
-    private ArrayList<AllBean.GameBean> rankGames;
     private View mRootView;
 
     @Override
@@ -41,7 +41,6 @@ public class HomeFragment extends SupportFragment {
         mBinding = FragmentHomeBinding.inflate(inflater);
         mRootView = mBinding.getRoot();
         onBindView(savedInstanceState,mRootView);
-//        return super.onCreateView(inflater, container, savedInstanceState);
         return mRootView;
     }
 
@@ -59,6 +58,32 @@ public class HomeFragment extends SupportFragment {
                     if (result != null) {
                         ArrayList<AllBean.GameBean> gameList = result.getData();
                         recommendGames = gameList;
+                        initViewPager2();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AllBean> call, Throwable t) {
+                Toast.makeText(getContext(), "获取游戏列表失败！", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * 获取粉丝榜
+     */
+    private void getFans() {
+        GetGameService service = RetrofitFactory.getGetGameService(getContext());
+        Call<AllBean> call = service.getFans();
+        call.enqueue(new Callback<AllBean>() {
+            @Override
+            public void onResponse(Call<AllBean> call, Response<AllBean> response) {
+                if (response.isSuccessful()) {
+                    AllBean result = response.body();
+                    if (result != null) {
+                        ArrayList<AllBean.GameBean> gameList = result.getData();
+                        fansGames = gameList;
                         initViewPager2();
                     }
                 }
@@ -97,32 +122,6 @@ public class HomeFragment extends SupportFragment {
         });
     }
 
-    /**
-     * 获取排行
-     */
-    private void getRank() {
-        GetGameService service = RetrofitFactory.getGetGameService(getContext());
-        Call<AllBean> call = service.getNice();
-        call.enqueue(new Callback<AllBean>() {
-            @Override
-            public void onResponse(Call<AllBean> call, Response<AllBean> response) {
-                if (response.isSuccessful()) {
-                    AllBean result = response.body();
-                    if (result != null) {
-                        ArrayList<AllBean.GameBean> gameList = result.getData();
-                        rankGames = gameList;
-                        initViewPager2();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<AllBean> call, Throwable t) {
-                Toast.makeText(getContext(), "获取游戏列表失败！", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
 
     /**
      * 初始化ViewPager2
@@ -144,8 +143,8 @@ public class HomeFragment extends SupportFragment {
     private void initViewPagerFragments() {
         fragments = new ArrayList<>();
         fragments.add(ViewPager2ContentFragment.create(recommendGames, true));
+        fragments.add(ViewPager2ContentFragment.create(fansGames, false));
         fragments.add(ViewPager2ContentFragment.create(hotGames, false));
-        fragments.add(ViewPager2ContentFragment.create(rankGames, false));
     }
 
     /**
@@ -154,8 +153,8 @@ public class HomeFragment extends SupportFragment {
     private void mediateTabLayoutAndViewPager2(){
         List<String> tabNameList = new ArrayList<>();
         tabNameList.add("推荐");
-        tabNameList.add("热门");
-        tabNameList.add("排行榜");
+        tabNameList.add("粉丝榜");
+        tabNameList.add("热门榜");
         new TabLayoutMediator(mBinding.tabRank, mBinding.viewPager, true, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
@@ -169,7 +168,7 @@ public class HomeFragment extends SupportFragment {
 
     protected void onBindView(Bundle savedInstanceState, View rootView) {
         getRecommend();
+        getFans();
         getHot();
-        getRank();
     }
 }
