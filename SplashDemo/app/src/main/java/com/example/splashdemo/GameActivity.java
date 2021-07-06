@@ -52,11 +52,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private RelativeLayout gameLike;
     private RelativeLayout gameComment;
     private ImageView gameBack;
-    private RatingBar ratingBar;
     private TextView gameName;
     private float score;
     private String iconUrl;
     private GameService service;
+    private ImageView star_one;
+    private ImageView star_two;
+    private ImageView star_three;
+    private ImageView star_four;
+    private ImageView star_five;
     private String userId;
     private LinearLayout commentCard;
     private ViewPager2 viewPager2;
@@ -108,7 +112,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         gameLike = findViewById(R.id.game_like);
         gameComment = findViewById(R.id.game_comment);
         gameBack = findViewById(R.id.game_back);
-        ratingBar = findViewById(R.id.rating_bar);
         gameName = findViewById(R.id.game_name);
         likeIcon = findViewById(R.id.like_icon);
         likeText = findViewById(R.id.like_text);
@@ -128,6 +131,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         categoryOne = findViewById(R.id.game_category_1);
         categoryTwo = findViewById(R.id.game_category_2);
         categoryThree = findViewById(R.id.game_category_3);
+        star_one = findViewById(R.id.star_1);
+        star_two = findViewById(R.id.star_2);
+        star_three = findViewById(R.id.star_3);
+        star_four = findViewById(R.id.star_4);
+        star_five = findViewById(R.id.star_5);
 
         service = RetrofitFactory.getGameService(getApplicationContext());
 
@@ -146,22 +154,64 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         //初始化评论
         initComment();
 
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+        star_one.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                if (fromUser) {
-                    Log.i("test", String.valueOf(rating * 2));
-                    Intent intent1 = new Intent(GameActivity.this, CommentActivity.class);
-                    intent1.putExtra("rating", rating)
-                            .putExtra("gameId", gameId)
-                            .putExtra("gameName", gameName.getText().toString())
-                            .putExtra("iconUrl", iconUrl)
-                            .putExtra("userId", userId);
-                    startActivity(intent1);
-                    overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
-                }
+            public void onClick(View v) {
+                setScore(2L);
+                jumpToComment(1L);
             }
         });
+
+        star_two.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setScore(4L);
+                jumpToComment(2L);
+            }
+        });
+
+        star_three.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setScore(6L);
+                jumpToComment(3L);
+            }
+        });
+
+        star_four.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setScore(8L);
+                jumpToComment(4L);
+            }
+        });
+
+        star_five.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setScore(10L);
+                jumpToComment(5L);
+            }
+        });
+
+
+
+//        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+//            @Override
+//            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+//                if (fromUser) {
+//                    Log.i("test", String.valueOf(rating * 2));
+//                    Intent intent1 = new Intent(GameActivity.this, CommentActivity.class);
+//                    intent1.putExtra("rating", rating)
+//                            .putExtra("gameId", gameId)
+//                            .putExtra("gameName", gameName.getText().toString())
+//                            .putExtra("iconUrl", iconUrl)
+//                            .putExtra("userId", userId);
+//                    startActivity(intent1);
+//                    overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -271,7 +321,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         double getScore = result.getData().getAvgScore();
                         String newScore =  String.format("%.1f", getScore);
                         avgScore.setText(newScore);
-                        ratingBar.setRating((float) getScore / 2);
+                        setScore((float) getScore);
                         rateScore.setText(newScore);
 
                         gameIntro.setText(result.getData().getBriefIntro());
@@ -521,5 +571,50 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
         mHandler.postDelayed(runnable, 5000);
+    }
+
+    private void setScore(float i) {
+        if (i <= 2.0) {
+            star_one.setImageResource(R.drawable.baseline_star_rate_24);
+            star_two.setImageResource(R.drawable.outline_star_rate_24);
+            star_three.setImageResource(R.drawable.outline_star_rate_24);
+            star_four.setImageResource(R.drawable.outline_star_rate_24);
+            star_five.setImageResource(R.drawable.outline_star_rate_24);
+        } else if (i <= 4.0) {
+            star_one.setImageResource(R.drawable.baseline_star_rate_24);
+            star_two.setImageResource(R.drawable.baseline_star_rate_24);
+            star_three.setImageResource(R.drawable.outline_star_rate_24);
+            star_four.setImageResource(R.drawable.outline_star_rate_24);
+            star_five.setImageResource(R.drawable.outline_star_rate_24);
+        } else if (i <= 6.0) {
+            star_one.setImageResource(R.drawable.baseline_star_rate_24);
+            star_two.setImageResource(R.drawable.baseline_star_rate_24);
+            star_three.setImageResource(R.drawable.baseline_star_rate_24);
+            star_four.setImageResource(R.drawable.outline_star_rate_24);
+            star_five.setImageResource(R.drawable.outline_star_rate_24);
+        } else if (i <= 8.0) {
+            star_one.setImageResource(R.drawable.baseline_star_rate_24);
+            star_two.setImageResource(R.drawable.baseline_star_rate_24);
+            star_three.setImageResource(R.drawable.baseline_star_rate_24);
+            star_four.setImageResource(R.drawable.baseline_star_rate_24);
+            star_five.setImageResource(R.drawable.outline_star_rate_24);
+        } else {
+            star_one.setImageResource(R.drawable.baseline_star_rate_24);
+            star_two.setImageResource(R.drawable.baseline_star_rate_24);
+            star_three.setImageResource(R.drawable.baseline_star_rate_24);
+            star_four.setImageResource(R.drawable.baseline_star_rate_24);
+            star_five.setImageResource(R.drawable.baseline_star_rate_24);
+        }
+    }
+
+    private void jumpToComment(float i){
+        Intent intent1 = new Intent(GameActivity.this, CommentActivity.class);
+        intent1.putExtra("rating", i)
+                .putExtra("gameId", gameId)
+                .putExtra("gameName", gameName.getText().toString())
+                .putExtra("iconUrl", iconUrl)
+                .putExtra("userId", userId);
+        startActivity(intent1);
+        overridePendingTransition(R.anim.rightin_enter, R.anim.no_anim);
     }
 }
