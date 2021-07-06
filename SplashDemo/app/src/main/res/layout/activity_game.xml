@@ -280,7 +280,7 @@
                         android:layout_toRightOf="@+id/brief_info">
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/game_category_1"
-                        android:layout_width="55dp"
+                        android:layout_width="60dp"
                         android:layout_height="40dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
@@ -294,7 +294,7 @@
                         app:cornerRadius="10dp" />
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/game_category_2"
-                            android:layout_width="55dp"
+                            android:layout_width="60dp"
                             android:layout_height="40dp"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="5dp"
@@ -308,7 +308,7 @@
                             app:cornerRadius="10dp" />
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/game_category_3"
-                            android:layout_width="55dp"
+                            android:layout_width="60dp"
                             android:layout_height="40dp"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="5dp"
