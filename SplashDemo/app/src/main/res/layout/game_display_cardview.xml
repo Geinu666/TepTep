@@ -86,13 +86,13 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/rv_item_game_sort"
-                    android:layout_width="45dp"
+                    android:layout_width="55dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="16dp"
                     android:backgroundTint="#F6F7F9"
                     android:clickable="false"
                     android:padding="2dp"
-                    android:text="塔防"
+                    android:text="rogue"
                     android:textColor="#878C92"
                     android:textSize="12sp"
                     app:cornerRadius="10dp"

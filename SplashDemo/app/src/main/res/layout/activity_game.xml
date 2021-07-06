@@ -75,7 +75,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:layout_toRightOf="@+id/game_icon"
-                        android:text="明日方舟"
+                        android:text="-"
                         android:textColor="@color/white"
                         android:textSize="23sp"
                         android:textStyle="bold"/>
@@ -91,7 +91,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
-                    android:text="开发 腾讯"
+                    android:text="开发 -"
                     android:textSize="16sp"/>
                 <TextView
                     android:id="@+id/game_followers"
@@ -100,7 +100,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="50dp"
-                    android:text="关注 5w"
+                    android:text="关注 -"
                     android:textSize="16sp"/>
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -121,7 +121,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
-                        android:text="9.9"
+                        android:text="-"
                         android:textSize="28sp"/>
                 </RelativeLayout>
             </RelativeLayout>
@@ -280,7 +280,7 @@
                         android:layout_toRightOf="@+id/brief_info">
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/game_category_1"
-                        android:layout_width="45dp"
+                        android:layout_width="55dp"
                         android:layout_height="40dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
@@ -288,13 +288,13 @@
                         android:backgroundTint="#F6F7F9"
                         android:clickable="false"
                         android:padding="2dp"
-                        android:text="塔防"
+                        android:text="-"
                         android:textColor="#878c92"
                         android:textSize="12sp"
                         app:cornerRadius="10dp" />
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/game_category_2"
-                            android:layout_width="45dp"
+                            android:layout_width="55dp"
                             android:layout_height="40dp"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="5dp"
@@ -302,13 +302,13 @@
                             android:backgroundTint="#F6F7F9"
                             android:clickable="false"
                             android:padding="2dp"
-                            android:text="塔防"
+                            android:text="-"
                             android:textColor="#878c92"
                             android:textSize="12sp"
                             app:cornerRadius="10dp" />
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/game_category_3"
-                            android:layout_width="45dp"
+                            android:layout_width="55dp"
                             android:layout_height="40dp"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="5dp"
@@ -316,7 +316,7 @@
                             android:backgroundTint="#F6F7F9"
                             android:clickable="false"
                             android:padding="2dp"
-                            android:text="塔防"
+                            android:text="-"
                             android:textColor="#878c92"
                             android:textSize="12sp"
                             app:cornerRadius="10dp" />
@@ -330,7 +330,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
                     android:textColor="@color/black"
-                    android:text="@string/intro_content"
+                    android:text="-"
                     android:textSize="15sp"/>
             </LinearLayout>
             <LinearLayout
@@ -355,14 +355,14 @@
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="15dp"
-                        android:text="9.9"
+                        android:text="-"
                         android:textSize="28sp"/>
                     <TextView
                         android:id="@+id/comment_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="55dp"
-                        android:text="@string/comment_count"
+                        android:text="-人评分"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -476,7 +476,7 @@
                     android:id="@+id/comment_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/intro_content"
+                    android:text="-"
                     android:layout_marginLeft="20dp"
                     android:textColor="@color/black"
                     android:layout_marginRight="20dp"
