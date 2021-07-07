@@ -72,6 +72,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private MaterialButton categoryOne;
     private MaterialButton categoryTwo;
     private MaterialButton categoryThree;
+    private int fansCount;
 
     private TextView likeText;
     private ImageView likeIcon;
@@ -276,10 +277,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                             Toast.makeText(getApplicationContext(), "关注成功！", Toast.LENGTH_SHORT).show();
                             likeIcon.setImageResource(R.drawable.baseline_favorite_24);
                             likeText.setText(R.string.game_is_like);
+                            fansCount++;
+                            String textfollow = "关注 "
+                                    + "<b><tt>" + fansCount + "</tt></b>";
+                            followersCount.setText(Html.fromHtml(textfollow));
                         } else {
                             Toast.makeText(getApplicationContext(), "取关成功！", Toast.LENGTH_SHORT).show();
                             likeIcon.setImageResource(R.drawable.baseline_favorite_border_24);
                             likeText.setText(R.string.game_like);
+                            fansCount--;
+                            String textfollow = "关注 "
+                                    + "<b><tt>" + fansCount + "</tt></b>";
+                            followersCount.setText(Html.fromHtml(textfollow));
                         }
 
                     } else {
@@ -363,6 +372,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         followersCount.setText("关注 " + result.getData().getInterestCount());
                         String textfollow = "关注 "
                                 + "<b><tt>" + result.getData().getInterestCount() + "</tt></b>";
+                        fansCount = result.getData().getInterestCount();
                         followersCount.setText(Html.fromHtml(textfollow));
 
                         gameName.setText(result.getData().getName());
