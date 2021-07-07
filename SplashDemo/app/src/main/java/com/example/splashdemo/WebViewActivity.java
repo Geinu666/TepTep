@@ -148,6 +148,5 @@ public class WebViewActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        webView.reload();
     }
 }

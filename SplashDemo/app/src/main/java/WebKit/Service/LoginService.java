@@ -1,5 +1,10 @@
 package WebKit.Service;
 
+import com.example.splashdemo.entity.Login;
+import com.example.splashdemo.entity.Register;
+
+import WebKit.Bean.CommentBean;
+import WebKit.Bean.Key;
 import WebKit.Bean.LoginBean;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -29,4 +34,12 @@ public interface LoginService {
                                  @Field("password") String password,
                                  @Field("username") String username);
 
+    @GET("publicKey")
+    Call<Key> getKey();
+
+    @POST("encryptedLogin")
+    Call<LoginBean> encryptedLogin(@Body Login body);
+
+    @POST("encryptedRegister")
+    Call<LoginBean> encryptedRegister(@Body Register body);
 }
