@@ -15,11 +15,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.splashdemo.entity.Login;
+import com.example.splashdemo.entity.Register;
+import com.example.splashdemo.utils.HuCryptoUtil;
 import com.example.splashdemo.utils.LightStatusBarUtils;
 
+import WebKit.Bean.Key;
 import WebKit.Bean.LoginBean;
+import WebKit.CookieUtil;
 import WebKit.RetrofitFactory;
 import WebKit.Service.LoginService;
+import okhttp3.Headers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,6 +39,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText signupMail;
     private String act;
     private String psw;
+    private String cryptedPsw;
     private EditText signupNickname;
     private String nic;
     private LoginService service;
@@ -68,7 +75,7 @@ public class SignupActivity extends AppCompatActivity {
     //注册按钮点击事件
     public void onClick(View view){
         if(emptyJudge()) {
-            signupJudge();
+            encryptedGetKey(true);
         }
     }
 
@@ -146,6 +153,11 @@ public class SignupActivity extends AppCompatActivity {
         Log.i("test", "cookie sync" + cookie);
     }
 
+    /**
+     * 未加密的自动登录
+     * @param Act
+     * @param Psw
+     */
     private void loginAfterRegister(String Act, String Psw){
         LoginService loginService = RetrofitFactory.getSpecialService(this);
         Call<LoginBean> call = loginService.postLogin(Act, Psw);
@@ -181,5 +193,82 @@ public class SignupActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.putExtra("result", isReg);
         setResult(101, intent);
+    }
+
+    public void encryptedGetKey(Boolean Reg){
+        LoginService service = RetrofitFactory.getSpecialService(getApplicationContext());
+        Call<Key> call = service.getKey();
+        call.enqueue(new Callback<Key>() {
+            @Override
+            public void onResponse(Call<Key> call, Response<Key> response) {
+                if (response.isSuccessful()) {
+                    Key result = response.body();
+                    if (result != null) {
+                        Headers headers = response.headers();
+                        Log.i("test", "public key " + result.getData());
+                        String encrypted = HuCryptoUtil.encryptData(psw, result.getData());
+                        Log.i("test", encrypted);
+                        cryptedPsw = encrypted;
+
+                        String cookies = response.headers().get("Set-Cookie");
+                        SharedPreferences.Editor config = getApplicationContext().getSharedPreferences("config", getApplicationContext().MODE_PRIVATE).edit();
+                        config.putString("cookie", cookies);
+                        config.commit();
+                        //同步cookies到全局WebView
+                        CookieUtil.syncCookie("http://119.91.130.198/api/", cookies, getApplicationContext());
+                        if (Reg) {
+                            encryptedRegister();
+                        } else {
+                            encryptedLogin();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Key> call, Throwable t) {
+                Log.i("test", "公钥获取失败!");
+            }
+        });
+    }
+
+    public void encryptedRegister(){
+        Register register = new Register(act, cryptedPsw, nic);
+        LoginService service = RetrofitFactory.getLoginService(getApplicationContext());
+        Call<LoginBean>  call = service.encryptedRegister(register);
+        call.enqueue(new Callback<LoginBean>() {
+            @Override
+            public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
+                Toast.makeText(getApplicationContext(), "注册成功!", Toast.LENGTH_SHORT).show();
+                encryptedGetKey(false);
+            }
+
+            @Override
+            public void onFailure(Call<LoginBean> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "注册失败!",  Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * 加密登录
+     */
+    public void encryptedLogin() {
+        LoginService service = RetrofitFactory.getLoginService(this);
+        Call<LoginBean> call = service.encryptedLogin(new Login(act, cryptedPsw));
+        call.enqueue(new Callback<LoginBean>() {
+            @Override
+            public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
+                if (response.isSuccessful()) {
+                    setIsReg(true);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginBean> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "登陆失败!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -1,7 +1,5 @@
 package com.example.splashdemo.entity;
 
-import com.example.splashdemo.utils.RSAEncryptedUtil;
-
 public class Login {
     String password;
     String username;

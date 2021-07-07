@@ -18,20 +18,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.splashdemo.entity.Login;
+import com.example.splashdemo.utils.HuCryptoUtil;
 import com.example.splashdemo.utils.LightStatusBarUtils;
-import com.example.splashdemo.utils.RSAEncryptedUtil;
 
 import WebKit.Bean.Key;
 import WebKit.Bean.LoginBean;
 import WebKit.CookieUtil;
 import WebKit.Service.LoginService;
 import WebKit.RetrofitFactory;
+import okhttp3.Headers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 
 public class LoginActivity extends AppCompatActivity {
@@ -92,28 +91,34 @@ public class LoginActivity extends AppCompatActivity {
     public void onClick(View view) {
         act = accountLoginText.getText().toString().trim();
         psw = passwordLoginText.getText().toString().trim();
-        login(act, psw);
-//        LoginService service = RetrofitFactory.getSpecialService(this);
-//        Call<Key> call = service.getKey();
-//        call.enqueue(new Callback<Key>() {
-//            @Override
-//            public void onResponse(Call<Key> call, Response<Key> response) {
-//                if (response.isSuccessful()) {
-//                    Key result = response.body();
-//                    if (result != null) {
-//                        Log.i("test", "public key " + result.getData());
-//                        String encrypted = RSAEncryptedUtil.encryptedDataOnJava(psw, result.getData());
-//                        Log.i("test", encrypted);
-//                        encryptedLogin(act, encrypted);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Key> call, Throwable t) {
-//                Log.i("test", "公钥获取失败!");
-//            }
-//        });
+        LoginService service = RetrofitFactory.getSpecialService(this);
+        Call<Key> call = service.getKey();
+        call.enqueue(new Callback<Key>() {
+            @Override
+            public void onResponse(Call<Key> call, Response<Key> response) {
+                if (response.isSuccessful()) {
+                    Key result = response.body();
+                    if (result != null) {
+                        Headers headers = response.headers();
+                        Log.i("test", "public key " + result.getData());
+                        String encrypted = HuCryptoUtil.encryptData(psw, result.getData());
+                        String cookies = response.headers().get("Set-Cookie");
+                        SharedPreferences.Editor config = getApplicationContext().getSharedPreferences("config", getApplicationContext().MODE_PRIVATE).edit();
+                        config.putString("cookie", cookies);
+                        config.commit();
+                        //同步cookies到全局WebView
+                        CookieUtil.syncCookie("http://119.91.130.198/api/", cookies, getApplicationContext());
+                        Log.i("test", encrypted);
+                        encryptedLogin(act, encrypted);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Key> call, Throwable t) {
+                Log.i("test", "公钥获取失败!");
+            }
+        });
     }
 
     /**
@@ -127,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
                 if (response.isSuccessful()) {
-                    LoginBean result = response.body();
+                    Headers headers = response.headers();
                     String cookies = response.headers().get("Set-Cookie");
                     SharedPreferences.Editor config = getApplicationContext().getSharedPreferences("config", getApplicationContext().MODE_PRIVATE).edit();
                     config.putString("cookie", cookies);
@@ -198,6 +203,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 加密登录
+     * @param username
+     * @param password
+     */
     public void encryptedLogin(String username, String password) {
         LoginService service = RetrofitFactory.getLoginService(this);
         Call<LoginBean> call = service.encryptedLogin(new Login(username, password));
@@ -205,13 +215,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
                 if (response.isSuccessful()) {
-                    LoginBean result = response.body();
-                    String cookies = response.headers().get("Set-Cookie");
-                    SharedPreferences.Editor config = getApplicationContext().getSharedPreferences("config", getApplicationContext().MODE_PRIVATE).edit();
-                    config.putString("cookie", cookies);
-                    config.commit();
-                    //同步cookies到全局WebView
-                    CookieUtil.syncCookie("http://119.91.130.198/api/", cookies, getApplicationContext());
                     Toast.makeText(getApplicationContext(), "登陆成功！", Toast.LENGTH_SHORT).show();
                     setLoginState(true);
                     getLogState();
