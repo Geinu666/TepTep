@@ -6,22 +6,22 @@
     app:startDestination="@id/navigation_home">
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.splashdemo.ui.HomeFragment"
+        android:name="com.example.teptep.ui.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home"/>
     <fragment
         android:id="@+id/navigation_rank"
-        android:name="com.example.splashdemo.ui.RankFragment"
+        android:name="com.example.teptep.ui.RankFragment"
         android:label="@string/title_rank"
         tools:layout="@layout/fragment_rank"/>
     <fragment
         android:id="@+id/navigation_dynamic"
-        android:name="com.example.splashdemo.ui.DynamicFragment"
+        android:name="com.example.teptep.ui.DynamicFragment"
         android:label="@string/title_dynamic"
         tools:layout="@layout/fragment_dynamic" />
     <fragment
         android:id="@+id/navigation_personal"
-        android:name="com.example.splashdemo.ui.PersonalFragment"
+        android:name="com.example.teptep.ui.PersonalFragment"
         android:label="@string/title_personal"
         tools:layout="@layout/fragment_personal"/>
 

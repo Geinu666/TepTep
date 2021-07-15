@@ -1,6 +1,6 @@
 package WebKit.Service;
 
-import com.example.splashdemo.entity.advertisement;
+import com.example.teptep.entity.advertisement;
 
 import java.util.List;
 

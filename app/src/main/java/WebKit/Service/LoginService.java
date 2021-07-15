@@ -1,16 +1,11 @@
 package WebKit.Service;
 
-import com.example.splashdemo.entity.Login;
-import com.example.splashdemo.entity.Register;
+import com.example.teptep.entity.Login;
+import com.example.teptep.entity.Register;
 
-import WebKit.Bean.CommentBean;
 import WebKit.Bean.Key;
 import WebKit.Bean.LoginBean;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

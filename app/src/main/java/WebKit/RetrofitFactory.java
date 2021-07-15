@@ -2,8 +2,6 @@ package WebKit;
 
 import android.content.Context;
 
-import com.example.splashdemo.R;
-
 import WebKit.Service.CommentService;
 import WebKit.Service.GameService;
 import WebKit.Service.GetGameService;

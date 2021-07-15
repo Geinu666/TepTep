@@ -1,3 +1,2 @@
-rootProject.name = "Splash Demo"
+rootProject.name = "TepTep"
 include ':app'
-include ':lib'

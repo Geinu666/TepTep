@@ -1,7 +1,7 @@
 package Deprecate;
 
-import com.example.splashdemo.entity.Comment;
-import com.example.splashdemo.entity.Game;
+import com.example.teptep.entity.Comment;
+import com.example.teptep.entity.Game;
 
 import java.util.ArrayList;
 
