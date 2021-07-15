@@ -1,4 +1,4 @@
-# androidCode
+# TepTep游戏社区安卓端
 
 ## 技术方案
 ### 导航栏
